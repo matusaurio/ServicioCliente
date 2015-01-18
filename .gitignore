@@ -7,3 +7,6 @@ nbproject/
 *.DS_Store
 *.swp
 *.out
+/ServicioCliente-ejb/target/
+/ServicioCliente-web/target/
+/ServicioCliente-ear/target/
