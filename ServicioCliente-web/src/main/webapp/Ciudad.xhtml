@@ -42,7 +42,7 @@
                             <p:layoutUnit position="center">
                                 <p:panel header="Vista" rendered="#{ciudadBean.desplegarVista}">
                                     <h3 style="margin-top: 0">Ciudades</h3>
-                                    <p:dataTable var="ciudad" value="#{ciudadBean.ciudades}" scrollable="true" scrollHeight="150">
+                                    <p:dataTable var="ciudad" value="#{ciudadBean.ciudades}" scrollable="true" scrollHeight="200" selectionMode="single" selection="#{ciudadBean.ciudadSeleccionada}" rowKey="#{ciudad.idCiudad}">
                                         <p:column headerText="Codigo" >
                                             <h:outputText value="#{ciudad.idCiudad}" />
                                         </p:column>

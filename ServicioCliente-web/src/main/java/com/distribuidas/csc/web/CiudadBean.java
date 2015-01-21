@@ -5,6 +5,7 @@
  */
 package com.distribuidas.csc.web;
 
+
 import com.distribuidas.csc.persistencia.Ciudad;
 import com.distribuidas.csc.servicio.CiudadServicio;
 import java.util.List;
@@ -22,11 +23,22 @@ import javax.faces.bean.ViewScoped;
 public class CiudadBean {
     
     private List<Ciudad> ciudades;
-    
     private Ciudad ciudad;
+    private Ciudad ciudadSeleccionada;
     
     private Boolean desplegarVista = false;
     private Boolean desplegarNuevo = false;
+    
+    private Boolean desplegarFormulario;
+    private String tituloFormulario;
+    private Boolean enNuevo;
+    private Boolean enModificar;
+    
+    
+    private Boolean activarNuevo;
+    private Boolean activarModificar;
+    private Boolean activarEliminar;
+    private Boolean activarCambiarEstado;
     
     @EJB
     private CiudadServicio ciudadServicio;
@@ -49,7 +61,7 @@ public class CiudadBean {
     public void guardar(){
         this.ciudadServicio.crear(this.ciudad);
         this.desplegarNuevo = false;
-        //this.ciudades.add(this.ciudad);
+        this.ciudades.add(this.ciudad);
     }
     
     public void cancelar(){
