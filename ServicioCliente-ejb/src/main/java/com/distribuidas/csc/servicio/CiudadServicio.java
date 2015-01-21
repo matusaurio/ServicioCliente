@@ -5,7 +5,8 @@
  */
 package com.distribuidas.csc.servicio;
 
-import com.distribuidas.csc.DAO.CiudadFacade;
+
+import com.distribuidas.csc.dao.CiudadFacade;
 import com.distribuidas.csc.persistencia.Ciudad;
 import java.util.List;
 import javax.ejb.EJB;

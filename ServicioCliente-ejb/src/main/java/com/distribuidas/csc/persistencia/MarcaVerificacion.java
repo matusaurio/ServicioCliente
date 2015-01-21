@@ -6,8 +6,8 @@
 package com.distribuidas.csc.persistencia;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -27,7 +27,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Santiago
+ * @author Stephen
  */
 @Entity
 @Table(name = "marca_verificacion")
@@ -57,8 +57,8 @@ public class MarcaVerificacion implements Serializable {
     @Column(name = "FECHA_MARCAVERIFICACION")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaMarcaverificacion;
-    @ManyToMany(mappedBy = "marcaVerificacionCollection")
-    private Collection<ParteServicio> parteServicioCollection;
+    @ManyToMany(mappedBy = "marcaVerificacionList")
+    private List<ParteServicio> parteServicioList;
 
     public MarcaVerificacion() {
     }
@@ -106,12 +106,12 @@ public class MarcaVerificacion implements Serializable {
     }
 
     @XmlTransient
-    public Collection<ParteServicio> getParteServicioCollection() {
-        return parteServicioCollection;
+    public List<ParteServicio> getParteServicioList() {
+        return parteServicioList;
     }
 
-    public void setParteServicioCollection(Collection<ParteServicio> parteServicioCollection) {
-        this.parteServicioCollection = parteServicioCollection;
+    public void setParteServicioList(List<ParteServicio> parteServicioList) {
+        this.parteServicioList = parteServicioList;
     }
 
     @Override

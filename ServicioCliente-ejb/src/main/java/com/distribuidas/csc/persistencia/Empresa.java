@@ -6,7 +6,7 @@
 package com.distribuidas.csc.persistencia;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -26,7 +26,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Santiago
+ * @author Stephen
  */
 @Entity
 @Table(name = "empresa")
@@ -53,9 +53,9 @@ public class Empresa implements Serializable {
     @Column(name = "ESTADO_EMPRESA")
     private boolean estadoEmpresa;
     @OneToMany(mappedBy = "idEmpresa")
-    private Collection<Sucursal> sucursalCollection;
+    private List<Sucursal> sucursalList;
     @OneToMany(mappedBy = "idEmpresa")
-    private Collection<Usuario> usuarioCollection;
+    private List<Usuario> usuarioList;
     @JoinColumn(name = "ID_CIUDAD", referencedColumnName = "ID_CIUDAD")
     @ManyToOne
     private Ciudad idCiudad;
@@ -98,21 +98,21 @@ public class Empresa implements Serializable {
     }
 
     @XmlTransient
-    public Collection<Sucursal> getSucursalCollection() {
-        return sucursalCollection;
+    public List<Sucursal> getSucursalList() {
+        return sucursalList;
     }
 
-    public void setSucursalCollection(Collection<Sucursal> sucursalCollection) {
-        this.sucursalCollection = sucursalCollection;
+    public void setSucursalList(List<Sucursal> sucursalList) {
+        this.sucursalList = sucursalList;
     }
 
     @XmlTransient
-    public Collection<Usuario> getUsuarioCollection() {
-        return usuarioCollection;
+    public List<Usuario> getUsuarioList() {
+        return usuarioList;
     }
 
-    public void setUsuarioCollection(Collection<Usuario> usuarioCollection) {
-        this.usuarioCollection = usuarioCollection;
+    public void setUsuarioList(List<Usuario> usuarioList) {
+        this.usuarioList = usuarioList;
     }
 
     public Ciudad getIdCiudad() {

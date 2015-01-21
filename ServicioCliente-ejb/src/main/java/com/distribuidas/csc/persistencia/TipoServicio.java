@@ -6,8 +6,8 @@
 package com.distribuidas.csc.persistencia;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -27,7 +27,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Santiago
+ * @author Stephen
  */
 @Entity
 @Table(name = "tipo_servicio")
@@ -64,7 +64,7 @@ public class TipoServicio implements Serializable {
     @Column(name = "OBSERVACION_TIPO_SERVICIO_SOLICITUDSERVICIO")
     private String observacionTipoServicioSolicitudservicio;
     @OneToMany(mappedBy = "idTipoServicioSolicitudservicio")
-    private Collection<SolicitudServicio> solicitudServicioCollection;
+    private List<SolicitudServicio> solicitudServicioList;
 
     public TipoServicio() {
     }
@@ -121,12 +121,12 @@ public class TipoServicio implements Serializable {
     }
 
     @XmlTransient
-    public Collection<SolicitudServicio> getSolicitudServicioCollection() {
-        return solicitudServicioCollection;
+    public List<SolicitudServicio> getSolicitudServicioList() {
+        return solicitudServicioList;
     }
 
-    public void setSolicitudServicioCollection(Collection<SolicitudServicio> solicitudServicioCollection) {
-        this.solicitudServicioCollection = solicitudServicioCollection;
+    public void setSolicitudServicioList(List<SolicitudServicio> solicitudServicioList) {
+        this.solicitudServicioList = solicitudServicioList;
     }
 
     @Override

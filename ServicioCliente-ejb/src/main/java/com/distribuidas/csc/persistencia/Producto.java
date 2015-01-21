@@ -27,7 +27,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author Santiago
+ * @author Stephen
  */
 @Entity
 @Table(name = "producto")
@@ -75,12 +75,12 @@ public class Producto implements Serializable {
     @NotNull
     @Column(name = "CANTIDAD_PRODUCTO")
     private int cantidadProducto;
-    @JoinColumn(name = "ID_BODEGA", referencedColumnName = "ID_BODEGA")
-    @ManyToOne
-    private Bodega idBodega;
     @JoinColumn(name = "ID_MODELO", referencedColumnName = "ID_MODELO")
     @ManyToOne
     private Modelo idModelo;
+    @JoinColumn(name = "ID_BODEGA", referencedColumnName = "ID_BODEGA")
+    @ManyToOne
+    private Bodega idBodega;
 
     public Producto() {
     }
@@ -154,20 +154,20 @@ public class Producto implements Serializable {
         this.cantidadProducto = cantidadProducto;
     }
 
-    public Bodega getIdBodega() {
-        return idBodega;
-    }
-
-    public void setIdBodega(Bodega idBodega) {
-        this.idBodega = idBodega;
-    }
-
     public Modelo getIdModelo() {
         return idModelo;
     }
 
     public void setIdModelo(Modelo idModelo) {
         this.idModelo = idModelo;
+    }
+
+    public Bodega getIdBodega() {
+        return idBodega;
+    }
+
+    public void setIdBodega(Bodega idBodega) {
+        this.idBodega = idBodega;
     }
 
     @Override

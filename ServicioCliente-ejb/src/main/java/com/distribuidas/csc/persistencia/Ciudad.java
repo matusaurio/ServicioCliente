@@ -6,7 +6,7 @@
 package com.distribuidas.csc.persistencia;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -24,7 +24,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Santiago
+ * @author Stephen
  */
 @Entity
 @Table(name = "ciudad")
@@ -46,7 +46,7 @@ public class Ciudad implements Serializable {
     @Column(name = "NOMBRE_CIUDAD")
     private String nombreCiudad;
     @OneToMany(mappedBy = "idCiudad")
-    private Collection<Empresa> empresaCollection;
+    private List<Empresa> empresaList;
 
     public Ciudad() {
     }
@@ -77,12 +77,12 @@ public class Ciudad implements Serializable {
     }
 
     @XmlTransient
-    public Collection<Empresa> getEmpresaCollection() {
-        return empresaCollection;
+    public List<Empresa> getEmpresaList() {
+        return empresaList;
     }
 
-    public void setEmpresaCollection(Collection<Empresa> empresaCollection) {
-        this.empresaCollection = empresaCollection;
+    public void setEmpresaList(List<Empresa> empresaList) {
+        this.empresaList = empresaList;
     }
 
     @Override

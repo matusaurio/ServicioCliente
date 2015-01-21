@@ -6,8 +6,8 @@
 package com.distribuidas.csc.persistencia;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -29,7 +29,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Santiago
+ * @author Stephen
  */
 @Entity
 @Table(name = "solicitud_servicio")
@@ -75,22 +75,22 @@ public class SolicitudServicio implements Serializable {
     @NotNull
     @Column(name = "ESTADO_SOLICITUDSERVICIO")
     private boolean estadoSolicitudservicio;
-    @JoinColumn(name = "ID_PARTESERVICIO", referencedColumnName = "ID_PARTESERVICIO")
-    @ManyToOne
-    private ParteServicio idParteservicio;
-    @JoinColumn(name = "ID_TIPO_SERVICIO_SOLICITUDSERVICIO", referencedColumnName = "ID_TIPO_SERVICIO_SOLICITUDSERVICIO")
-    @ManyToOne
-    private TipoServicio idTipoServicioSolicitudservicio;
-    @JoinColumn(name = "ID_ESTADO_SOLICITUDSERVICIO", referencedColumnName = "ID_ESTADO_SOLICITUDSERVICIO")
-    @ManyToOne
-    private Estado idEstadoSolicitudservicio;
+    @OneToMany(mappedBy = "idSolicitudservicio")
+    private List<DetalleSolicitudServicio> detalleSolicitudServicioList;
     @JoinColumn(name = "ID_USUARIO", referencedColumnName = "ID_USUARIO")
     @ManyToOne
     private Usuario idUsuario;
+    @JoinColumn(name = "ID_ESTADO_SOLICITUDSERVICIO", referencedColumnName = "ID_ESTADO_SOLICITUDSERVICIO")
+    @ManyToOne
+    private Estado idEstadoSolicitudservicio;
+    @JoinColumn(name = "ID_TIPO_SERVICIO_SOLICITUDSERVICIO", referencedColumnName = "ID_TIPO_SERVICIO_SOLICITUDSERVICIO")
+    @ManyToOne
+    private TipoServicio idTipoServicioSolicitudservicio;
+    @JoinColumn(name = "ID_PARTESERVICIO", referencedColumnName = "ID_PARTESERVICIO")
+    @ManyToOne
+    private ParteServicio idParteservicio;
     @OneToMany(mappedBy = "idSolicitudservicio")
-    private Collection<DetalleSolicitudServicio> detalleSolicitudServicioCollection;
-    @OneToMany(mappedBy = "idSolicitudservicio")
-    private Collection<ParteServicio> parteServicioCollection;
+    private List<ParteServicio> parteServicioList;
 
     public SolicitudServicio() {
     }
@@ -163,28 +163,13 @@ public class SolicitudServicio implements Serializable {
         this.estadoSolicitudservicio = estadoSolicitudservicio;
     }
 
-    public ParteServicio getIdParteservicio() {
-        return idParteservicio;
+    @XmlTransient
+    public List<DetalleSolicitudServicio> getDetalleSolicitudServicioList() {
+        return detalleSolicitudServicioList;
     }
 
-    public void setIdParteservicio(ParteServicio idParteservicio) {
-        this.idParteservicio = idParteservicio;
-    }
-
-    public TipoServicio getIdTipoServicioSolicitudservicio() {
-        return idTipoServicioSolicitudservicio;
-    }
-
-    public void setIdTipoServicioSolicitudservicio(TipoServicio idTipoServicioSolicitudservicio) {
-        this.idTipoServicioSolicitudservicio = idTipoServicioSolicitudservicio;
-    }
-
-    public Estado getIdEstadoSolicitudservicio() {
-        return idEstadoSolicitudservicio;
-    }
-
-    public void setIdEstadoSolicitudservicio(Estado idEstadoSolicitudservicio) {
-        this.idEstadoSolicitudservicio = idEstadoSolicitudservicio;
+    public void setDetalleSolicitudServicioList(List<DetalleSolicitudServicio> detalleSolicitudServicioList) {
+        this.detalleSolicitudServicioList = detalleSolicitudServicioList;
     }
 
     public Usuario getIdUsuario() {
@@ -195,22 +180,37 @@ public class SolicitudServicio implements Serializable {
         this.idUsuario = idUsuario;
     }
 
+    public Estado getIdEstadoSolicitudservicio() {
+        return idEstadoSolicitudservicio;
+    }
+
+    public void setIdEstadoSolicitudservicio(Estado idEstadoSolicitudservicio) {
+        this.idEstadoSolicitudservicio = idEstadoSolicitudservicio;
+    }
+
+    public TipoServicio getIdTipoServicioSolicitudservicio() {
+        return idTipoServicioSolicitudservicio;
+    }
+
+    public void setIdTipoServicioSolicitudservicio(TipoServicio idTipoServicioSolicitudservicio) {
+        this.idTipoServicioSolicitudservicio = idTipoServicioSolicitudservicio;
+    }
+
+    public ParteServicio getIdParteservicio() {
+        return idParteservicio;
+    }
+
+    public void setIdParteservicio(ParteServicio idParteservicio) {
+        this.idParteservicio = idParteservicio;
+    }
+
     @XmlTransient
-    public Collection<DetalleSolicitudServicio> getDetalleSolicitudServicioCollection() {
-        return detalleSolicitudServicioCollection;
+    public List<ParteServicio> getParteServicioList() {
+        return parteServicioList;
     }
 
-    public void setDetalleSolicitudServicioCollection(Collection<DetalleSolicitudServicio> detalleSolicitudServicioCollection) {
-        this.detalleSolicitudServicioCollection = detalleSolicitudServicioCollection;
-    }
-
-    @XmlTransient
-    public Collection<ParteServicio> getParteServicioCollection() {
-        return parteServicioCollection;
-    }
-
-    public void setParteServicioCollection(Collection<ParteServicio> parteServicioCollection) {
-        this.parteServicioCollection = parteServicioCollection;
+    public void setParteServicioList(List<ParteServicio> parteServicioList) {
+        this.parteServicioList = parteServicioList;
     }
 
     @Override

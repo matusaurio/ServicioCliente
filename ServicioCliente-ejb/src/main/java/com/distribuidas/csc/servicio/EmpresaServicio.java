@@ -5,7 +5,8 @@
  */
 package com.distribuidas.csc.servicio;
 
-import com.distribuidas.csc.DAO.EmpresaFacade;
+
+import com.distribuidas.csc.dao.EmpresaFacade;
 import com.distribuidas.csc.persistencia.Ciudad;
 import com.distribuidas.csc.persistencia.Empresa;
 import java.util.List;

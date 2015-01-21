@@ -6,7 +6,7 @@
 package com.distribuidas.csc.persistencia;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -24,7 +24,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Santiago
+ * @author Stephen
  */
 @Entity
 @Table(name = "marca")
@@ -53,7 +53,7 @@ public class Marca implements Serializable {
     @Column(name = "ESTADO_MARCA")
     private Boolean estadoMarca;
     @OneToMany(mappedBy = "idMarca")
-    private Collection<Modelo> modeloCollection;
+    private List<Modelo> modeloList;
 
     public Marca() {
     }
@@ -100,12 +100,12 @@ public class Marca implements Serializable {
     }
 
     @XmlTransient
-    public Collection<Modelo> getModeloCollection() {
-        return modeloCollection;
+    public List<Modelo> getModeloList() {
+        return modeloList;
     }
 
-    public void setModeloCollection(Collection<Modelo> modeloCollection) {
-        this.modeloCollection = modeloCollection;
+    public void setModeloList(List<Modelo> modeloList) {
+        this.modeloList = modeloList;
     }
 
     @Override

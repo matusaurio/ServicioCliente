@@ -6,7 +6,7 @@
 package com.distribuidas.csc.persistencia;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -26,7 +26,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Santiago
+ * @author Stephen
  */
 @Entity
 @Table(name = "usuario")
@@ -64,16 +64,16 @@ public class Usuario implements Serializable {
     @NotNull
     @Column(name = "ESTADO_USUARIO")
     private boolean estadoUsuario;
-    @OneToMany(mappedBy = "idUsuario")
-    private Collection<SolicitudServicio> solicitudServicioCollection;
-    @JoinColumn(name = "ID_EMPRESA", referencedColumnName = "ID_EMPRESA")
-    @ManyToOne
-    private Empresa idEmpresa;
     @JoinColumn(name = "ID_ROL", referencedColumnName = "ID_ROL")
     @ManyToOne
     private Rol idRol;
+    @JoinColumn(name = "ID_EMPRESA", referencedColumnName = "ID_EMPRESA")
+    @ManyToOne
+    private Empresa idEmpresa;
     @OneToMany(mappedBy = "idUsuario")
-    private Collection<ParteServicio> parteServicioCollection;
+    private List<SolicitudServicio> solicitudServicioList;
+    @OneToMany(mappedBy = "idUsuario")
+    private List<ParteServicio> parteServicioList;
 
     public Usuario() {
     }
@@ -130,13 +130,12 @@ public class Usuario implements Serializable {
         this.estadoUsuario = estadoUsuario;
     }
 
-    @XmlTransient
-    public Collection<SolicitudServicio> getSolicitudServicioCollection() {
-        return solicitudServicioCollection;
+    public Rol getIdRol() {
+        return idRol;
     }
 
-    public void setSolicitudServicioCollection(Collection<SolicitudServicio> solicitudServicioCollection) {
-        this.solicitudServicioCollection = solicitudServicioCollection;
+    public void setIdRol(Rol idRol) {
+        this.idRol = idRol;
     }
 
     public Empresa getIdEmpresa() {
@@ -147,21 +146,22 @@ public class Usuario implements Serializable {
         this.idEmpresa = idEmpresa;
     }
 
-    public Rol getIdRol() {
-        return idRol;
+    @XmlTransient
+    public List<SolicitudServicio> getSolicitudServicioList() {
+        return solicitudServicioList;
     }
 
-    public void setIdRol(Rol idRol) {
-        this.idRol = idRol;
+    public void setSolicitudServicioList(List<SolicitudServicio> solicitudServicioList) {
+        this.solicitudServicioList = solicitudServicioList;
     }
 
     @XmlTransient
-    public Collection<ParteServicio> getParteServicioCollection() {
-        return parteServicioCollection;
+    public List<ParteServicio> getParteServicioList() {
+        return parteServicioList;
     }
 
-    public void setParteServicioCollection(Collection<ParteServicio> parteServicioCollection) {
-        this.parteServicioCollection = parteServicioCollection;
+    public void setParteServicioList(List<ParteServicio> parteServicioList) {
+        this.parteServicioList = parteServicioList;
     }
 
     @Override

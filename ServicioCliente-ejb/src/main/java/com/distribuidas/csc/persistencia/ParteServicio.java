@@ -7,8 +7,8 @@ package com.distribuidas.csc.persistencia;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -32,7 +32,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Santiago
+ * @author Stephen
  */
 @Entity
 @Table(name = "parte_servicio")
@@ -93,19 +93,19 @@ public class ParteServicio implements Serializable {
         @JoinColumn(name = "ID_PARTESERVICIO", referencedColumnName = "ID_PARTESERVICIO")}, inverseJoinColumns = {
         @JoinColumn(name = "ID_MARCAVERIFICACION", referencedColumnName = "ID_MARCAVERIFICACION")})
     @ManyToMany
-    private Collection<MarcaVerificacion> marcaVerificacionCollection;
+    private List<MarcaVerificacion> marcaVerificacionList;
     @OneToMany(mappedBy = "idParteservicio")
-    private Collection<DetalleParteServicio> detalleParteServicioCollection;
+    private List<HorarioServicio> horarioServicioList;
     @OneToMany(mappedBy = "idParteservicio")
-    private Collection<SolicitudServicio> solicitudServicioCollection;
+    private List<DetalleParteServicio> detalleParteServicioList;
     @OneToMany(mappedBy = "idParteservicio")
-    private Collection<HorarioServicio> horarioServicioCollection;
-    @JoinColumn(name = "ID_USUARIO", referencedColumnName = "ID_USUARIO")
-    @ManyToOne
-    private Usuario idUsuario;
+    private List<SolicitudServicio> solicitudServicioList;
     @JoinColumn(name = "ID_SOLICITUDSERVICIO", referencedColumnName = "ID_SOLICITUDSERVICIO")
     @ManyToOne
     private SolicitudServicio idSolicitudservicio;
+    @JoinColumn(name = "ID_USUARIO", referencedColumnName = "ID_USUARIO")
+    @ManyToOne
+    private Usuario idUsuario;
 
     public ParteServicio() {
     }
@@ -197,47 +197,39 @@ public class ParteServicio implements Serializable {
     }
 
     @XmlTransient
-    public Collection<MarcaVerificacion> getMarcaVerificacionCollection() {
-        return marcaVerificacionCollection;
+    public List<MarcaVerificacion> getMarcaVerificacionList() {
+        return marcaVerificacionList;
     }
 
-    public void setMarcaVerificacionCollection(Collection<MarcaVerificacion> marcaVerificacionCollection) {
-        this.marcaVerificacionCollection = marcaVerificacionCollection;
-    }
-
-    @XmlTransient
-    public Collection<DetalleParteServicio> getDetalleParteServicioCollection() {
-        return detalleParteServicioCollection;
-    }
-
-    public void setDetalleParteServicioCollection(Collection<DetalleParteServicio> detalleParteServicioCollection) {
-        this.detalleParteServicioCollection = detalleParteServicioCollection;
+    public void setMarcaVerificacionList(List<MarcaVerificacion> marcaVerificacionList) {
+        this.marcaVerificacionList = marcaVerificacionList;
     }
 
     @XmlTransient
-    public Collection<SolicitudServicio> getSolicitudServicioCollection() {
-        return solicitudServicioCollection;
+    public List<HorarioServicio> getHorarioServicioList() {
+        return horarioServicioList;
     }
 
-    public void setSolicitudServicioCollection(Collection<SolicitudServicio> solicitudServicioCollection) {
-        this.solicitudServicioCollection = solicitudServicioCollection;
+    public void setHorarioServicioList(List<HorarioServicio> horarioServicioList) {
+        this.horarioServicioList = horarioServicioList;
     }
 
     @XmlTransient
-    public Collection<HorarioServicio> getHorarioServicioCollection() {
-        return horarioServicioCollection;
+    public List<DetalleParteServicio> getDetalleParteServicioList() {
+        return detalleParteServicioList;
     }
 
-    public void setHorarioServicioCollection(Collection<HorarioServicio> horarioServicioCollection) {
-        this.horarioServicioCollection = horarioServicioCollection;
+    public void setDetalleParteServicioList(List<DetalleParteServicio> detalleParteServicioList) {
+        this.detalleParteServicioList = detalleParteServicioList;
     }
 
-    public Usuario getIdUsuario() {
-        return idUsuario;
+    @XmlTransient
+    public List<SolicitudServicio> getSolicitudServicioList() {
+        return solicitudServicioList;
     }
 
-    public void setIdUsuario(Usuario idUsuario) {
-        this.idUsuario = idUsuario;
+    public void setSolicitudServicioList(List<SolicitudServicio> solicitudServicioList) {
+        this.solicitudServicioList = solicitudServicioList;
     }
 
     public SolicitudServicio getIdSolicitudservicio() {
@@ -246,6 +238,14 @@ public class ParteServicio implements Serializable {
 
     public void setIdSolicitudservicio(SolicitudServicio idSolicitudservicio) {
         this.idSolicitudservicio = idSolicitudservicio;
+    }
+
+    public Usuario getIdUsuario() {
+        return idUsuario;
+    }
+
+    public void setIdUsuario(Usuario idUsuario) {
+        this.idUsuario = idUsuario;
     }
 
     @Override

@@ -6,7 +6,7 @@
 package com.distribuidas.csc.persistencia;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -26,7 +26,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Santiago
+ * @author Stephen
  */
 @Entity
 @Table(name = "sucursal")
@@ -60,11 +60,11 @@ public class Sucursal implements Serializable {
     @NotNull
     @Column(name = "ESTADO_SUCURSAL")
     private boolean estadoSucursal;
-    @OneToMany(mappedBy = "idSucursal")
-    private Collection<Bodega> bodegaCollection;
     @JoinColumn(name = "ID_EMPRESA", referencedColumnName = "ID_EMPRESA")
     @ManyToOne
     private Empresa idEmpresa;
+    @OneToMany(mappedBy = "idSucursal")
+    private List<Bodega> bodegaList;
 
     public Sucursal() {
     }
@@ -119,21 +119,21 @@ public class Sucursal implements Serializable {
         this.estadoSucursal = estadoSucursal;
     }
 
-    @XmlTransient
-    public Collection<Bodega> getBodegaCollection() {
-        return bodegaCollection;
-    }
-
-    public void setBodegaCollection(Collection<Bodega> bodegaCollection) {
-        this.bodegaCollection = bodegaCollection;
-    }
-
     public Empresa getIdEmpresa() {
         return idEmpresa;
     }
 
     public void setIdEmpresa(Empresa idEmpresa) {
         this.idEmpresa = idEmpresa;
+    }
+
+    @XmlTransient
+    public List<Bodega> getBodegaList() {
+        return bodegaList;
+    }
+
+    public void setBodegaList(List<Bodega> bodegaList) {
+        this.bodegaList = bodegaList;
     }
 
     @Override
