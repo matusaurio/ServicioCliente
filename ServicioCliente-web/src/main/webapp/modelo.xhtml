@@ -1,0 +1,48 @@
+<?xml version='1.0' encoding='ISO-8859-1' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" 
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core" 
+                xmlns:ui="http://java.sun.com/jsf/facelets" 
+                xmlns:p="http://primefaces.org/ui"
+                template="/plantillaInterna.xhtml">
+
+    <ui:define name="titulo">Bienvenido</ui:define>
+    <ui:define name="contenidoCiudad">
+        <p:growl autoUpdate="true" showDetail="true"/>
+        <p:panelMenu style="width: 300px; height: auto">
+            <p:submenu label="Opciones">
+                <p:menuitem value="Ver" update="@form" actionListener="#{ciudadBean.vista()}" />
+                <p:menuitem value="Nuevo" update="@form" actionListener="#{ciudadBean.nuevo()}"/>
+                <p:menuitem value="Editar" update="@form" actionListener="#{ciudadBean.modificar()}"/>
+                <p:menuitem value="Eliminar" update="@form" actionListener="#{ciudadBean.eliminar()}"/>
+            </p:submenu>
+        </p:panelMenu>
+    </ui:define>
+    <ui:define name="tablaCiudad">
+        <p:panel header="Vista" rendered="#{ciudadBean.desplegarVista}">
+            <h3 style="margin-top: 0">Ciudades</h3>
+            <p:dataTable var="ciudad" value="#{ciudadBean.ciudades}" scrollable="true" scrollHeight="200" selectionMode="single" selection="#{ciudadBean.ciudadSeleccionada}" rowKey="#{ciudad.idCiudad}">
+                <p:ajax event="rowSelect" listener="#{ciudadBean.onRowSelect(event)}" update="@form"/>
+                <p:ajax event="rowUnselect" listener="#{ciudadBean.onRowUnselect(event)}" update="@form"/>
+                <p:column headerText="Codigo" >
+                    <h:outputText value="#{ciudad.idCiudad}" />
+                </p:column>
+                <p:column headerText="Descripcion" >
+                    <h:outputText value="#{ciudad.nombreCiudad}" />
+                </p:column>
+            </p:dataTable>
+        </p:panel>
+    </ui:define>
+    <ui:define name="formularioCiudad">
+        <p:panel header="Nueva Ciudad" rendered="#{ciudadBean.desplegarNuevo}">
+            <p:panelGrid columns="3">
+                <p:outputLabel for="nombre" value="Nombre" />
+                <p:inputText id="nombre" value="#{ciudadBean.ciudad.nombreCiudad}" required="true" maxlength="100" requiredMessage="Debe ingresar la descripcion."/>
+                <p:message for="nombre" />
+            </p:panelGrid>
+            <p:commandButton value="Aceptar" update="@form" actionListener="#{ciudadBean.guardar()}"/>
+            <p:commandButton value="Cancelar" update="@form" immediate="true" actionListener="#{ciudadBean.cancelar()}"/>
+        </p:panel>
+    </ui:define>
+</ui:composition>

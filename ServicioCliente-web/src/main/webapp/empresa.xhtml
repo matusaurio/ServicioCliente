@@ -1,0 +1,64 @@
+<?xml version='1.0' encoding='ISO-8859-1' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" 
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core" 
+                xmlns:ui="http://java.sun.com/jsf/facelets" 
+                xmlns:p="http://primefaces.org/ui"
+                template="/plantillaInterna.xhtml">
+
+    <ui:define name="titulo">Bienvenido</ui:define>
+    <ui:define name="contenidoEmpresa">
+        <p:growl autoUpdate="true"/>
+        <p:panelMenu style="min-width: 300px;height: auto">
+            <p:submenu label="Opciones">
+                <p:menuitem value="Ver" update="@form" actionListener="#{empresaBean.vista()}"/>
+                <p:menuitem value="Nuevo" update="@form" actionListener="#{empresaBean.nuevo()}"/>
+                <p:menuitem value="Editar" update="@form" actionListener="#{empresaBean.modificar()}"/>
+                <p:menuitem value="Eliminar" update="@form" actionListener="#{empresaBean.eliminar()}"/>
+            </p:submenu>
+        </p:panelMenu>
+    </ui:define>
+    <ui:define name="tablaEmpresa">
+        <p:panel header="Vista" rendered="#{empresaBean.desplegarVista}">
+            <h3 style="margin-top: 0">Ciudades</h3>
+            <p:dataTable var="empresa" value="#{empresaBean.empresas}" scrollable="true" scrollHeight="200" selectionMode="single" selection="#{empresaBean.empresaSeleccionada}" rowKey="#{empresa.idEmpresa}">
+                <p:ajax event="rowSelect" listener="#{empresaBean.onRowSelect(event)}" update="@form"/>
+                <p:ajax event="rowUnselect" listener="#{empresaBean.onRowUnselect(event)}" update="@form"/>
+                <p:column headerText="Codigo Empresa" >
+                    <h:outputText value="#{empresa.idEmpresa}" />
+                </p:column>
+                <p:column headerText="Codigo Ciudad" >
+                    <h:outputText value="#{empresa.idCiudad}" />
+                </p:column>
+                <p:column headerText="Nombre Empresa" >
+                    <h:outputText value="#{empresa.nombreEmpresa}" />
+                </p:column>
+                <p:column headerText="Estado Empresa" >
+                    <h:outputText value="#{empresa.estadoEmpresa}" />
+                </p:column>
+            </p:dataTable>
+        </p:panel>
+    </ui:define>
+    <ui:define name="formularioEmpresa">
+        <p:panel header="Nueva Empresa" rendered="#{empresaBean.desplegarNuevo}">
+            <p:panelGrid columns="3">
+                <p:outputLabel for="codigoCiudad" value="Codigo Ciudad:" />
+                <p:inputText id="codigoCiudad" value="#{empresaBean.empresa.idCiudad}" required="true" maxlength="100" requiredMessage="Debe ingresar la descripcion."/>
+                <p:message for="codigoCiudad" />
+                <p:outputLabel for="nombreEmpresa" value="Nombre Empresa:" />
+                <p:inputText id="nombreEmpresa" value="#{empresaBean.empresa.nombreEmpresa}" required="true" maxlength="100" requiredMessage="Debe ingresar la descripcion."/>
+                <p:message for="nombreEmpresa" />
+                <p:outputLabel for="estadoEmpresa" value="Estado:"/>
+                <p:selectOneMenu id="estadoEmpresa" value="#{empresaBean.empresa.estadoEmpresa}" style="width:125px" >
+                    <f:selectItem itemLabel="Seleccione" itemValue="" />
+                    <f:selectItem itemLabel="0" itemValue="0" />
+                    <f:selectItem itemLabel="1" itemValue="1" />
+                </p:selectOneMenu>
+                <p:message for="estadoEmpresa" />
+            </p:panelGrid>
+            <p:commandButton value="Aceptar" update="@form" actionListener="#{empresaBean.guardar()}"/>
+            <p:commandButton value="Cancelar" update="@form" immediate="true" actionListener="#{empresaBean.cancelar()}"/>
+        </p:panel>
+    </ui:define>
+</ui:composition>

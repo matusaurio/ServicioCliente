@@ -13,6 +13,8 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import org.primefaces.event.SelectEvent;
+import org.primefaces.event.UnselectEvent;
 
 /**
  *
@@ -29,7 +31,6 @@ public class CiudadBean {
     private Boolean desplegarVista = false;
     private Boolean desplegarNuevo = false;
     
-    private Boolean desplegarFormulario;
     private String tituloFormulario;
     private Boolean enNuevo;
     private Boolean enModificar;
@@ -49,7 +50,6 @@ public class CiudadBean {
     }
     
     public void vista(){
-        System.out.println("asdfasdfa");
         this.desplegarVista = true;
     }
     
@@ -58,16 +58,44 @@ public class CiudadBean {
         this.ciudad = new Ciudad();
     }
     
-    public void guardar(){
-        this.ciudadServicio.crear(this.ciudad);
-        this.desplegarNuevo = false;
-        this.ciudades.add(this.ciudad);
+    public void guardar() {
+        if (this.enNuevo) {
+            this.ciudadServicio.crear(this.ciudad);
+            this.desplegarNuevo = false;
+            this.ciudades.add(this.ciudad);
+            this.enNuevo = false;
+        } else if (this.enModificar) {
+            System.err.println("modificar");
+            this.ciudadServicio.actualizar(this.ciudad);
+            this.desplegarNuevo = false;
+            this.enModificar = false;
+        }
     }
-    
-    public void cancelar(){
+
+    public void modificar() {
+        this.enModificar = true;
+        this.enNuevo = false;
+        this.desplegarNuevo = true;
+        this.ciudad = this.ciudadSeleccionada;
+    }
+
+    public void eliminar() {
+        this.ciudadServicio.eliminar(this.ciudadSeleccionada);
+        this.ciudades.remove(this.ciudadSeleccionada);
+    }
+
+    public void cancelar() {
         this.desplegarNuevo = false;
     }
-    
+
+    public void onRowSelect(SelectEvent event) {
+
+    }
+
+    public void onRowUnselect(UnselectEvent event) {
+
+    }
+
     public List<Ciudad> getCiudades() {
         return ciudades;
     }
@@ -94,6 +122,70 @@ public class CiudadBean {
 
     public void setDesplegarNuevo(Boolean desplegarNuevo) {
         this.desplegarNuevo = desplegarNuevo;
+    }
+
+    public Ciudad getCiudadSeleccionada() {
+        return ciudadSeleccionada;
+    }
+
+    public void setCiudadSeleccionada(Ciudad ciudadSeleccionada) {
+        this.ciudadSeleccionada = ciudadSeleccionada;
+    }
+
+    public String getTituloFormulario() {
+        return tituloFormulario;
+    }
+
+    public void setTituloFormulario(String tituloFormulario) {
+        this.tituloFormulario = tituloFormulario;
+    }
+
+    public Boolean getEnNuevo() {
+        return enNuevo;
+    }
+
+    public void setEnNuevo(Boolean enNuevo) {
+        this.enNuevo = enNuevo;
+    }
+
+    public Boolean getEnModificar() {
+        return enModificar;
+    }
+
+    public void setEnModificar(Boolean enModificar) {
+        this.enModificar = enModificar;
+    }
+
+    public Boolean getActivarNuevo() {
+        return activarNuevo;
+    }
+
+    public void setActivarNuevo(Boolean activarNuevo) {
+        this.activarNuevo = activarNuevo;
+    }
+
+    public Boolean getActivarModificar() {
+        return activarModificar;
+    }
+
+    public void setActivarModificar(Boolean activarModificar) {
+        this.activarModificar = activarModificar;
+    }
+
+    public Boolean getActivarEliminar() {
+        return activarEliminar;
+    }
+
+    public void setActivarEliminar(Boolean activarEliminar) {
+        this.activarEliminar = activarEliminar;
+    }
+
+    public Boolean getActivarCambiarEstado() {
+        return activarCambiarEstado;
+    }
+
+    public void setActivarCambiarEstado(Boolean activarCambiarEstado) {
+        this.activarCambiarEstado = activarCambiarEstado;
     }
     
     
