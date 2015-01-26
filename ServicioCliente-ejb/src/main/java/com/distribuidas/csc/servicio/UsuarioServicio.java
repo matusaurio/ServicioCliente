@@ -5,9 +5,8 @@
  */
 package com.distribuidas.csc.servicio;
 
-
-import com.distribuidas.csc.dao.EmpresaFacade;
-import com.distribuidas.csc.persistencia.Empresa;
+import com.distribuidas.csc.dao.UsuarioFacade;
+import com.distribuidas.csc.persistencia.Usuario;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.LocalBean;
@@ -21,30 +20,31 @@ import javax.ejb.TransactionAttributeType;
  */
 @Stateless
 @LocalBean
-public class EmpresaServicio {
-
+public class UsuarioServicio {
+    
     @EJB
-    private EmpresaFacade empresaFacade;
+    private UsuarioFacade usuarioFacade;
 
-    public List<Empresa> obtenerTodos() {
-        return this.empresaFacade.findAll();
+    public List<Usuario> obtenerTodos() {
+        return this.usuarioFacade.findAll();
     }
 
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
-    public void crear(Empresa empresa) {
-        this.empresaFacade.create(empresa);
+    public void crear(Usuario usuario) {
+        this.usuarioFacade.create(usuario);
     }
 
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
-    public void actualizar(Empresa empresa) {
-        this.empresaFacade.edit(empresa);
+    public void actualizar(Usuario usuario) {
+        this.usuarioFacade.edit(usuario);
     }
 
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
-    public void eliminar(Empresa empresa) {
-        Empresa empresaTmp = this.empresaFacade.find(empresa.getIdCiudad());
-        if (empresaTmp != null) {
-            this.empresaFacade.remove(empresaTmp);
+    public void eliminar(Usuario usuario) {
+        Usuario usuarioTmp = this.usuarioFacade.find(usuario.getIdUsuario());
+        if (usuarioTmp != null) {
+            this.usuarioFacade.remove(usuarioTmp);
         }
     }
+    
 }
