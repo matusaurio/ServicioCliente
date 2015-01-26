@@ -42,7 +42,7 @@ public class EmpresaServicio {
     }
 
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
-    public void eliminar(Ciudad empresa) {
+    public void eliminar(Empresa empresa) {
         Empresa empresaTmp = this.empresaFacade.find(empresa.getIdCiudad());
         if (empresaTmp != null) {
             this.empresaFacade.remove(empresaTmp);
