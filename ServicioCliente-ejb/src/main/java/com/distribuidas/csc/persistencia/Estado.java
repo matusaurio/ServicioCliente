@@ -125,7 +125,7 @@ public class Estado implements Serializable {
 
     @Override
     public String toString() {
-        return "com.distribuidas.csc.persistencia.Estado[ idEstadoSolicitudservicio=" + idEstadoSolicitudservicio + " ]";
+        return idEstadoSolicitudservicio.toString();
     }
     
 }

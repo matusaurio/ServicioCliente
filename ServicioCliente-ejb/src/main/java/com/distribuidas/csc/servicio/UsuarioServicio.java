@@ -21,7 +21,7 @@ import javax.ejb.TransactionAttributeType;
 @Stateless
 @LocalBean
 public class UsuarioServicio {
-    
+
     @EJB
     private UsuarioFacade usuarioFacade;
 
@@ -46,5 +46,9 @@ public class UsuarioServicio {
             this.usuarioFacade.remove(usuarioTmp);
         }
     }
-    
+
+    public Boolean login(String email, String password) {
+        return usuarioFacade.login(email, password) != null;
+    }
+
 }

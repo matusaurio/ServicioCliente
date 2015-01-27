@@ -136,7 +136,7 @@ public class MarcaVerificacion implements Serializable {
 
     @Override
     public String toString() {
-        return "com.distribuidas.csc.persistencia.MarcaVerificacion[ idMarcaverificacion=" + idMarcaverificacion + " ]";
+        return idMarcaverificacion.toString();
     }
     
 }

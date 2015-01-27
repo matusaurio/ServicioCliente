@@ -122,7 +122,7 @@ public class DetalleParteServicio implements Serializable {
 
     @Override
     public String toString() {
-        return "com.distribuidas.csc.persistencia.DetalleParteServicio[ idDetalleParteservicio=" + idDetalleParteservicio + " ]";
+        return idDetalleParteservicio.toString();
     }
     
 }
