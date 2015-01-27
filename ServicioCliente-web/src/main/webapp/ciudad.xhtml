@@ -10,14 +10,14 @@
     <ui:define name="titulo">Bienvenido</ui:define>
     <ui:define name="contenidoCiudad">
         <p:growl autoUpdate="true" showDetail="true"/>
-        <p:panelMenu style="width: 300px; height: auto">
-            <p:submenu label="Opciones">
+        <p:menu style="width: 250px">
+            <p:submenu label="Opciones Ciudad">
                 <p:menuitem value="Ver" update="@form" actionListener="#{ciudadBean.vista()}" />
                 <p:menuitem value="Nuevo" update="@form" actionListener="#{ciudadBean.nuevo()}"/>
                 <p:menuitem value="Editar" update="@form" actionListener="#{ciudadBean.modificar()}"/>
                 <p:menuitem value="Eliminar" update="@form" actionListener="#{ciudadBean.eliminar()}"/>
             </p:submenu>
-        </p:panelMenu>
+        </p:menu>
     </ui:define>
     <ui:define name="tablaCiudad">
         <p:panel header="Vista" rendered="#{ciudadBean.desplegarVista}">

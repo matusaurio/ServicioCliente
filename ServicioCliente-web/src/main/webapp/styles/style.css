@@ -1,5 +1,8 @@
 /*HTML*/
+@import url(http://fonts.googleapis.com/css?family=Didact+Gothic);
+
 * {margin:0px; padding:0px; border:0px;}
+body{background-color: #2A2A2A; font-family: 'Didact Gothic', sans-serif;}
 h1{	color: #222; font-size: 20pt; font-weight: bold;}
 h2{	color: #222; font-size: 18pt; font-weight: bold;}
 p{ font-size: 12pt; font-weight: normal;}

@@ -10,14 +10,14 @@
     <ui:define name="titulo">Bienvenido</ui:define>
     <ui:define name="contenidoEmpresa">
         <p:growl autoUpdate="true"/>
-        <p:panelMenu style="min-width: 300px;height: auto">
-            <p:submenu label="Opciones">
+        <p:menu style="width: 250px">
+            <p:submenu label="Opciones Empresa">
                 <p:menuitem value="Ver" update="@form" actionListener="#{empresaBean.vista()}"/>
                 <p:menuitem value="Nuevo" update="@form" actionListener="#{empresaBean.nuevo()}"/>
                 <p:menuitem value="Editar" update="@form" actionListener="#{empresaBean.modificar()}"/>
                 <p:menuitem value="Eliminar" update="@form" actionListener="#{empresaBean.eliminar()}"/>
             </p:submenu>
-        </p:panelMenu>
+        </p:menu>
     </ui:define>
     <ui:define name="tablaEmpresa">
         <p:panel header="Vista" rendered="#{empresaBean.desplegarVista}">

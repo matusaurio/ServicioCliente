@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='ISO-8859-1' ?>
+<?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:composition xmlns="http://www.w3.org/1999/xhtml" 
                 xmlns:h="http://java.sun.com/jsf/html"
@@ -11,6 +11,7 @@
     <ui:define name="logeo">
         <p:growl id="growl">
             <p:panel id="basic" header="Ingreso al Sistema"  style="margin-bottom:20px">
+                <p:spacer/>
                 <p:panelGrid id="loginpanel" columns="2">
                     <p:outputLabel for="email" value="Email:"/>
                     <p:inputText id="email" value="#{loginBean.email}" placeholder="Email" required="true" requiredMessage="Debe ingresar su email!"/>
@@ -19,11 +20,11 @@
                     <p:outputLabel for="password" value="Contraseña:"/>
                     <p:password id="password" value="#{loginBean.password}" placeholder="Contraseña" required="true" requiredMessage="Debe ingresar su contraseña!"/>
                     <p:spacer/>
-                    <p:message for="password"/>
-                    <p:spacer/>
-                    <p:commandButton action="#{loginBean.login()}" value="Ingresar" ajax="true" update="loginform"/>
-                    <p:spacer/>
+                    <p:message for="password"/>                    
                 </p:panelGrid>
+                <br/>
+                <p:commandButton action="#{loginBean.login()}" value="Ingresar" ajax="true" update="loginform"/>
+                <br/><br/>
                 <p:link outcome="olvidoPassword" value="Olvidó su contraseña?"/>
             </p:panel>
         </p:growl>        

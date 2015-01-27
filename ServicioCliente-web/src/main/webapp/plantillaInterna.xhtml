@@ -8,8 +8,8 @@
     <f:view>
         <h:head>
             <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"/>
-            <link rel="stylesheet" href="#{facesContext.externalContext.requestContextPath}/style.css" type="text/css" media="all"/>
-            <title>Atencion al cliente <ui:insert name="titulo">Distribuidas</ui:insert></title>
+            <link rel="stylesheet" href="#{facesContext.externalContext.requestContextPath}/styles/style.css" type="text/css" media="all"/>
+            <title>Centro de Servicio al Cliente <ui:insert name="titulo">Distribuidas</ui:insert></title>
         </h:head>
 
         <h:body>
@@ -22,9 +22,13 @@
                     <div id="cuerpo">
                         <p:spacer height="30px"/>
                         <p:layout style="min-width: 350px;min-height: 400px;">
-                            <p:layoutUnit position="west" resizable="true" size="350px" minSize="350" >
-                                <p:commandButton value="Ciudad" update="@form" ajax="false" action="ciudad"/>
-                                <p:commandButton value="Empresa" update="@form" ajax="false" action="empresa"/>
+                            <p:layoutUnit position="west" resizable="true" size="350px" minSize="350" >                                
+                                <p:menu>
+                                    <p:submenu label="Parametrización">
+                                        <p:menuitem value="Ciudad" update="@form" ajax="false" action="ciudad"/>
+                                        <p:menuitem value="Empresa" update="@form" ajax="false" action="empresa"/>
+                                    </p:submenu>
+                                </p:menu>
                                 <ui:insert name="contenidoCiudad"/>
                                 <ui:insert name="contenidoEmpresa"/>
                             </p:layoutUnit>
@@ -39,7 +43,7 @@
                 </h:form>
             </center>
             <div id="pie">
-                <p class="pieFont">Proyecto<br/>ESPE-Aplicaciones Distribuidas</p>
+                <p class="pieFont">Centro de Servicio al Cliente - Santiago Benalcázar, Verónica Ruiz, Stephen Sampedro</p>
             </div>
 
         </h:body>
