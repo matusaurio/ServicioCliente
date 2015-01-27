@@ -30,9 +30,11 @@
     
     <dependencies>
         <dependency>
-            <groupId>${project.groupId}</groupId>
+            <groupId>com.distribuidas</groupId>
             <artifactId>ServicioCliente-ejb</artifactId>
-            <version>${project.version}</version>
+            <version>1.0</version>
+            <type>ejb</type>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>javax</groupId>
@@ -40,20 +42,11 @@
             <version>7.0</version>
             <scope>provided</scope>
         </dependency>
-        
-        <dependency>
-            <groupId>com.distribuidas</groupId>
-            <artifactId>ServicioCliente-ejb</artifactId>
-            <version>1</version>
-            <scope>provided</scope>
-        </dependency>
-        
         <dependency>  
             <groupId>org.primefaces</groupId>  
             <artifactId>primefaces</artifactId>  
             <version>5.1</version>  
-        </dependency>
-        
+        </dependency>       
         <dependency>  
             <groupId>org.primefaces.themes</groupId>  
             <artifactId>all-themes</artifactId>  
