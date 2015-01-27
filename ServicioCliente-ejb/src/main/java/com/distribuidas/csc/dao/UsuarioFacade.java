@@ -9,6 +9,7 @@ import com.distribuidas.csc.persistencia.Usuario;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -16,6 +17,7 @@ import javax.persistence.PersistenceContext;
  */
 @Stateless
 public class UsuarioFacade extends AbstractFacade<Usuario> {
+
     @PersistenceContext(unitName = "com.distribuidas_ServicioCliente-ejb_ejb_1.0PU")
     private EntityManager em;
 
@@ -27,5 +29,12 @@ public class UsuarioFacade extends AbstractFacade<Usuario> {
     public UsuarioFacade() {
         super(Usuario.class);
     }
-    
+
+    public Usuario login(String email, String password) {
+        Query qry = this.em.createQuery("SELECT u FROM USUARIO u "
+                                      + "WHERE u.MAIL_USUARIO=?1 AND u.PASS_USUARIO=?2");
+        qry.setParameter(1, email);
+        qry.setParameter(2, password);
+        return qry.getResultList().isEmpty() ? null : (Usuario)qry.getSingleResult();
+    }
 }
