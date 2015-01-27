@@ -107,7 +107,7 @@ public class Ciudad implements Serializable {
 
     @Override
     public String toString() {
-        return "com.distribuidas.csc.persistencia.Ciudad[ idCiudad=" + idCiudad + " ]";
+        return idCiudad.toString();
     }
     
 }

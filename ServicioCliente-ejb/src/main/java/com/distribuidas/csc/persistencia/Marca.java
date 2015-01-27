@@ -130,7 +130,7 @@ public class Marca implements Serializable {
 
     @Override
     public String toString() {
-        return "com.distribuidas.csc.persistencia.Marca[ idMarca=" + idMarca + " ]";
+        return idMarca.toString();
     }
     
 }

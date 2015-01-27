@@ -107,7 +107,7 @@ public class Rol implements Serializable {
 
     @Override
     public String toString() {
-        return "com.distribuidas.csc.persistencia.Rol[ idRol=" + idRol + " ]";
+        return idRol.toString();
     }
     
 }

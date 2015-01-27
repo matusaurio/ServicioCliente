@@ -143,7 +143,7 @@ public class Modelo implements Serializable {
 
     @Override
     public String toString() {
-        return "com.distribuidas.csc.persistencia.Modelo[ idModelo=" + idModelo + " ]";
+        return idModelo.toString();
     }
     
 }
