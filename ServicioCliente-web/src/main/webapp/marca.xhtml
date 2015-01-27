@@ -8,41 +8,53 @@
                 template="/plantillaInterna.xhtml">
 
     <ui:define name="titulo">Bienvenido</ui:define>
-    <ui:define name="contenidoCiudad">
+    <ui:define name="contenidoMarca">
         <p:growl autoUpdate="true" showDetail="true"/>
         <p:panelMenu style="width: 300px; height: auto">
             <p:submenu label="Opciones">
-                <p:menuitem value="Ver" update="@form" actionListener="#{ciudadBean.vista()}" />
-                <p:menuitem value="Nuevo" update="@form" actionListener="#{ciudadBean.nuevo()}"/>
-                <p:menuitem value="Editar" update="@form" actionListener="#{ciudadBean.modificar()}"/>
-                <p:menuitem value="Eliminar" update="@form" actionListener="#{ciudadBean.eliminar()}"/>
+                <p:menuitem value="Ver" update="@form" actionListener="#{marcaBean.vista()}" />
+                <p:menuitem value="Nuevo" update="@form" actionListener="#{marcaBean.nuevo()}"/>
+                <p:menuitem value="Editar" update="@form" actionListener="#{marcaBean.modificar()}"/>
+                <p:menuitem value="Eliminar" update="@form" actionListener="#{marcaBean.eliminar()}"/>
             </p:submenu>
         </p:panelMenu>
     </ui:define>
     <ui:define name="tablaCiudad">
-        <p:panel header="Vista" rendered="#{ciudadBean.desplegarVista}">
-            <h3 style="margin-top: 0">Ciudades</h3>
-            <p:dataTable var="ciudad" value="#{ciudadBean.ciudades}" scrollable="true" scrollHeight="200" selectionMode="single" selection="#{ciudadBean.ciudadSeleccionada}" rowKey="#{ciudad.idCiudad}">
-                <p:ajax event="rowSelect" listener="#{ciudadBean.onRowSelect(event)}" update="@form"/>
-                <p:ajax event="rowUnselect" listener="#{ciudadBean.onRowUnselect(event)}" update="@form"/>
+        <p:panel header="Vista" rendered="#{marcaBean.desplegarVista}">
+            <h3 style="margin-top: 0">MARCAS</h3>
+            <p:dataTable var="marca" value="#{marcaBean.marcas}" scrollable="true" scrollHeight="200" selectionMode="single" selection="#{ciudadBean.ciudadSeleccionada}" rowKey="#{ciudad.idCiudad}">
+                <p:ajax event="rowSelect" listener="#{marcaBean.onRowSelect(event)}" update="@form"/>
+                <p:ajax event="rowUnselect" listener="#{marcaBean.onRowUnselect(event)}" update="@form"/>
                 <p:column headerText="Codigo" >
-                    <h:outputText value="#{ciudad.idCiudad}" />
+                    <h:outputText value="#{marca.idMarca}" />
                 </p:column>
-                <p:column headerText="Descripcion" >
-                    <h:outputText value="#{ciudad.nombreCiudad}" />
+                <p:column headerText="Nombre" >
+                    <h:outputText value="#{marca.nombreMarca}" />
+                </p:column>
+                <p:column headerText="Observacion" >
+                    <h:outputText value="#{marca.observacionMarca}" />
+                </p:column>
+                <p:column headerText="Estado" >
+                    <h:outputText value="#{marca.estadoMarca}" />
                 </p:column>
             </p:dataTable>
         </p:panel>
     </ui:define>
-    <ui:define name="formularioCiudad">
-        <p:panel header="Nueva Ciudad" rendered="#{ciudadBean.desplegarNuevo}">
+    <ui:define name="formularioMarca">
+        <p:panel header="Nueva Marca" rendered="#{marcaBean.desplegarNuevo}">
             <p:panelGrid columns="3">
                 <p:outputLabel for="nombre" value="Nombre" />
-                <p:inputText id="nombre" value="#{ciudadBean.ciudad.nombreCiudad}" required="true" maxlength="100" requiredMessage="Debe ingresar la descripcion."/>
+                <p:inputText id="nombre" value="#{marcaBean.marca.nombreMarca}" required="true" maxlength="100" requiredMessage="Debe ingresar la descripcion."/>
                 <p:message for="nombre" />
+                <p:outputLabel for="observacionMarca" value="Observacion Marca:" />
+                <p:inputText id="observacionMarca" value="#{marcaBean.marca.observacionMarca}" required="true" maxlength="100" requiredMessage="Debe ingresar la descripcion."/>
+                <p:message for="observacionMarca" />
+                <p:outputLabel for="estadoMarca" value="Estado Marca:" />
+                <p:inputText id="estadoMarca" value="#{marcaBean.marca.estadoMarca}" required="true" maxlength="100" requiredMessage="Debe ingresar la descripcion."/>
+                <p:message for="estadoMarca" />
             </p:panelGrid>
-            <p:commandButton value="Aceptar" update="@form" actionListener="#{ciudadBean.guardar()}"/>
-            <p:commandButton value="Cancelar" update="@form" immediate="true" actionListener="#{ciudadBean.cancelar()}"/>
+            <p:commandButton value="Aceptar" update="@form" actionListener="#{marcaBean.guardar()}"/>
+            <p:commandButton value="Cancelar" update="@form" immediate="true" actionListener="#{marcaBean.cancelar()}"/>
         </p:panel>
     </ui:define>
 </ui:composition>

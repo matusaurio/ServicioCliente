@@ -21,7 +21,7 @@
     </ui:define>
     <ui:define name="tablaCiudad">
         <p:panel header="Vista" rendered="#{ciudadBean.desplegarVista}">
-            <h3 style="margin-top: 0">Ciudades</h3>
+            <h3 style="margin-top: 0">CIUDADES</h3>
             <p:dataTable var="ciudad" value="#{ciudadBean.ciudades}" scrollable="true" scrollHeight="200" selectionMode="single" selection="#{ciudadBean.ciudadSeleccionada}" rowKey="#{ciudad.idCiudad}">
                 <p:ajax event="rowSelect" listener="#{ciudadBean.onRowSelect(event)}" update="@form"/>
                 <p:ajax event="rowUnselect" listener="#{ciudadBean.onRowUnselect(event)}" update="@form"/>

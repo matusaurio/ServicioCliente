@@ -5,9 +5,8 @@
  */
 package com.distribuidas.csc.web;
 
-
-import com.distribuidas.csc.persistencia.Ciudad;
-import com.distribuidas.csc.servicio.CiudadServicio;
+import com.distribuidas.csc.persistencia.Sucursal;
+import com.distribuidas.csc.servicio.SucursalServicio;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -22,11 +21,11 @@ import org.primefaces.event.UnselectEvent;
  */
 @ManagedBean
 @ViewScoped
-public class CiudadBean {
+public class SucursalBean {
     
-    private List<Ciudad> ciudades;
-    private Ciudad ciudad;
-    private Ciudad ciudadSeleccionada;
+    private List<Sucursal> sucursales;
+    private Sucursal sucursal;
+    private Sucursal sucursalSeleccionada;
     
     private Boolean desplegarVista = false;
     private Boolean desplegarNuevo = false;
@@ -42,11 +41,11 @@ public class CiudadBean {
     private Boolean activarCambiarEstado;
     
     @EJB
-    private CiudadServicio ciudadServicio;
+    private SucursalServicio sucursalServicio;
     
     @PostConstruct
     public void init(){
-        this.ciudades = this.ciudadServicio.obtenerTodos();
+        this.sucursales = this.sucursalServicio.obtenerTodos();
     }
     
     public void vista(){
@@ -55,21 +54,18 @@ public class CiudadBean {
     
     public void nuevo(){
         this.desplegarNuevo = true;
-        this.enNuevo = true;
-        this.enModificar = false;
-        this.ciudad = new Ciudad();
+        this.sucursal = new Sucursal();
     }
     
     public void guardar() {
         if (this.enNuevo) {
-            System.err.println("HOLOOOOO");
-            this.ciudadServicio.crear(this.ciudad);
+            this.sucursalServicio.crear(this.sucursal);
             this.desplegarNuevo = false;
-            this.ciudades.add(this.ciudad);
+            this.sucursales.add(this.sucursal);
             this.enNuevo = false;
         } else if (this.enModificar) {
             System.err.println("modificar");
-            this.ciudadServicio.actualizar(this.ciudad);
+            this.sucursalServicio.actualizar(this.sucursal);
             this.desplegarNuevo = false;
             this.enModificar = false;
         }
@@ -79,12 +75,12 @@ public class CiudadBean {
         this.enModificar = true;
         this.enNuevo = false;
         this.desplegarNuevo = true;
-        this.ciudad = this.ciudadSeleccionada;
+        this.sucursal = this.sucursalSeleccionada;
     }
 
     public void eliminar() {
-        this.ciudadServicio.eliminar(this.ciudadSeleccionada);
-        this.ciudades.remove(this.ciudadSeleccionada);
+        this.sucursalServicio.eliminar(this.sucursalSeleccionada);
+        this.sucursales.remove(this.sucursalSeleccionada);
     }
 
     public void cancelar() {
@@ -99,16 +95,25 @@ public class CiudadBean {
 
     }
 
-    public List<Ciudad> getCiudades() {
-        return ciudades;
+    public List<Sucursal> getSucursales() {
+        return sucursales;
     }
 
-    public Ciudad getCiudad() {
-        return ciudad;
+
+    public Sucursal getSucursal() {
+        return sucursal;
     }
 
-    public void setCiudad(Ciudad ciudad) {
-        this.ciudad = ciudad;
+    public void setSucursal(Sucursal sucursal) {
+        this.sucursal = sucursal;
+    }
+
+    public Sucursal getSucursalSeleccionada() {
+        return sucursalSeleccionada;
+    }
+
+    public void setSucursalSeleccionada(Sucursal sucursalSeleccionada) {
+        this.sucursalSeleccionada = sucursalSeleccionada;
     }
 
     public Boolean getDesplegarVista() {
@@ -125,14 +130,6 @@ public class CiudadBean {
 
     public void setDesplegarNuevo(Boolean desplegarNuevo) {
         this.desplegarNuevo = desplegarNuevo;
-    }
-
-    public Ciudad getCiudadSeleccionada() {
-        return ciudadSeleccionada;
-    }
-
-    public void setCiudadSeleccionada(Ciudad ciudadSeleccionada) {
-        this.ciudadSeleccionada = ciudadSeleccionada;
     }
 
     public String getTituloFormulario() {
@@ -190,7 +187,5 @@ public class CiudadBean {
     public void setActivarCambiarEstado(Boolean activarCambiarEstado) {
         this.activarCambiarEstado = activarCambiarEstado;
     }
-    
-    
     
 }

@@ -21,7 +21,7 @@
     </ui:define>
     <ui:define name="tablaEmpresa">
         <p:panel header="Vista" rendered="#{empresaBean.desplegarVista}">
-            <h3 style="margin-top: 0">Ciudades</h3>
+            <h3 style="margin-top: 0">EMPRESAS</h3>
             <p:dataTable var="empresa" value="#{empresaBean.empresas}" scrollable="true" scrollHeight="200" selectionMode="single" selection="#{empresaBean.empresaSeleccionada}" rowKey="#{empresa.idEmpresa}">
                 <p:ajax event="rowSelect" listener="#{empresaBean.onRowSelect(event)}" update="@form"/>
                 <p:ajax event="rowUnselect" listener="#{empresaBean.onRowUnselect(event)}" update="@form"/>
@@ -44,10 +44,10 @@
         <p:panel header="Nueva Empresa" rendered="#{empresaBean.desplegarNuevo}">
             <p:panelGrid columns="3">
                 <p:outputLabel for="codigoCiudad" value="Codigo Ciudad:" />
-                <p:inputText id="codigoCiudad" value="#{empresaBean.empresa.idCiudad}" required="true" maxlength="100" requiredMessage="Debe ingresar la descripcion."/>
+                <p:inputText id="codigoCiudad" value="#{empresaBean.empresa.idCiudad}" required="true" maxlength="100" requiredMessage="Debe ingresar el codigo de la ciudad."/>
                 <p:message for="codigoCiudad" />
                 <p:outputLabel for="nombreEmpresa" value="Nombre Empresa:" />
-                <p:inputText id="nombreEmpresa" value="#{empresaBean.empresa.nombreEmpresa}" required="true" maxlength="100" requiredMessage="Debe ingresar la descripcion."/>
+                <p:inputText id="nombreEmpresa" value="#{empresaBean.empresa.nombreEmpresa}" required="true" maxlength="100" requiredMessage="Debe ingresar el nombre de la empresa."/>
                 <p:message for="nombreEmpresa" />
                 <p:outputLabel for="estadoEmpresa" value="Estado:"/>
                 <p:selectOneMenu id="estadoEmpresa" value="#{empresaBean.empresa.estadoEmpresa}" style="width:125px" >

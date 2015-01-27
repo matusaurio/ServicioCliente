@@ -5,9 +5,8 @@
  */
 package com.distribuidas.csc.web;
 
-
-import com.distribuidas.csc.persistencia.Ciudad;
-import com.distribuidas.csc.servicio.CiudadServicio;
+import com.distribuidas.csc.persistencia.Bodega;
+import com.distribuidas.csc.servicio.BodegaServicio;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -22,11 +21,11 @@ import org.primefaces.event.UnselectEvent;
  */
 @ManagedBean
 @ViewScoped
-public class CiudadBean {
+public class BodegaBean {
     
-    private List<Ciudad> ciudades;
-    private Ciudad ciudad;
-    private Ciudad ciudadSeleccionada;
+    private List<Bodega> bodegas;
+    private Bodega bodega;
+    private Bodega bodegaSeleccionada;
     
     private Boolean desplegarVista = false;
     private Boolean desplegarNuevo = false;
@@ -42,11 +41,11 @@ public class CiudadBean {
     private Boolean activarCambiarEstado;
     
     @EJB
-    private CiudadServicio ciudadServicio;
+    private BodegaServicio bodegaServicio;
     
     @PostConstruct
     public void init(){
-        this.ciudades = this.ciudadServicio.obtenerTodos();
+        this.bodegas = this.bodegaServicio.obtenerTodos();
     }
     
     public void vista(){
@@ -55,21 +54,18 @@ public class CiudadBean {
     
     public void nuevo(){
         this.desplegarNuevo = true;
-        this.enNuevo = true;
-        this.enModificar = false;
-        this.ciudad = new Ciudad();
+        this.bodega = new Bodega();
     }
     
     public void guardar() {
         if (this.enNuevo) {
-            System.err.println("HOLOOOOO");
-            this.ciudadServicio.crear(this.ciudad);
+            this.bodegaServicio.crear(this.bodega);
             this.desplegarNuevo = false;
-            this.ciudades.add(this.ciudad);
+            this.bodegas.add(this.bodega);
             this.enNuevo = false;
         } else if (this.enModificar) {
             System.err.println("modificar");
-            this.ciudadServicio.actualizar(this.ciudad);
+            this.bodegaServicio.actualizar(this.bodega);
             this.desplegarNuevo = false;
             this.enModificar = false;
         }
@@ -79,12 +75,12 @@ public class CiudadBean {
         this.enModificar = true;
         this.enNuevo = false;
         this.desplegarNuevo = true;
-        this.ciudad = this.ciudadSeleccionada;
+        this.bodega = this.bodegaSeleccionada;
     }
 
     public void eliminar() {
-        this.ciudadServicio.eliminar(this.ciudadSeleccionada);
-        this.ciudades.remove(this.ciudadSeleccionada);
+        this.bodegaServicio.eliminar(this.bodegaSeleccionada);
+        this.bodegas.remove(this.bodegaSeleccionada);
     }
 
     public void cancelar() {
@@ -99,16 +95,24 @@ public class CiudadBean {
 
     }
 
-    public List<Ciudad> getCiudades() {
-        return ciudades;
+    public List<Bodega> getBodegas() {
+        return bodegas;
     }
 
-    public Ciudad getCiudad() {
-        return ciudad;
+    public Bodega getBodega() {
+        return bodega;
     }
 
-    public void setCiudad(Ciudad ciudad) {
-        this.ciudad = ciudad;
+    public void setBodega(Bodega bodega) {
+        this.bodega = bodega;
+    }
+
+    public Bodega getBodegaSeleccionada() {
+        return bodegaSeleccionada;
+    }
+
+    public void setBodegaSeleccionada(Bodega bodegaSeleccionada) {
+        this.bodegaSeleccionada = bodegaSeleccionada;
     }
 
     public Boolean getDesplegarVista() {
@@ -125,14 +129,6 @@ public class CiudadBean {
 
     public void setDesplegarNuevo(Boolean desplegarNuevo) {
         this.desplegarNuevo = desplegarNuevo;
-    }
-
-    public Ciudad getCiudadSeleccionada() {
-        return ciudadSeleccionada;
-    }
-
-    public void setCiudadSeleccionada(Ciudad ciudadSeleccionada) {
-        this.ciudadSeleccionada = ciudadSeleccionada;
     }
 
     public String getTituloFormulario() {
