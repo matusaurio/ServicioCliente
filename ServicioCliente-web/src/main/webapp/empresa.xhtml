@@ -10,18 +10,17 @@
     <ui:define name="titulo">Bienvenido</ui:define>
     <ui:define name="contenidoEmpresa">
         <p:growl autoUpdate="true"/>
-        <p:panelMenu style="min-width: 300px;height: auto">
-            <p:submenu label="Opciones">
+        <p:menu style="width: 250px">
+            <p:submenu label="Opciones Empresa">
                 <p:menuitem value="Ver" update="@form" actionListener="#{empresaBean.vista()}"/>
                 <p:menuitem value="Nuevo" update="@form" actionListener="#{empresaBean.nuevo()}"/>
                 <p:menuitem value="Editar" update="@form" actionListener="#{empresaBean.modificar()}"/>
                 <p:menuitem value="Eliminar" update="@form" actionListener="#{empresaBean.eliminar()}"/>
             </p:submenu>
-        </p:panelMenu>
+        </p:menu>
     </ui:define>
     <ui:define name="tablaEmpresa">
-        <p:panel header="Vista" rendered="#{empresaBean.desplegarVista}">
-            <h3 style="margin-top: 0">EMPRESAS</h3>
+        <p:panel header="EMPRESAS" rendered="#{empresaBean.desplegarVista}" style="max-width: 800px;">
             <p:dataTable var="empresa" value="#{empresaBean.empresas}" scrollable="true" scrollHeight="200" selectionMode="single" selection="#{empresaBean.empresaSeleccionada}" rowKey="#{empresa.idEmpresa}">
                 <p:ajax event="rowSelect" listener="#{empresaBean.onRowSelect(event)}" update="@form"/>
                 <p:ajax event="rowUnselect" listener="#{empresaBean.onRowUnselect(event)}" update="@form"/>
@@ -41,28 +40,33 @@
         </p:panel>
     </ui:define>
     <ui:define name="formularioEmpresa">
-        <p:panel header="Nueva Empresa" rendered="#{empresaBean.desplegarNuevo}">
-            <p:panelGrid columns="3">
-                <p:outputLabel for="codigoCiudad" value="Codigo Ciudad:" />
-                <p:selectOneMenu id="codigoCiudad" value="#{empresaBean.empresa.idCiudad}" required="true">                    
-                    <f:selectItems value="#{ciudadBean.ciudades}" var="ciudad"
-                                   itemLabel="#{ciudad.nombreCiudad}" itemValue="#{ciudad}"/>
-                    <f:converter converterId="ciudadConverter"/>
-                </p:selectOneMenu>
-                <p:message for="codigoCiudad" />
-                <p:outputLabel for="nombreEmpresa" value="Nombre Empresa:" />
-                <p:inputText id="nombreEmpresa" value="#{empresaBean.empresa.nombreEmpresa}" required="true" maxlength="100" requiredMessage="Debe ingresar el nombre de la empresa."/>
-                <p:message for="nombreEmpresa" />
-                <p:outputLabel for="estado" value="Estado:" />
-                <p:selectOneMenu id="estado" value="#{empresaBean.empresa.estadoEmpresa}" style="width:125px" >
-                    <f:selectItem itemLabel="Select One" itemValue="" />
-                    <f:selectItem itemLabel="Activo" itemValue="1" />
-                    <f:selectItem itemLabel="Inactivo" itemValue="0" />
-                </p:selectOneMenu>
-                <p:message for="estado" />
-            </p:panelGrid>
-            <p:commandButton value="Aceptar" update="@form" actionListener="#{empresaBean.guardar()}"/>
-            <p:commandButton value="Cancelar" update="@form" immediate="true" actionListener="#{empresaBean.cancelar()}"/>
-        </p:panel>
+        <h:form id="form">
+            <p:panel header="Nueva Empresa" rendered="#{empresaBean.desplegarNuevo}" style="max-width: 800px;">
+                <p:panelGrid columns="3">
+                    <p:outputLabel for="codigoCiudad" value="Codigo Ciudad:" />
+                    <p:selectOneMenu id="codigoCiudad" value="#{empresaBean.empresa.idCiudad}" required="true">                    
+                        <f:selectItems value="#{ciudadBean.ciudades}" var="ciudad"
+                                       itemLabel="#{ciudad.nombreCiudad}" itemValue="#{ciudad}"/>
+                        <f:converter converterId="ciudadConverter"/>
+                    </p:selectOneMenu>                    
+                    <p:message for="codigoCiudad" />
+
+                    <p:outputLabel for="nombreEmpresa" value="Nombre Empresa:" />
+                    <p:inputText id="nombreEmpresa" value="#{empresaBean.empresa.nombreEmpresa}" required="true" maxlength="100" requiredMessage="Debe ingresar el nombre de la empresa."/>
+                    <p:message for="nombreEmpresa" />
+
+                    <p:outputLabel for="estadoEmpresa" value="Estado:"/>
+                    <p:selectOneMenu id="estadoEmpresa" value="#{empresaBean.empresa.estadoEmpresa}" >
+                        <f:selectItem itemLabel="Seleccione" itemValue="#{null}" />
+                        <f:selectItem itemLabel="0" itemValue="#{false}" />
+                        <f:selectItem itemLabel="1" itemValue="#{true}" />
+                    </p:selectOneMenu>
+                    <p:message for="estadoEmpresa" />
+                </p:panelGrid>
+                <br/>
+                <p:commandButton value="Aceptar" update="@form" actionListener="#{empresaBean.guardar()}"/>
+                <p:commandButton value="Cancelar" update="@form" immediate="true" actionListener="#{empresaBean.cancelar()}"/>
+            </p:panel>
+        </h:form>
     </ui:define>
 </ui:composition>

@@ -24,15 +24,17 @@
 
                         <p:growl autoUpdate="true"/>
                         <p:menubar>
-                            <p:menuitem value="Ciudad" update="@form" ajax="false" action="ciudad"/>
-                            <p:menuitem value="Empresa" update="@form" ajax="false" action="empresa"/>
-                            <p:menuitem value="Sucursal" update="@form" ajax="false" action="sucursal"/>
-                            <p:menuitem value="Bodega" update="@form" ajax="false" action="bodega"/>
-                            <p:menuitem value="Modelo" update="@form" ajax="false" action="modelo"/>
-                            <p:menuitem value="Marca" update="@form" ajax="false" action="marca"/>
-                            <p:menuitem value="Usuario" update="@form" ajax="false" action="usuario"/>
-                            <p:menuitem value="Tipo Servicio" update="@form" ajax="false" action="tipodeservicio"/>
-                            <p:menuitem value="Estado" update="@form" ajax="false" action="estado"/>
+                            <p:submenu label="Parametrización">
+                                <p:menuitem value="Ciudad" update="@form" ajax="false" action="ciudad"/>
+                                <p:menuitem value="Empresa" update="@form" ajax="false" action="empresa"/>
+                                <p:menuitem value="Sucursal" update="@form" ajax="false" action="sucursal"/>
+                                <p:menuitem value="Bodega" update="@form" ajax="false" action="bodega"/>
+                                <p:menuitem value="Modelo" update="@form" ajax="false" action="modelo"/>
+                                <p:menuitem value="Marca" update="@form" ajax="false" action="marca"/>
+                                <p:menuitem value="Usuario" update="@form" ajax="false" action="usuario"/>
+                                <p:menuitem value="Tipo Servicio" update="@form" ajax="false" action="tipodeservicio"/>
+                                <p:menuitem value="Estado" update="@form" ajax="false" action="estado"/>
+                            </p:submenu>
                         </p:menubar>
 
                         <p:spacer height="30px"/>
@@ -40,28 +42,19 @@
                             <p:layoutUnit position="west" resizable="true" size="350px" minSize="350" >
                                 <ui:insert name="contenidoCiudad"/>
                                 <ui:insert name="contenidoEmpresa"/>
-                                <ui:insert name="contenidoMarca"/>
-                                <ui:insert name="contenidoEstado"/>
-                                <ui:insert name="contenidoTipoServicio"/>
                             </p:layoutUnit>
-                            <p:layoutUnit position="center">
+                            <p:layoutUnit position="center" id="principal">
                                 <ui:insert name="tablaCiudad"/>
                                 <ui:insert name="formularioCiudad"/>
                                 <ui:insert name="tablaEmpresa"/>
                                 <ui:insert name="formularioEmpresa"/>
-                                <ui:insert name="tablaMarca"/>
-                                <ui:insert name="formularioMarca"/>
-                                <ui:insert name="tablaEstado"/>
-                                <ui:insert name="formularioEstado"/>
-                                <ui:insert name="tablaTipoServicio"/>
-                                <ui:insert name="formularioTipoServicio"/>
                             </p:layoutUnit>
                         </p:layout>
                     </div>
                 </h:form>
             </center>
             <div id="pie">
-                <p class="pieFont">Proyecto<br/>ESPE-Aplicaciones Distribuidas</p>
+                <p class="pieFont">Centro de Servicio al Cliente - Santiago Benalcázar, Verónica Ruiz, Stephen Sampedro</p>
             </div>
 
         </h:body>
