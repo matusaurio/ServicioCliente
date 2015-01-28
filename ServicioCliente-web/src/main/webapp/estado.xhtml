@@ -44,7 +44,7 @@
                 <p:inputText id="nombreE" value="#{estadoBean.estado.nombreEstadoSolicitudservicio}" required="true" maxlength="100" requiredMessage="Debe ingresar la descripcion."/>
                 <p:message for="nombreE" />
                 <p:outputLabel for="fechaE" value="Fecha" />
-                <p:calendar id="fechaE" value="#{estadoBean.estado.fechaEstadoSolicitudservicio}" pattern="yyyy/MM/dd HH:mm:ss" showOn="button"/>
+                <p:calendar id="fechaE" value="#{estadoBean.estado.fechaEstadoSolicitudservicio}" pattern="yyyy/MM/dd HH:mm:ss"/>
                 <p:message for="fechaE" />
             </p:panelGrid>
             <p:commandButton value="Aceptar" update="@form" actionListener="#{estadoBean.guardar()}"/>

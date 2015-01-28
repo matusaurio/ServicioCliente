@@ -52,8 +52,13 @@
                 <p:outputLabel for="fechaT" value="Fecha" />
                 <p:calendar id="fechaT" value="#{tipoServicioBean.tipoServicio.fechaTipoServicioSolicitudservicio}" pattern="yyyy/MM/dd HH:mm:ss"/>
                 <p:message for="fechaT" />
-                <p:outputLabel for="estadoT" value="Estado" />
-                <p:inputText id="estadoT" value="#{tipoServicioBean.tipoServicio.estadoTipoServicioSolicitudservicio}" required="true" maxlength="100" requiredMessage="Debe ingresar la descripcion."/>
+
+                <p:outputLabel for="estadoT" value="Estado:"/>
+                <p:selectOneMenu id="estadoT" value="#{tipoServicioBean.tipoServicio.estadoTipoServicioSolicitudservicio}" >
+                    <f:selectItem itemLabel="Seleccione" itemValue="#{null}" />
+                    <f:selectItem itemLabel="0" itemValue="#{false}" />
+                    <f:selectItem itemLabel="1" itemValue="#{true}" />
+                </p:selectOneMenu>
                 <p:message for="estadoT" />
                 <p:outputLabel for="observacionT" value="Observacion" />
                 <p:inputText id="observacionT" value="#{tipoServicioBean.tipoServicio.observacionTipoServicioSolicitudservicio}" required="true" maxlength="100" requiredMessage="Debe ingresar la descripcion."/>

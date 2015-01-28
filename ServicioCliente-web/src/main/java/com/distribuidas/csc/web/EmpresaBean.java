@@ -5,11 +5,9 @@
  */
 package com.distribuidas.csc.web;
 
-import com.distribuidas.csc.persistencia.Ciudad;
 import com.distribuidas.csc.persistencia.Empresa;
 import com.distribuidas.csc.servicio.EmpresaServicio;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;

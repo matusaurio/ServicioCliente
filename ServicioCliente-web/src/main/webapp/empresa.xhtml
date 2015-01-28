@@ -40,7 +40,6 @@
         </p:panel>
     </ui:define>
     <ui:define name="formularioEmpresa">
-        <h:form id="form">
             <p:panel header="Nueva Empresa" rendered="#{empresaBean.desplegarNuevo}" style="max-width: 800px;">
                 <p:panelGrid columns="3">
                     <p:outputLabel for="codigoCiudad" value="Codigo Ciudad:" />
@@ -67,6 +66,5 @@
                 <p:commandButton value="Aceptar" update="@form" actionListener="#{empresaBean.guardar()}"/>
                 <p:commandButton value="Cancelar" update="@form" immediate="true" actionListener="#{empresaBean.cancelar()}"/>
             </p:panel>
-        </h:form>
     </ui:define>
 </ui:composition>

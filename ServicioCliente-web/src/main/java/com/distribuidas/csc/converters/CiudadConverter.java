@@ -28,9 +28,7 @@ public class CiudadConverter implements Converter {
     @Override
     public Object getAsObject(FacesContext context, UIComponent component, String submittedValue){
         int ciudadId;
-        try {
-            //mierda entra dos veces pero no se xk 
-            
+        try {            
             ciudadId = Integer.parseInt(submittedValue);
         } catch (NumberFormatException e) {
             throw new ConverterException(new FacesMessage(FacesMessage.SEVERITY_ERROR, 
