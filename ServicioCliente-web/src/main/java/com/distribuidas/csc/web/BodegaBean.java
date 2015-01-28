@@ -54,6 +54,8 @@ public class BodegaBean {
     
     public void nuevo(){
         this.desplegarNuevo = true;
+        this.enNuevo = true;
+        this.enModificar = false;
         this.bodega = new Bodega();
     }
     

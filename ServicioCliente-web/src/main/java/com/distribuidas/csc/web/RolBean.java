@@ -5,8 +5,8 @@
  */
 package com.distribuidas.csc.web;
 
-import com.distribuidas.csc.persistencia.Modelo;
-import com.distribuidas.csc.servicio.ModeloServicio;
+import com.distribuidas.csc.persistencia.Rol;
+import com.distribuidas.csc.servicio.RolServicio;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -21,11 +21,11 @@ import org.primefaces.event.UnselectEvent;
  */
 @ManagedBean
 @ViewScoped
-public class ModeloBean {
+public class RolBean {
     
-    private List<Modelo> modelos;
-    private Modelo modelo;
-    private Modelo modeloSeleccionada;
+    private List<Rol> roles;
+    private Rol rol;
+    private Rol rolSeleccionada;
     
     private Boolean desplegarVista = false;
     private Boolean desplegarNuevo = false;
@@ -41,11 +41,11 @@ public class ModeloBean {
     private Boolean activarCambiarEstado;
     
     @EJB
-    private ModeloServicio modeloServicio;
+    private RolServicio rolServicio;
     
     @PostConstruct
     public void init(){
-        this.modelos = this.modeloServicio.obtenerTodos();
+        this.roles = this.rolServicio.obtenerTodos();
     }
     
     public void vista(){
@@ -56,18 +56,19 @@ public class ModeloBean {
         this.desplegarNuevo = true;
         this.enNuevo = true;
         this.enModificar = false;
-        this.modelo = new Modelo();
+        this.rol = new Rol();
     }
     
     public void guardar() {
         if (this.enNuevo) {
-            this.modeloServicio.crear(this.modelo);
+            System.err.println("HOLOOOOO");
+            this.rolServicio.crear(this.rol);
             this.desplegarNuevo = false;
-            this.modelos.add(this.modelo);
+            this.roles.add(this.rol);
             this.enNuevo = false;
         } else if (this.enModificar) {
             System.err.println("modificar");
-            this.modeloServicio.actualizar(this.modelo);
+            this.rolServicio.actualizar(this.rol);
             this.desplegarNuevo = false;
             this.enModificar = false;
         }
@@ -77,12 +78,12 @@ public class ModeloBean {
         this.enModificar = true;
         this.enNuevo = false;
         this.desplegarNuevo = true;
-        this.modelo = this.modeloSeleccionada;
+        this.rol = this.rolSeleccionada;
     }
 
     public void eliminar() {
-        this.modeloServicio.eliminar(this.modeloSeleccionada);
-        this.modelos.remove(this.modeloSeleccionada);
+        this.rolServicio.eliminar(this.rolSeleccionada);
+        this.roles.remove(this.rolSeleccionada);
     }
 
     public void cancelar() {
@@ -97,24 +98,24 @@ public class ModeloBean {
 
     }
 
-    public List<Modelo> getModelos() {
-        return modelos;
+    public List<Rol> getRoles() {
+        return roles;
     }
 
-    public Modelo getModelo() {
-        return modelo;
+    public Rol getRol() {
+        return rol;
     }
 
-    public void setModelo(Modelo modelo) {
-        this.modelo = modelo;
+    public void setRol(Rol rol) {
+        this.rol = rol;
     }
 
-    public Modelo getModeloSeleccionada() {
-        return modeloSeleccionada;
+    public Rol getRolSeleccionada() {
+        return rolSeleccionada;
     }
 
-    public void setModeloSeleccionada(Modelo modeloSeleccionada) {
-        this.modeloSeleccionada = modeloSeleccionada;
+    public void setRolSeleccionada(Rol rolSeleccionada) {
+        this.rolSeleccionada = rolSeleccionada;
     }
 
     public Boolean getDesplegarVista() {
@@ -188,6 +189,7 @@ public class ModeloBean {
     public void setActivarCambiarEstado(Boolean activarCambiarEstado) {
         this.activarCambiarEstado = activarCambiarEstado;
     }
+    
     
     
 }

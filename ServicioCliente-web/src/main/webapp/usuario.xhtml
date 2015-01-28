@@ -8,41 +8,88 @@
                 template="/plantillaInterna.xhtml">
 
     <ui:define name="titulo">Bienvenido</ui:define>
-    <ui:define name="contenidoCiudad">
-        <p:growl autoUpdate="true" showDetail="true"/>
-        <p:panelMenu style="width: 300px; height: auto">
-            <p:submenu label="Opciones">
-                <p:menuitem value="Ver" update="@form" actionListener="#{ciudadBean.vista()}" />
-                <p:menuitem value="Nuevo" update="@form" actionListener="#{ciudadBean.nuevo()}"/>
-                <p:menuitem value="Editar" update="@form" actionListener="#{ciudadBean.modificar()}"/>
-                <p:menuitem value="Eliminar" update="@form" actionListener="#{ciudadBean.eliminar()}"/>
+    <ui:define name="contenidoUsuario">
+        <p:growl autoUpdate="true"/>
+        <p:menu style="width: 250px">
+            <p:submenu label="Opciones Usuario">
+                <p:menuitem value="Ver" update="@form" actionListener="#{usuarioBean.vista()}"/>
+                <p:menuitem value="Nuevo" update="@form" actionListener="#{usuarioBean.nuevo()}"/>
+                <p:menuitem value="Editar" update="@form" actionListener="#{usuarioBean.modificar()}"/>
+                <p:menuitem value="Eliminar" update="@form" actionListener="#{usuarioBean.eliminar()}"/>
             </p:submenu>
-        </p:panelMenu>
+        </p:menu>
     </ui:define>
-    <ui:define name="tablaCiudad">
-        <p:panel header="Vista" rendered="#{ciudadBean.desplegarVista}">
-            <h3 style="margin-top: 0">Ciudades</h3>
-            <p:dataTable var="ciudad" value="#{ciudadBean.ciudades}" scrollable="true" scrollHeight="200" selectionMode="single" selection="#{ciudadBean.ciudadSeleccionada}" rowKey="#{ciudad.idCiudad}">
-                <p:ajax event="rowSelect" listener="#{ciudadBean.onRowSelect(event)}" update="@form"/>
-                <p:ajax event="rowUnselect" listener="#{ciudadBean.onRowUnselect(event)}" update="@form"/>
-                <p:column headerText="Codigo" >
-                    <h:outputText value="#{ciudad.idCiudad}" />
+    <ui:define name="tablaUsuario">
+        <p:panel header="EMPRESAS" rendered="#{usuarioBean.desplegarVista}" style="max-width: 800px;">
+            <p:dataTable var="usuario" value="#{usuarioBean.usuarios}" scrollable="true" scrollHeight="200" selectionMode="single" selection="#{usuarioBean.usuarioSeleccionada}" rowKey="#{usuario.idUsuario}">
+                <p:ajax event="rowSelect" listener="#{usuarioBean.onRowSelect(event)}" update="@form"/>
+                <p:ajax event="rowUnselect" listener="#{usuarioBean.onRowUnselect(event)}" update="@form"/>
+                <p:column headerText="Codigo Usuario" >
+                    <h:outputText value="#{usuario.idUsuario}" />
                 </p:column>
-                <p:column headerText="Descripcion" >
-                    <h:outputText value="#{ciudad.nombreCiudad}" />
+                <p:column headerText="Codigo Rol" >
+                    <h:outputText value="#{usuario.idRol}" />
+                </p:column>
+                <p:column headerText="Codigo Empresa" >
+                    <h:outputText value="#{usuario.idEmpresa}" />
+                </p:column>
+                <p:column headerText="Nombre Usuario" >
+                    <h:outputText value="#{usuario.nombreUsuario}" />
+                </p:column>
+                <p:column headerText="Mail Usuario" >
+                    <h:outputText value="#{usuario.mailUsuario}" />
+                </p:column>
+                <p:column headerText="Clave Usuario" >
+                    <h:outputScript value="#{usuario.passUsuario}" />
+                </p:column>
+                <p:column headerText="Estado Empresa" >
+                    <h:outputText value="#{usuario.estadoUsuario}" />
                 </p:column>
             </p:dataTable>
         </p:panel>
     </ui:define>
-    <ui:define name="formularioCiudad">
-        <p:panel header="Nueva Ciudad" rendered="#{ciudadBean.desplegarNuevo}">
-            <p:panelGrid columns="3">
-                <p:outputLabel for="nombre" value="Nombre" />
-                <p:inputText id="nombre" value="#{ciudadBean.ciudad.nombreCiudad}" required="true" maxlength="100" requiredMessage="Debe ingresar la descripcion."/>
-                <p:message for="nombre" />
-            </p:panelGrid>
-            <p:commandButton value="Aceptar" update="@form" actionListener="#{ciudadBean.guardar()}"/>
-            <p:commandButton value="Cancelar" update="@form" immediate="true" actionListener="#{ciudadBean.cancelar()}"/>
-        </p:panel>
+    <ui:define name="formularioUsuario">
+            <p:panel header="Nuevo Usuario" rendered="#{usuarioBean.desplegarNuevo}" style="max-width: 800px;">
+                <p:panelGrid columns="3">
+                    <p:outputLabel for="codigoRol" value="Codigo Rol" />
+                    <p:selectOneMenu id="codigoRol" value="#{usuarioBean.usuario.idRol}" required="true">                    
+                        <f:selectItems value="#{rolBean.roles}" var="rol"
+                                       itemLabel="#{rol.nombreRol}" itemValue="#{rol}"/>
+                        <f:converter converterId="rolConverter"/>
+                    </p:selectOneMenu>                    
+                    <p:message for="codigoRol" />
+                    
+                    <p:outputLabel for="codigoEmpresa" value="Codigo Empresa" />
+                    <p:selectOneMenu id="codigoEmpresa" value="#{usuarioBean.usuario.idEmpresa}" required="true">                    
+                        <f:selectItems value="#{empresaBean.empresas}" var="empresa"
+                                       itemLabel="#{empresa.nombreEmpresa}" itemValue="#{empresa}"/>
+                        <f:converter converterId="empresaConverter"/>
+                    </p:selectOneMenu>                    
+                    <p:message for="codigoEmpresa" />
+
+                    <p:outputLabel for="nombreUsuario" value="Nombre Usuario:" />
+                    <p:inputText id="nombreUsuario" value="#{usuarioBean.usuario.nombreUsuario}" required="true" maxlength="100" requiredMessage="Debe ingresar el nombre de la empresa."/>
+                    <p:message for="nombreUsuario" />
+
+                    <p:outputLabel for="mailUsuario" value="Mail Usuario:" />
+                    <p:inputText id="mailUsuario" value="#{usuarioBean.usuario.mailUsuario}" required="true" maxlength="100" requiredMessage="Debe ingresar el nombre de la empresa."/>
+                    <p:message for="mailUsuario" />
+                    
+                    <p:outputLabel for="claveUsuario" value="Clave Usuario:" />
+                    <p:password id="claveUsuario" value="#{usuarioBean.usuario.passUsuario}" required="true" requiredMessage="Debe ingresar el nombre de la empresa."/>
+                    <p:message for="claveUsuario" />
+                    
+                    <p:outputLabel for="estadoUsuario" value="Estado:"/>
+                    <p:selectOneMenu id="estadoUsuario" value="#{usuarioBean.usuario.estadoUsuario}" >
+                        <f:selectItem itemLabel="Seleccione" itemValue="#{null}" />
+                        <f:selectItem itemLabel="0" itemValue="#{false}" />
+                        <f:selectItem itemLabel="1" itemValue="#{true}" />
+                    </p:selectOneMenu>
+                    <p:message for="estadoUsuario" />
+                </p:panelGrid>
+                <br/>
+                <p:commandButton value="Aceptar" update="@form" actionListener="#{usuarioBean.guardar()}"/>
+                <p:commandButton value="Cancelar" update="@form" immediate="true" actionListener="#{usuarioBean.cancelar()}"/>
+            </p:panel>
     </ui:define>
 </ui:composition>
