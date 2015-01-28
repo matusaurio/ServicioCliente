@@ -17,14 +17,27 @@
             <div id="cabecera">
                 <img src="#{facesContext.externalContext.requestContextPath}/images/cabecera.jpg" align="right"/>
             </div>
+
             <center>
                 <h:form>
                     <div id="cuerpo">
+
+                        <p:growl autoUpdate="true"/>
+                        <p:menubar>
+                            <p:menuitem value="Ciudad" update="@form" ajax="false" action="ciudad"/>
+                            <p:menuitem value="Empresa" update="@form" ajax="false" action="empresa"/>
+                            <p:menuitem value="Sucursal" update="@form" ajax="false" action="sucursal"/>
+                            <p:menuitem value="Bodega" update="@form" ajax="false" action="bodega"/>
+                            <p:menuitem value="Modelo" update="@form" ajax="false" action="modelo"/>
+                            <p:menuitem value="Marca" update="@form" ajax="false" action="marca"/>
+                            <p:menuitem value="Usuario" update="@form" ajax="false" action="usuario"/>
+                            <p:menuitem value="Tipo Servicio" update="@form" ajax="false" action="tipodeservicio"/>
+                            <p:menuitem value="Estado" update="@form" ajax="false" action="estado"/>
+                        </p:menubar>
+
                         <p:spacer height="30px"/>
                         <p:layout style="min-width: 350px;min-height: 400px;">
                             <p:layoutUnit position="west" resizable="true" size="350px" minSize="350" >
-                                <p:commandButton value="Ciudad" update="@form" ajax="false" action="ciudad"/>
-                                <p:commandButton value="Empresa" update="@form" ajax="false" action="empresa"/>
                                 <ui:insert name="contenidoCiudad"/>
                                 <ui:insert name="contenidoEmpresa"/>
                             </p:layoutUnit>

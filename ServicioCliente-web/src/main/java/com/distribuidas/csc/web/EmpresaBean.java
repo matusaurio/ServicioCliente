@@ -5,7 +5,9 @@
  */
 package com.distribuidas.csc.web;
 
+import com.distribuidas.csc.persistencia.Ciudad;
 import com.distribuidas.csc.persistencia.Empresa;
+import com.distribuidas.csc.servicio.CiudadServicio;
 import com.distribuidas.csc.servicio.EmpresaServicio;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -24,6 +26,7 @@ import org.primefaces.event.UnselectEvent;
 public class EmpresaBean {
 
     private List<Empresa> empresas;
+    private List<Ciudad> ciudades;
     private Empresa empresa;
     private Empresa empresaSeleccionada;
     
@@ -42,10 +45,13 @@ public class EmpresaBean {
 
     @EJB
     private EmpresaServicio empresaServicio;
+    @EJB
+    private CiudadServicio ciudadServicio;
 
     @PostConstruct
     public void init() {
         this.empresas = this.empresaServicio.obtenerTodos();
+        this.ciudades = this.ciudadServicio.obtenerTodos();
     }
 
     public void vista() {
@@ -97,6 +103,10 @@ public class EmpresaBean {
 
     public List<Empresa> getEmpresas() {
         return empresas;
+    }
+
+    public List<Ciudad> getCiudades() {
+        return ciudades;
     }
 
     public Empresa getEmpresa() {
