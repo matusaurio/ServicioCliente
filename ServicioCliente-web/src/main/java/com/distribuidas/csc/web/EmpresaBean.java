@@ -5,10 +5,9 @@
  */
 package com.distribuidas.csc.web;
 
-import com.distribuidas.csc.persistencia.Ciudad;
 import com.distribuidas.csc.persistencia.Empresa;
-import com.distribuidas.csc.servicio.CiudadServicio;
 import com.distribuidas.csc.servicio.EmpresaServicio;
+import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -23,35 +22,30 @@ import org.primefaces.event.UnselectEvent;
  */
 @ManagedBean
 @ViewScoped
-public class EmpresaBean {
+public class EmpresaBean implements Serializable {
+
+    @EJB
+    private EmpresaServicio empresaServicio;
 
     private List<Empresa> empresas;
-    private List<Ciudad> ciudades;
     private Empresa empresa;
     private Empresa empresaSeleccionada;
-    
+
     private Boolean desplegarVista = false;
     private Boolean desplegarNuevo = false;
-    
+
     private String tituloFormulario;
     private Boolean enNuevo;
     private Boolean enModificar;
-    
-    
+
     private Boolean activarNuevo;
     private Boolean activarModificar;
     private Boolean activarEliminar;
     private Boolean activarCambiarEstado;
 
-    @EJB
-    private EmpresaServicio empresaServicio;
-    @EJB
-    private CiudadServicio ciudadServicio;
-
     @PostConstruct
     public void init() {
         this.empresas = this.empresaServicio.obtenerTodos();
-        this.ciudades = this.ciudadServicio.obtenerTodos();
     }
 
     public void vista() {
@@ -60,10 +54,11 @@ public class EmpresaBean {
 
     public void nuevo() {
         this.desplegarNuevo = true;
+        enNuevo = true;
         this.empresa = new Empresa();
     }
 
-   public void guardar() {
+    public void guardar() {
         if (this.enNuevo) {
             this.empresaServicio.crear(this.empresa);
             this.desplegarNuevo = false;
@@ -103,10 +98,6 @@ public class EmpresaBean {
 
     public List<Empresa> getEmpresas() {
         return empresas;
-    }
-
-    public List<Ciudad> getCiudades() {
-        return ciudades;
     }
 
     public Empresa getEmpresa() {

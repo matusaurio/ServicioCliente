@@ -8,6 +8,7 @@ package com.distribuidas.csc.web;
 
 import com.distribuidas.csc.persistencia.Ciudad;
 import com.distribuidas.csc.servicio.CiudadServicio;
+import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -22,7 +23,7 @@ import org.primefaces.event.UnselectEvent;
  */
 @ManagedBean
 @ViewScoped
-public class CiudadBean {
+public class CiudadBean  implements Serializable {
     
     private List<Ciudad> ciudades;
     private Ciudad ciudad;
@@ -189,8 +190,7 @@ public class CiudadBean {
 
     public void setActivarCambiarEstado(Boolean activarCambiarEstado) {
         this.activarCambiarEstado = activarCambiarEstado;
-    }
-    
+    }    
     
     
 }
