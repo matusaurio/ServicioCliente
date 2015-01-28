@@ -31,8 +31,8 @@ public class UsuarioFacade extends AbstractFacade<Usuario> {
     }
 
     public Usuario login(String email, String password) {
-        Query qry = this.em.createQuery("SELECT u FROM USUARIO u "
-                                      + "WHERE u.MAIL_USUARIO=?1 AND u.PASS_USUARIO=?2");
+        Query qry = this.em.createQuery("SELECT u FROM Usuario u "
+                                      + "WHERE u.mailUsuario=?1 AND u.passUsuario=?2");
         qry.setParameter(1, email);
         qry.setParameter(2, password);
         return qry.getResultList().isEmpty() ? null : (Usuario)qry.getSingleResult();
