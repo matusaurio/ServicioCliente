@@ -54,6 +54,8 @@ public class MarcaBean {
     
     public void nuevo(){
         this.desplegarNuevo = true;
+        this.enNuevo = true;
+        this.enModificar = false;
         this.marca = new Marca();
     }
     

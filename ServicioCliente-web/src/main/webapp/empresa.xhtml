@@ -44,18 +44,22 @@
         <p:panel header="Nueva Empresa" rendered="#{empresaBean.desplegarNuevo}">
             <p:panelGrid columns="3">
                 <p:outputLabel for="codigoCiudad" value="Codigo Ciudad:" />
-                <p:inputText id="codigoCiudad" value="#{empresaBean.empresa.idCiudad}" required="true" maxlength="100" requiredMessage="Debe ingresar el codigo de la ciudad."/>
+                <p:selectOneMenu id="codigoCiudad" value="#{empresaBean.empresa.idCiudad}" required="true">                    
+                    <f:selectItems value="#{ciudadBean.ciudades}" var="ciudad"
+                                   itemLabel="#{ciudad.nombreCiudad}" itemValue="#{ciudad}"/>
+                    <f:converter converterId="ciudadConverter"/>
+                </p:selectOneMenu>
                 <p:message for="codigoCiudad" />
                 <p:outputLabel for="nombreEmpresa" value="Nombre Empresa:" />
                 <p:inputText id="nombreEmpresa" value="#{empresaBean.empresa.nombreEmpresa}" required="true" maxlength="100" requiredMessage="Debe ingresar el nombre de la empresa."/>
                 <p:message for="nombreEmpresa" />
-                <p:outputLabel for="estadoEmpresa" value="Estado:"/>
-                <p:selectOneMenu id="estadoEmpresa" value="#{empresaBean.empresa.estadoEmpresa}" style="width:125px" >
-                    <f:selectItem itemLabel="Seleccione" itemValue="" />
-                    <f:selectItem itemLabel="0" itemValue="0" />
-                    <f:selectItem itemLabel="1" itemValue="1" />
+                <p:outputLabel for="estado" value="Estado:" />
+                <p:selectOneMenu id="estado" value="#{empresaBean.empresa.estadoEmpresa}" style="width:125px" >
+                    <f:selectItem itemLabel="Select One" itemValue="" />
+                    <f:selectItem itemLabel="Activo" itemValue="1" />
+                    <f:selectItem itemLabel="Inactivo" itemValue="0" />
                 </p:selectOneMenu>
-                <p:message for="estadoEmpresa" />
+                <p:message for="estado" />
             </p:panelGrid>
             <p:commandButton value="Aceptar" update="@form" actionListener="#{empresaBean.guardar()}"/>
             <p:commandButton value="Cancelar" update="@form" immediate="true" actionListener="#{empresaBean.cancelar()}"/>

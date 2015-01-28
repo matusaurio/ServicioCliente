@@ -9,11 +9,13 @@ import com.distribuidas.csc.persistencia.Ciudad;
 import com.distribuidas.csc.persistencia.Empresa;
 import com.distribuidas.csc.servicio.CiudadServicio;
 import com.distribuidas.csc.servicio.EmpresaServicio;
+import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.model.SelectItem;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.event.UnselectEvent;
 
@@ -25,6 +27,8 @@ import org.primefaces.event.UnselectEvent;
 @ViewScoped
 public class EmpresaBean {
 
+    private List<SelectItem> listaCombo;
+    
     private List<Empresa> empresas;
     private List<Ciudad> ciudades;
     private Empresa empresa;
@@ -60,6 +64,8 @@ public class EmpresaBean {
 
     public void nuevo() {
         this.desplegarNuevo = true;
+        this.enNuevo = true;
+        this.enModificar = false;
         this.empresa = new Empresa();
     }
 
@@ -99,6 +105,22 @@ public class EmpresaBean {
 
     public void onRowUnselect(UnselectEvent event) {
 
+    }
+
+    public List<SelectItem> getListaCombo() {
+        this.listaCombo = new ArrayList<>();
+        listaCombo.clear();
+        System.err.println("COMBOOO");
+        for(Ciudad ciu:this.ciudades){
+            SelectItem selectItem = new SelectItem(ciu.getIdCiudad(),ciu.getNombreCiudad());
+            this.listaCombo.add(selectItem);
+        }
+        System.err.println("Se cargaron Ciudades"+ listaCombo.size());
+        return listaCombo;
+    }
+
+    public void setListaCombo(List<SelectItem> listaCombo) {
+        this.listaCombo = listaCombo;
     }
 
     public List<Empresa> getEmpresas() {

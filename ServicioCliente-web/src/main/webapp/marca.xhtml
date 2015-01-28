@@ -19,10 +19,10 @@
             </p:submenu>
         </p:panelMenu>
     </ui:define>
-    <ui:define name="tablaCiudad">
+    <ui:define name="tablaMarca">
         <p:panel header="Vista" rendered="#{marcaBean.desplegarVista}">
             <h3 style="margin-top: 0">MARCAS</h3>
-            <p:dataTable var="marca" value="#{marcaBean.marcas}" scrollable="true" scrollHeight="200" selectionMode="single" selection="#{ciudadBean.ciudadSeleccionada}" rowKey="#{ciudad.idCiudad}">
+            <p:dataTable var="marca" value="#{marcaBean.marcas}" scrollable="true" scrollHeight="200" selectionMode="single" selection="#{marcaBean.marcaSeleccionada}" rowKey="#{marca.idMarca}">
                 <p:ajax event="rowSelect" listener="#{marcaBean.onRowSelect(event)}" update="@form"/>
                 <p:ajax event="rowUnselect" listener="#{marcaBean.onRowUnselect(event)}" update="@form"/>
                 <p:column headerText="Codigo" >

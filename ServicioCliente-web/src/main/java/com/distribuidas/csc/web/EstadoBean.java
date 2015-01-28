@@ -54,6 +54,8 @@ public class EstadoBean {
     
     public void nuevo(){
         this.desplegarNuevo = true;
+        this.enNuevo = true;
+        this.enModificar = false;
         this.estado = new Estado();
     }
     

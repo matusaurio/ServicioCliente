@@ -54,6 +54,8 @@ public class TipoServicioBean {
     
     public void nuevo(){
         this.desplegarNuevo = true;
+        this.enNuevo = true;
+        this.enModificar = false;
         this.tipoServicio = new TipoServicio();
     }
     
