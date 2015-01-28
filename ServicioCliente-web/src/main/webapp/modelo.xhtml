@@ -61,9 +61,9 @@
                     <p:message for="observacionModelo" />
                     <p:outputLabel for="estadoModelo" value="Estado:"/>
                     <p:selectOneMenu id="estadoModelo" value="#{modeloBean.modelo.estadoModelo}" >
-                        <f:selectItem itemLabel="Seleccione" itemValue="#{null}" />
-                        <f:selectItem itemLabel="0" itemValue="#{false}" />
-                        <f:selectItem itemLabel="1" itemValue="#{true}" />
+                        <f:selectItem itemLabel="- Seleccione -" itemValue="#{null}" />
+                        <f:selectItem itemLabel="INACTIVO" itemValue="#{false}" />
+                        <f:selectItem itemLabel="ACTIVO" itemValue="#{true}" />
                     </p:selectOneMenu>
                     <p:message for="estadoModelo" />
                 </p:panelGrid>

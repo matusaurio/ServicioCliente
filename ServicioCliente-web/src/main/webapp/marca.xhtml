@@ -52,8 +52,8 @@
                 <p:outputLabel for="estadoMarca" value="Estado:"/>
                 <p:selectOneMenu id="estadoMarca" value="#{marcaBean.marca.estadoMarca}" >
                     <f:selectItem itemLabel="Seleccione" itemValue="#{null}" />
-                    <f:selectItem itemLabel="0" itemValue="#{false}" />
-                    <f:selectItem itemLabel="1" itemValue="#{true}" />
+                    <f:selectItem itemLabel="INACTIVO" itemValue="#{false}" />
+                    <f:selectItem itemLabel="ACTIVO" itemValue="#{true}" />
                 </p:selectOneMenu>
                 <p:message for="estadoMarca" />
             </p:panelGrid>

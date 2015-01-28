@@ -37,7 +37,7 @@
                     <h:outputText value="#{usuario.nombreUsuario}" />
                 </p:column>
                 <p:column headerText="Mail Usuario" >
-                    <h:outputText value="#{usuario.mailUsuario}" />
+                    <h:outputText value="#{usuario.mailUsuario}"/>
                 </p:column>
                 <p:column headerText="Clave Usuario" >
                     <h:outputScript value="#{usuario.passUsuario}" />
@@ -68,22 +68,24 @@
                     <p:message for="codigoEmpresa" />
 
                     <p:outputLabel for="nombreUsuario" value="Nombre Usuario:" />
-                    <p:inputText id="nombreUsuario" value="#{usuarioBean.usuario.nombreUsuario}" required="true" maxlength="100" requiredMessage="Debe ingresar el nombre de la empresa."/>
+                    <p:inputText id="nombreUsuario" value="#{usuarioBean.usuario.nombreUsuario}" required="true" maxlength="100" requiredMessage="Debe ingresar un nombre."/>
                     <p:message for="nombreUsuario" />
 
                     <p:outputLabel for="mailUsuario" value="Mail Usuario:" />
-                    <p:inputText id="mailUsuario" value="#{usuarioBean.usuario.mailUsuario}" required="true" maxlength="100" requiredMessage="Debe ingresar el nombre de la empresa."/>
+                    <p:inputText id="mailUsuario" value="#{usuarioBean.usuario.mailUsuario}" required="true" maxlength="100" requiredMessage="Debe ingresar un email.">
+                        <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+                    </p:inputText>
                     <p:message for="mailUsuario" />
                     
                     <p:outputLabel for="claveUsuario" value="Clave Usuario:" />
-                    <p:password id="claveUsuario" value="#{usuarioBean.usuario.passUsuario}" required="true" requiredMessage="Debe ingresar el nombre de la empresa."/>
+                    <p:password id="claveUsuario" value="#{usuarioBean.usuario.passUsuario}" required="true" requiredMessage="Debe ingresar una contraseña."/>
                     <p:message for="claveUsuario" />
                     
                     <p:outputLabel for="estadoUsuario" value="Estado:"/>
                     <p:selectOneMenu id="estadoUsuario" value="#{usuarioBean.usuario.estadoUsuario}" >
-                        <f:selectItem itemLabel="Seleccione" itemValue="#{null}" />
-                        <f:selectItem itemLabel="0" itemValue="#{false}" />
-                        <f:selectItem itemLabel="1" itemValue="#{true}" />
+                        <f:selectItem itemLabel="- Seleccione -" itemValue="#{null}" />
+                        <f:selectItem itemLabel="INACTIVO" itemValue="#{false}" />
+                        <f:selectItem itemLabel="ACTIVO" itemValue="#{true}" />
                     </p:selectOneMenu>
                     <p:message for="estadoUsuario" />
                 </p:panelGrid>

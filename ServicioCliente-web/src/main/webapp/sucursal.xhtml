@@ -65,14 +65,16 @@
                     <p:message for="direccionSurcusal" />
                     
                     <p:outputLabel for="telefonoSurcusal" value="Telefono Sucursal" />
-                    <p:inputText id="telefonoSurcusal" value="#{sucursalBean.sucursal.telefonoSucursal}" required="true" maxlength="10" requiredMessage="Debe ingresar el nombre de la empresa."/>
+                    <p:inputText id="telefonoSurcusal" value="#{sucursalBean.sucursal.telefonoSucursal}" required="true" maxlength="10" requiredMessage="Debe ingresar el nombre de la empresa.">
+                        <f:validateRegex pattern="[0-9]+" />
+                    </p:inputText>
                     <p:message for="telefonoSurcusal" />
 
                     <p:outputLabel for="estadoSucursal" value="Estado:"/>
                     <p:selectOneMenu id="estadoSucursal" value="#{sucursalBean.sucursal.estadoSucursal}" >
-                        <f:selectItem itemLabel="Seleccione" itemValue="#{null}" />
-                        <f:selectItem itemLabel="0" itemValue="#{false}" />
-                        <f:selectItem itemLabel="1" itemValue="#{true}" />
+                        <f:selectItem itemLabel="- Seleccione -" itemValue="#{null}" />
+                        <f:selectItem itemLabel="INACTIVO" itemValue="#{false}" />
+                        <f:selectItem itemLabel="ACTIVO" itemValue="#{true}" />
                     </p:selectOneMenu>
                     <p:message for="estadoSucursal" />
                 </p:panelGrid>
