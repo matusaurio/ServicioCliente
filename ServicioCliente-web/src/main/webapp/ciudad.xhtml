@@ -20,8 +20,7 @@
         </p:menu>
     </ui:define>
     <ui:define name="tablaCiudad">
-        <p:panel header="Vista" rendered="#{ciudadBean.desplegarVista}">
-            <h3 style="margin-top: 0">CIUDADES</h3>
+        <p:panel header="CIUDADES" rendered="#{ciudadBean.desplegarVista}" style="max-width: 800px;">          
             <p:dataTable var="ciudad" value="#{ciudadBean.ciudades}" scrollable="true" scrollHeight="200" selectionMode="single" selection="#{ciudadBean.ciudadSeleccionada}" rowKey="#{ciudad.idCiudad}">
                 <p:ajax event="rowSelect" listener="#{ciudadBean.onRowSelect(event)}" update="@form"/>
                 <p:ajax event="rowUnselect" listener="#{ciudadBean.onRowUnselect(event)}" update="@form"/>
@@ -35,12 +34,13 @@
         </p:panel>
     </ui:define>
     <ui:define name="formularioCiudad">
-        <p:panel header="Nueva Ciudad" rendered="#{ciudadBean.desplegarNuevo}">
-            <p:panelGrid columns="3">
+        <p:panel header="Nueva Ciudad" rendered="#{ciudadBean.desplegarNuevo}" style="max-width: 800px;">
+            <p:panelGrid columns="2">
                 <p:outputLabel for="nombre" value="Nombre" />
                 <p:inputText id="nombre" value="#{ciudadBean.ciudad.nombreCiudad}" required="true" maxlength="100" requiredMessage="Debe ingresar la descripcion."/>
                 <p:message for="nombre" />
             </p:panelGrid>
+            <br/>
             <p:commandButton value="Aceptar" update="@form" actionListener="#{ciudadBean.guardar()}"/>
             <p:commandButton value="Cancelar" update="@form" immediate="true" actionListener="#{ciudadBean.cancelar()}"/>
         </p:panel>
