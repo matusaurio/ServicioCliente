@@ -134,7 +134,7 @@ public class Bodega implements Serializable {
 
     @Override
     public String toString() {
-        return "com.distribuidas.csc.persistencia.Bodega[ idBodega=" + idBodega + " ]";
+        return idBodega.toString();
     }
     
 }
