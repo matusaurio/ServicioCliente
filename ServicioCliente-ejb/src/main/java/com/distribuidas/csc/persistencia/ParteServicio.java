@@ -270,7 +270,7 @@ public class ParteServicio implements Serializable {
 
     @Override
     public String toString() {
-        return "com.distribuidas.csc.persistencia.ParteServicio[ idParteservicio=" + idParteservicio + " ]";
+        return idParteservicio.toString();
     }
     
 }

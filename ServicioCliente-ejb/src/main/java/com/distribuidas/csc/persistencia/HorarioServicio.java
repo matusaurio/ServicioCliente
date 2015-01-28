@@ -139,7 +139,7 @@ public class HorarioServicio implements Serializable {
 
     @Override
     public String toString() {
-        return "com.distribuidas.csc.persistencia.HorarioServicio[ idHorarioservicio=" + idHorarioservicio + " ]";
+        return idHorarioservicio.toString();
     }
     
 }

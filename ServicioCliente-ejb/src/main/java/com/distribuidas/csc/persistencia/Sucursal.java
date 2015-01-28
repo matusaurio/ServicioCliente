@@ -158,7 +158,7 @@ public class Sucursal implements Serializable {
 
     @Override
     public String toString() {
-        return "com.distribuidas.csc.persistencia.Sucursal[ idSucursal=" + idSucursal + " ]";
+        return idSucursal.toString();
     }
     
 }

@@ -192,7 +192,7 @@ public class Producto implements Serializable {
 
     @Override
     public String toString() {
-        return "com.distribuidas.csc.persistencia.Producto[ idProducto=" + idProducto + " ]";
+        return idProducto.toString();
     }
     
 }

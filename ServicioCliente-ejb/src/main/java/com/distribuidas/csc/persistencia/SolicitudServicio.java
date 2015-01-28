@@ -235,7 +235,7 @@ public class SolicitudServicio implements Serializable {
 
     @Override
     public String toString() {
-        return "com.distribuidas.csc.persistencia.SolicitudServicio[ idSolicitudservicio=" + idSolicitudservicio + " ]";
+        return idSolicitudservicio.toString();
     }
     
 }

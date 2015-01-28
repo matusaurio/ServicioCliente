@@ -145,7 +145,7 @@ public class Empresa implements Serializable {
 
     @Override
     public String toString() {
-        return "com.distribuidas.csc.persistencia.Empresa[ idEmpresa=" + idEmpresa + " ]";
+        return idEmpresa.toString();
     }
     
 }

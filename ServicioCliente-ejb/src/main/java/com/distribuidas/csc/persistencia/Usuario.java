@@ -186,7 +186,7 @@ public class Usuario implements Serializable {
 
     @Override
     public String toString() {
-        return "com.distribuidas.csc.persistencia.Usuario[ idUsuario=" + idUsuario + " ]";
+        return idUsuario.toString();
     }
     
 }
