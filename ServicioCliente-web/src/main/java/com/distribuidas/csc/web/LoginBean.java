@@ -6,6 +6,7 @@
 package com.distribuidas.csc.web;
 
 import com.distribuidas.csc.servicio.UsuarioServicio;
+import java.io.Serializable;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
@@ -19,7 +20,7 @@ import javax.faces.context.FacesContext;
  */
 @ManagedBean
 @ViewScoped
-public class LoginBean {
+public class LoginBean implements Serializable{
 
     private String email;
     private String password;

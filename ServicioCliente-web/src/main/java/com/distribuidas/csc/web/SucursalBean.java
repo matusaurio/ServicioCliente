@@ -5,9 +5,8 @@
  */
 package com.distribuidas.csc.web;
 
-import com.distribuidas.csc.persistencia.Empresa;
-import com.distribuidas.csc.servicio.EmpresaServicio;
-import java.io.Serializable;
+import com.distribuidas.csc.persistencia.Sucursal;
+import com.distribuidas.csc.servicio.SucursalServicio;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -22,51 +21,51 @@ import org.primefaces.event.UnselectEvent;
  */
 @ManagedBean
 @ViewScoped
-public class EmpresaBean implements Serializable {
-
-    @EJB
-    private EmpresaServicio empresaServicio;
-
-    private List<Empresa> empresas;
-    private Empresa empresa;
-    private Empresa empresaSeleccionada;
-
+public class SucursalBean {
+    
+    private List<Sucursal> sucursales;
+    private Sucursal sucursal;
+    private Sucursal sucursalSeleccionada;
+    
     private Boolean desplegarVista = false;
     private Boolean desplegarNuevo = false;
-
+    
     private String tituloFormulario;
     private Boolean enNuevo;
     private Boolean enModificar;
-
+    
+    
     private Boolean activarNuevo;
     private Boolean activarModificar;
     private Boolean activarEliminar;
     private Boolean activarCambiarEstado;
-
+    
+    @EJB
+    private SucursalServicio sucursalServicio;
+    
     @PostConstruct
-    public void init() {
-        this.empresas = this.empresaServicio.obtenerTodos();
+    public void init(){
+        this.sucursales = this.sucursalServicio.obtenerTodos();
     }
-
-    public void vista() {
+    
+    public void vista(){
         this.desplegarVista = true;
     }
-
-    public void nuevo() {
+    
+    public void nuevo(){
         this.desplegarNuevo = true;
-        enNuevo = true;
-        this.empresa = new Empresa();
+        this.sucursal = new Sucursal();
     }
-
+    
     public void guardar() {
         if (this.enNuevo) {
-            this.empresaServicio.crear(this.empresa);
+            this.sucursalServicio.crear(this.sucursal);
             this.desplegarNuevo = false;
-            this.empresas.add(this.empresa);
+            this.sucursales.add(this.sucursal);
             this.enNuevo = false;
         } else if (this.enModificar) {
             System.err.println("modificar");
-            this.empresaServicio.actualizar(this.empresa);
+            this.sucursalServicio.actualizar(this.sucursal);
             this.desplegarNuevo = false;
             this.enModificar = false;
         }
@@ -76,12 +75,12 @@ public class EmpresaBean implements Serializable {
         this.enModificar = true;
         this.enNuevo = false;
         this.desplegarNuevo = true;
-        this.empresa = this.empresaSeleccionada;
+        this.sucursal = this.sucursalSeleccionada;
     }
 
     public void eliminar() {
-        this.empresaServicio.eliminar(this.empresaSeleccionada);
-        this.empresas.remove(this.empresaSeleccionada);
+        this.sucursalServicio.eliminar(this.sucursalSeleccionada);
+        this.sucursales.remove(this.sucursalSeleccionada);
     }
 
     public void cancelar() {
@@ -96,16 +95,25 @@ public class EmpresaBean implements Serializable {
 
     }
 
-    public List<Empresa> getEmpresas() {
-        return empresas;
+    public List<Sucursal> getSucursales() {
+        return sucursales;
     }
 
-    public Empresa getEmpresa() {
-        return empresa;
+
+    public Sucursal getSucursal() {
+        return sucursal;
     }
 
-    public void setEmpresa(Empresa empresa) {
-        this.empresa = empresa;
+    public void setSucursal(Sucursal sucursal) {
+        this.sucursal = sucursal;
+    }
+
+    public Sucursal getSucursalSeleccionada() {
+        return sucursalSeleccionada;
+    }
+
+    public void setSucursalSeleccionada(Sucursal sucursalSeleccionada) {
+        this.sucursalSeleccionada = sucursalSeleccionada;
     }
 
     public Boolean getDesplegarVista() {
@@ -122,14 +130,6 @@ public class EmpresaBean implements Serializable {
 
     public void setDesplegarNuevo(Boolean desplegarNuevo) {
         this.desplegarNuevo = desplegarNuevo;
-    }
-
-    public Empresa getEmpresaSeleccionada() {
-        return empresaSeleccionada;
-    }
-
-    public void setEmpresaSeleccionada(Empresa empresaSeleccionada) {
-        this.empresaSeleccionada = empresaSeleccionada;
     }
 
     public String getTituloFormulario() {
@@ -187,5 +187,5 @@ public class EmpresaBean implements Serializable {
     public void setActivarCambiarEstado(Boolean activarCambiarEstado) {
         this.activarCambiarEstado = activarCambiarEstado;
     }
-
+    
 }

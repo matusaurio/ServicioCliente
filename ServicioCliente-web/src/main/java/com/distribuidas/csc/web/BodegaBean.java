@@ -5,9 +5,8 @@
  */
 package com.distribuidas.csc.web;
 
-import com.distribuidas.csc.persistencia.Empresa;
-import com.distribuidas.csc.servicio.EmpresaServicio;
-import java.io.Serializable;
+import com.distribuidas.csc.persistencia.Bodega;
+import com.distribuidas.csc.servicio.BodegaServicio;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -22,51 +21,51 @@ import org.primefaces.event.UnselectEvent;
  */
 @ManagedBean
 @ViewScoped
-public class EmpresaBean implements Serializable {
-
-    @EJB
-    private EmpresaServicio empresaServicio;
-
-    private List<Empresa> empresas;
-    private Empresa empresa;
-    private Empresa empresaSeleccionada;
-
+public class BodegaBean {
+    
+    private List<Bodega> bodegas;
+    private Bodega bodega;
+    private Bodega bodegaSeleccionada;
+    
     private Boolean desplegarVista = false;
     private Boolean desplegarNuevo = false;
-
+    
     private String tituloFormulario;
     private Boolean enNuevo;
     private Boolean enModificar;
-
+    
+    
     private Boolean activarNuevo;
     private Boolean activarModificar;
     private Boolean activarEliminar;
     private Boolean activarCambiarEstado;
-
+    
+    @EJB
+    private BodegaServicio bodegaServicio;
+    
     @PostConstruct
-    public void init() {
-        this.empresas = this.empresaServicio.obtenerTodos();
+    public void init(){
+        this.bodegas = this.bodegaServicio.obtenerTodos();
     }
-
-    public void vista() {
+    
+    public void vista(){
         this.desplegarVista = true;
     }
-
-    public void nuevo() {
+    
+    public void nuevo(){
         this.desplegarNuevo = true;
-        enNuevo = true;
-        this.empresa = new Empresa();
+        this.bodega = new Bodega();
     }
-
+    
     public void guardar() {
         if (this.enNuevo) {
-            this.empresaServicio.crear(this.empresa);
+            this.bodegaServicio.crear(this.bodega);
             this.desplegarNuevo = false;
-            this.empresas.add(this.empresa);
+            this.bodegas.add(this.bodega);
             this.enNuevo = false;
         } else if (this.enModificar) {
             System.err.println("modificar");
-            this.empresaServicio.actualizar(this.empresa);
+            this.bodegaServicio.actualizar(this.bodega);
             this.desplegarNuevo = false;
             this.enModificar = false;
         }
@@ -76,12 +75,12 @@ public class EmpresaBean implements Serializable {
         this.enModificar = true;
         this.enNuevo = false;
         this.desplegarNuevo = true;
-        this.empresa = this.empresaSeleccionada;
+        this.bodega = this.bodegaSeleccionada;
     }
 
     public void eliminar() {
-        this.empresaServicio.eliminar(this.empresaSeleccionada);
-        this.empresas.remove(this.empresaSeleccionada);
+        this.bodegaServicio.eliminar(this.bodegaSeleccionada);
+        this.bodegas.remove(this.bodegaSeleccionada);
     }
 
     public void cancelar() {
@@ -96,16 +95,24 @@ public class EmpresaBean implements Serializable {
 
     }
 
-    public List<Empresa> getEmpresas() {
-        return empresas;
+    public List<Bodega> getBodegas() {
+        return bodegas;
     }
 
-    public Empresa getEmpresa() {
-        return empresa;
+    public Bodega getBodega() {
+        return bodega;
     }
 
-    public void setEmpresa(Empresa empresa) {
-        this.empresa = empresa;
+    public void setBodega(Bodega bodega) {
+        this.bodega = bodega;
+    }
+
+    public Bodega getBodegaSeleccionada() {
+        return bodegaSeleccionada;
+    }
+
+    public void setBodegaSeleccionada(Bodega bodegaSeleccionada) {
+        this.bodegaSeleccionada = bodegaSeleccionada;
     }
 
     public Boolean getDesplegarVista() {
@@ -122,14 +129,6 @@ public class EmpresaBean implements Serializable {
 
     public void setDesplegarNuevo(Boolean desplegarNuevo) {
         this.desplegarNuevo = desplegarNuevo;
-    }
-
-    public Empresa getEmpresaSeleccionada() {
-        return empresaSeleccionada;
-    }
-
-    public void setEmpresaSeleccionada(Empresa empresaSeleccionada) {
-        this.empresaSeleccionada = empresaSeleccionada;
     }
 
     public String getTituloFormulario() {
@@ -187,5 +186,7 @@ public class EmpresaBean implements Serializable {
     public void setActivarCambiarEstado(Boolean activarCambiarEstado) {
         this.activarCambiarEstado = activarCambiarEstado;
     }
-
+    
+    
+    
 }
