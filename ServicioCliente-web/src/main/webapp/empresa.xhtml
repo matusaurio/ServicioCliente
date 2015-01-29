@@ -10,7 +10,7 @@
     <ui:define name="titulo">Bienvenido</ui:define>
     <ui:define name="contenidoEmpresa">
         <p:growl autoUpdate="true"/>
-        <p:menu style="width: 250px">
+        <p:menu class="menuLateral">
             <p:submenu label="Opciones Empresa">
                 <p:menuitem value="Ver" update="@form" actionListener="#{empresaBean.vista()}"/>
                 <p:menuitem value="Nuevo" update="@form" actionListener="#{empresaBean.nuevo()}"/>
@@ -20,7 +20,7 @@
         </p:menu>
     </ui:define>
     <ui:define name="tablaEmpresa">
-        <p:panel header="EMPRESAS" rendered="#{empresaBean.desplegarVista}" style="max-width: 800px;">
+        <p:panel header="EMPRESAS" rendered="#{empresaBean.desplegarVista}" class="panelCentral">
             <p:dataTable var="empresa" value="#{empresaBean.empresas}" scrollable="true" scrollHeight="200" selectionMode="single" selection="#{empresaBean.empresaSeleccionada}" rowKey="#{empresa.idEmpresa}">
                 <p:ajax event="rowSelect" listener="#{empresaBean.onRowSelect(event)}" update="@form"/>
                 <p:ajax event="rowUnselect" listener="#{empresaBean.onRowUnselect(event)}" update="@form"/>
@@ -40,7 +40,7 @@
         </p:panel>
     </ui:define>
     <ui:define name="formularioEmpresa">
-            <p:panel header="Nueva Empresa" rendered="#{empresaBean.desplegarNuevo}" style="max-width: 800px;">
+        <p:panel header="Nueva Empresa" rendered="#{empresaBean.desplegarNuevo}" class="panelCentral">
                 <p:panelGrid columns="3">
                     <p:outputLabel for="codigoCiudad" value="Codigo Ciudad:" />
                     <p:selectOneMenu id="codigoCiudad" value="#{empresaBean.empresa.idCiudad}" required="true">                    

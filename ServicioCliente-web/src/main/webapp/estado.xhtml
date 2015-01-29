@@ -10,18 +10,17 @@
     <ui:define name="titulo">Bienvenido</ui:define>
     <ui:define name="contenidoEstado">
         <p:growl autoUpdate="true" showDetail="true"/>
-        <p:panelMenu style="width: 300px; height: auto">
-            <p:submenu label="Opciones">
+        <p:menu class="menuLateral">
+            <p:submenu label="Opciones Estado Solicitud Servicio">
                 <p:menuitem value="Ver" update="@form" actionListener="#{estadoBean.vista()}" />
                 <p:menuitem value="Nuevo" update="@form" actionListener="#{estadoBean.nuevo()}"/>
                 <p:menuitem value="Editar" update="@form" actionListener="#{estadoBean.modificar()}"/>
                 <p:menuitem value="Eliminar" update="@form" actionListener="#{estadoBean.eliminar()}"/>
             </p:submenu>
-        </p:panelMenu>
+        </p:menu>
     </ui:define>
     <ui:define name="tablaEstado">
-        <p:panel header="Vista" rendered="#{estadoBean.desplegarVista}">
-            <h3 style="margin-top: 0">ESTADOS</h3>
+        <p:panel header="ESTADOS SOLICITUD SERVICIO" rendered="#{estadoBean.desplegarVista}" class="panelCentral">
             <p:dataTable var="estado" value="#{estadoBean.estados}" scrollable="true" scrollHeight="200" selectionMode="single" selection="#{estadoBean.estadoSeleccionada}" rowKey="#{estado.idEstadoSolicitudservicio}">
                 <p:ajax event="rowSelect" listener="#{estadoBean.onRowSelect(event)}" update="@form"/>
                 <p:ajax event="rowUnselect" listener="#{estadoBean.onRowUnselect(event)}" update="@form"/>
@@ -38,7 +37,7 @@
         </p:panel>
     </ui:define>
     <ui:define name="formularioEstado">
-        <p:panel header="Nueva Estado" rendered="#{estadoBean.desplegarNuevo}">
+        <p:panel header="Nueva Estado" rendered="#{estadoBean.desplegarNuevo}" class="panelCentral">
             <p:panelGrid columns="3">
                 <p:outputLabel for="nombreE" value="Nombre" />
                 <p:inputText id="nombreE" value="#{estadoBean.estado.nombreEstadoSolicitudservicio}" required="true" maxlength="100" requiredMessage="Debe ingresar la descripcion."/>
@@ -47,6 +46,7 @@
                 <p:calendar id="fechaE" value="#{estadoBean.estado.fechaEstadoSolicitudservicio}" pattern="yyyy/MM/dd HH:mm:ss"/>
                 <p:message for="fechaE" />
             </p:panelGrid>
+            <br/>
             <p:commandButton value="Aceptar" update="@form" actionListener="#{estadoBean.guardar()}"/>
             <p:commandButton value="Cancelar" update="@form" immediate="true" actionListener="#{estadoBean.cancelar()}"/>
         </p:panel>

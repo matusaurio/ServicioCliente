@@ -10,18 +10,17 @@
     <ui:define name="titulo">Bienvenido</ui:define>
     <ui:define name="contenidoMarca">
         <p:growl autoUpdate="true" showDetail="true"/>
-        <p:panelMenu style="width: 300px; height: auto">
-            <p:submenu label="Opciones">
+        <p:menu class="menuLateral">
+            <p:submenu label="Opciones Marca">
                 <p:menuitem value="Ver" update="@form" actionListener="#{marcaBean.vista()}" />
                 <p:menuitem value="Nuevo" update="@form" actionListener="#{marcaBean.nuevo()}"/>
                 <p:menuitem value="Editar" update="@form" actionListener="#{marcaBean.modificar()}"/>
                 <p:menuitem value="Eliminar" update="@form" actionListener="#{marcaBean.eliminar()}"/>
             </p:submenu>
-        </p:panelMenu>
+        </p:menu>
     </ui:define>
     <ui:define name="tablaMarca">
-        <p:panel header="Vista" rendered="#{marcaBean.desplegarVista}">
-            <h3 style="margin-top: 0">MARCAS</h3>
+        <p:panel header="MARCAS" rendered="#{marcaBean.desplegarVista}" class="panelCentral">
             <p:dataTable var="marca" value="#{marcaBean.marcas}" scrollable="true" scrollHeight="200" selectionMode="single" selection="#{marcaBean.marcaSeleccionada}" rowKey="#{marca.idMarca}">
                 <p:ajax event="rowSelect" listener="#{marcaBean.onRowSelect(event)}" update="@form"/>
                 <p:ajax event="rowUnselect" listener="#{marcaBean.onRowUnselect(event)}" update="@form"/>
@@ -41,7 +40,7 @@
         </p:panel>
     </ui:define>
     <ui:define name="formularioMarca">
-        <p:panel header="Nueva Marca" rendered="#{marcaBean.desplegarNuevo}">
+        <p:panel header="Nueva Marca" rendered="#{marcaBean.desplegarNuevo}" class="panelCentral">
             <p:panelGrid columns="3">
                 <p:outputLabel for="nombre" value="Nombre" />
                 <p:inputText id="nombre" value="#{marcaBean.marca.nombreMarca}" required="true" maxlength="100" requiredMessage="Debe ingresar la descripcion."/>
@@ -58,6 +57,7 @@
                 </p:selectOneMenu>
                 <p:message for="estadoMarca" />
             </p:panelGrid>
+            <br/>
             <p:commandButton value="Aceptar" update="@form" actionListener="#{marcaBean.guardar()}"/>
             <p:commandButton value="Cancelar" update="@form" immediate="true" actionListener="#{marcaBean.cancelar()}"/>
         </p:panel>

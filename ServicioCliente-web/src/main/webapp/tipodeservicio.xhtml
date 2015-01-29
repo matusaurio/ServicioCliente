@@ -10,18 +10,17 @@
     <ui:define name="titulo">Bienvenido</ui:define>
     <ui:define name="contenidoTipoServicio">
         <p:growl autoUpdate="true" showDetail="true"/>
-        <p:panelMenu style="width: 300px; height: auto">
-            <p:submenu label="Opciones">
+        <p:menu class="menuLateral">
+            <p:submenu label="Opciones Tipo Servicio Solicitud Servicio">
                 <p:menuitem value="Ver" update="@form" actionListener="#{tipoServicioBean.vista()}" />
                 <p:menuitem value="Nuevo" update="@form" actionListener="#{tipoServicioBean.nuevo()}"/>
                 <p:menuitem value="Editar" update="@form" actionListener="#{tipoServicioBean.modificar()}"/>
                 <p:menuitem value="Eliminar" update="@form" actionListener="#{tipoServicioBean.eliminar()}"/>
             </p:submenu>
-        </p:panelMenu>
+        </p:menu>
     </ui:define>
     <ui:define name="tablaTipoServicio">
-        <p:panel header="Vista" rendered="#{tipoServicioBean.desplegarVista}">
-            <h3 style="margin-top: 0">TIPOS SERVICIOS</h3>
+        <p:panel header="TIPO SERVICIO SOLICITUD SERVICIO" rendered="#{tipoServicioBean.desplegarVista}" class="panelCentral">
             <p:dataTable var="tipoServicio" value="#{tipoServicioBean.tipoServicios}" scrollable="true" scrollHeight="200" selectionMode="single" selection="#{tipoServicioBean.tipoServicioSeleccionada}" rowKey="#{tipoServicio.idTipoServicioSolicitudservicio}">
                 <p:ajax event="rowSelect" listener="#{tipoServicioBean.onRowSelect(event)}" update="@form"/>
                 <p:ajax event="rowUnselect" listener="#{tipoServicioBean.onRowUnselect(event)}" update="@form"/>
@@ -44,7 +43,7 @@
         </p:panel>
     </ui:define>
     <ui:define name="formularioTipoServicio">
-        <p:panel header="Nueva Tipo Servicio" rendered="#{tipoServicioBean.desplegarNuevo}">
+        <p:panel header="Nueva Tipo Servicio" rendered="#{tipoServicioBean.desplegarNuevo}" class="panelCentral">
             <p:panelGrid columns="3">
                 <p:outputLabel for="nombreT" value="Nombre" />
                 <p:inputText id="nombreT" value="#{tipoServicioBean.tipoServicio.nombreTipoServicioSolicitudservicio}" required="true" maxlength="100" requiredMessage="Debe ingresar la descripcion."/>
@@ -64,6 +63,7 @@
                 <p:inputText id="observacionT" value="#{tipoServicioBean.tipoServicio.observacionTipoServicioSolicitudservicio}" required="true" maxlength="100" requiredMessage="Debe ingresar la descripcion."/>
                 <p:message for="observacionT" />
             </p:panelGrid>
+            <br/>
             <p:commandButton value="Aceptar" update="@form" actionListener="#{tipoServicioBean.guardar()}"/>
             <p:commandButton value="Cancelar" update="@form" immediate="true" actionListener="#{tipoServicioBean.cancelar()}"/>
         </p:panel>

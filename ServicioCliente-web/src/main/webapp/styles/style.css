@@ -11,10 +11,13 @@ p{ font-size: 12pt; font-weight: normal;}
 
 
 #cabecera {width: 100%; height: 150px; background-color: azure;}
-#cuerpo {width: 100%; min-height: 600px; }
-#login {width: 50%; height: 250px; margin-top: 150px}
-#noticias {width: 500px; float: left; height: 350px;}
-#instrucciones {width: 295px; float: right;  }
-#pie {width: 100%; height: 50px;  }
+#cuerpo {width: 99%; min-height: 500px; }
+#login {width: 50%; height: 150px; margin-top: 125px}
+//#noticias {width: 500px; float: left; height: 350px;}
+//#instrucciones {width: 295px; float: right;  }
+#pie {width: 100%; height: 50px; text-align: center;}
+
+.panelCentral{ max-width: 800px; height: auto;}
+.menuLateral{max-width: 300px; height: auto;}
 
 .pieFont {font-size: 10pt; color: appworkspace; font-weight: bolder}
