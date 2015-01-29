@@ -21,7 +21,7 @@
     </ui:define>
     <ui:define name="tablaEmpresa">
         <p:panel header="EMPRESAS" rendered="#{empresaBean.desplegarVista}" class="panelCentral">
-            <p:dataTable var="empresa" value="#{empresaBean.empresas}" scrollable="true" scrollHeight="200" selectionMode="single" selection="#{empresaBean.empresaSeleccionada}" rowKey="#{empresa.idEmpresa}">
+            <p:dataTable var="empresa" value="#{empresaBean.empresas}" paginator="true" pageLinks="5" paginatorAlwaysVisible="false" selectionMode="single" selection="#{empresaBean.empresaSeleccionada}" rowKey="#{empresa.idEmpresa}">
                 <p:ajax event="rowSelect" listener="#{empresaBean.onRowSelect(event)}" update="@form"/>
                 <p:ajax event="rowUnselect" listener="#{empresaBean.onRowUnselect(event)}" update="@form"/>
                 <p:column headerText="Codigo Empresa" >
@@ -43,7 +43,7 @@
         <p:panel header="Nueva Empresa" rendered="#{empresaBean.desplegarNuevo}" class="panelCentral">
                 <p:panelGrid columns="3">
                     <p:outputLabel for="codigoCiudad" value="Codigo Ciudad:" />
-                    <p:selectOneMenu id="codigoCiudad" value="#{empresaBean.empresa.idCiudad}" required="true" effect="explode">
+                    <p:selectOneMenu id="codigoCiudad" value="#{empresaBean.empresa.idCiudad}" required="true" effect="puff">
                         <f:selectItems value="#{ciudadBean.ciudades}" var="ciudad"
                                        itemLabel="#{ciudad.nombreCiudad}" itemValue="#{ciudad}"/>
                         <f:converter converterId="ciudadConverter"/>
@@ -55,7 +55,7 @@
                     <p:message for="nombreEmpresa" />
 
                     <p:outputLabel for="estadoEmpresa" value="Estado:"/>
-                    <p:selectOneMenu id="estadoEmpresa" value="#{empresaBean.empresa.estadoEmpresa}" >
+                    <p:selectOneMenu id="estadoEmpresa" value="#{empresaBean.empresa.estadoEmpresa}" effect="explode" >
                         <f:selectItem itemLabel="Inactivo" itemValue="#{false}" />
                         <f:selectItem itemLabel="Activo" itemValue="#{true}" />
                     </p:selectOneMenu>

@@ -50,7 +50,7 @@
                 <p:message for="observacionMarca" />
 
                 <p:outputLabel for="estadoMarca" value="Estado:"/>
-                <p:selectOneMenu id="estadoMarca" value="#{marcaBean.marca.estadoMarca}" >
+                <p:selectOneMenu id="estadoMarca" value="#{marcaBean.marca.estadoMarca}" effect="explode" >
                     <f:selectItem itemLabel="Seleccione" itemValue="#{null}" />
                     <f:selectItem itemLabel="INACTIVO" itemValue="#{false}" />
                     <f:selectItem itemLabel="ACTIVO" itemValue="#{true}" />

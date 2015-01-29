@@ -52,7 +52,7 @@
         <p:panel header="Nuevo Usuario" rendered="#{usuarioBean.desplegarNuevo}" class="panelCentral">
                 <p:panelGrid columns="3">
                     <p:outputLabel for="codigoRol" value="Codigo Rol" />
-                    <p:selectOneMenu id="codigoRol" value="#{usuarioBean.usuario.idRol}" required="true">                    
+                    <p:selectOneMenu id="codigoRol" value="#{usuarioBean.usuario.idRol}" required="true" effect="puff">                    
                         <f:selectItems value="#{rolBean.roles}" var="rol"
                                        itemLabel="#{rol.nombreRol}" itemValue="#{rol}"/>
                         <f:converter converterId="rolConverter"/>
@@ -60,7 +60,7 @@
                     <p:message for="codigoRol" />
                     
                     <p:outputLabel for="codigoEmpresa" value="Codigo Empresa" />
-                    <p:selectOneMenu id="codigoEmpresa" value="#{usuarioBean.usuario.idEmpresa}" required="true">                    
+                    <p:selectOneMenu id="codigoEmpresa" value="#{usuarioBean.usuario.idEmpresa}" required="true" effect="puff">                    
                         <f:selectItems value="#{empresaBean.empresas}" var="empresa"
                                        itemLabel="#{empresa.nombreEmpresa}" itemValue="#{empresa}"/>
                         <f:converter converterId="empresaConverter"/>
@@ -82,7 +82,7 @@
                     <p:message for="claveUsuario" />
                     
                     <p:outputLabel for="estadoUsuario" value="Estado:"/>
-                    <p:selectOneMenu id="estadoUsuario" value="#{usuarioBean.usuario.estadoUsuario}" >
+                    <p:selectOneMenu id="estadoUsuario" value="#{usuarioBean.usuario.estadoUsuario}" effect="explode" >
                         <f:selectItem itemLabel="- Seleccione -" itemValue="#{null}" />
                         <f:selectItem itemLabel="INACTIVO" itemValue="#{false}" />
                         <f:selectItem itemLabel="ACTIVO" itemValue="#{true}" />

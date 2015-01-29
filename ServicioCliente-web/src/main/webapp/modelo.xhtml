@@ -46,7 +46,7 @@
         <p:panel header="Nuevo Modelo" rendered="#{modeloBean.desplegarNuevo}" class="panelCentral">
                 <p:panelGrid columns="3">
                     <p:outputLabel for="codigoMarca" value="Codigo Marca" />
-                    <p:selectOneMenu id="codigoMarca" value="#{modeloBean.modelo.idMarca}" required="true">                    
+                    <p:selectOneMenu id="codigoMarca" value="#{modeloBean.modelo.idMarca}" required="true"  effect="puff">                    
                         <f:selectItems value="#{marcaBean.marcas}" var="marca"
                                        itemLabel="#{marca.nombreMarca}" itemValue="#{marca}"/>
                         <f:converter converterId="marcaConverter"/>
@@ -60,7 +60,7 @@
                     <p:inputText id="observacionModelo" value="#{modeloBean.modelo.observacionModelo}" required="true" maxlength="100" requiredMessage="Debe ingresar el nombre de la empresa."/>
                     <p:message for="observacionModelo" />
                     <p:outputLabel for="estadoModelo" value="Estado:"/>
-                    <p:selectOneMenu id="estadoModelo" value="#{modeloBean.modelo.estadoModelo}" >
+                    <p:selectOneMenu id="estadoModelo" value="#{modeloBean.modelo.estadoModelo}" effect="explode" >
                         <f:selectItem itemLabel="- Seleccione -" itemValue="#{null}" />
                         <f:selectItem itemLabel="INACTIVO" itemValue="#{false}" />
                         <f:selectItem itemLabel="ACTIVO" itemValue="#{true}" />

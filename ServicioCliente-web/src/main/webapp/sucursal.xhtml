@@ -49,7 +49,7 @@
         <p:panel header="Nueva Sucursal" rendered="#{sucursalBean.desplegarNuevo}" class="panelCentral">
                 <p:panelGrid columns="3">
                     <p:outputLabel for="codigoEmpresa" value="Codigo Empresa" />
-                    <p:selectOneMenu id="codigoEmpresa" value="#{sucursalBean.sucursal.idEmpresa}" required="true">                    
+                    <p:selectOneMenu id="codigoEmpresa" value="#{sucursalBean.sucursal.idEmpresa}" required="true" effect="puff">                    
                         <f:selectItems value="#{empresaBean.empresas}" var="empresa"
                                        itemLabel="#{empresa.nombreEmpresa}" itemValue="#{empresa}"/>
                         <f:converter converterId="empresaConverter"/>
@@ -71,7 +71,7 @@
                     <p:message for="telefonoSurcusal" />
 
                     <p:outputLabel for="estadoSucursal" value="Estado:"/>
-                    <p:selectOneMenu id="estadoSucursal" value="#{sucursalBean.sucursal.estadoSucursal}" >
+                    <p:selectOneMenu id="estadoSucursal" value="#{sucursalBean.sucursal.estadoSucursal}" effect="explode" >
                         <f:selectItem itemLabel="- Seleccione -" itemValue="#{null}" />
                         <f:selectItem itemLabel="INACTIVO" itemValue="#{false}" />
                         <f:selectItem itemLabel="ACTIVO" itemValue="#{true}" />
