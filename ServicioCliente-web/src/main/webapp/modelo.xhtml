@@ -28,7 +28,7 @@
                     <h:outputText value="#{modelo.idModelo}" />
                 </p:column>
                 <p:column headerText="Codigo Marca" >
-                    <h:outputText value="#{modelo.idMarca}" />
+                    <h:outputText value="#{modelo.idMarca.nombreMarca}" />
                 </p:column>
                 <p:column headerText="Nombre Modelo" >
                     <h:outputText value="#{modelo.nombreModelo}" />
@@ -37,7 +37,7 @@
                     <h:outputText value="#{modelo.observacionModelo}" />
                 </p:column>
                 <p:column headerText="Estado Modelo" >
-                    <h:outputText value="#{modelo.estadoModelo}" />
+                    <h:outputText value="#{modelo.estadoModeloTxt}" />
                 </p:column>
             </p:dataTable>
         </p:panel>

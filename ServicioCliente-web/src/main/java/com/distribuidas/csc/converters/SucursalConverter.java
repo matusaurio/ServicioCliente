@@ -43,7 +43,7 @@ public class SucursalConverter implements Converter{
         if(value instanceof Sucursal){
             sucursal = (Sucursal) value;
             StringBuilder asString = new StringBuilder();
-            asString.append(sucursal.getIdEmpresa());
+            asString.append(sucursal.getIdSucursal());
             return asString.toString();
         }
         return "";

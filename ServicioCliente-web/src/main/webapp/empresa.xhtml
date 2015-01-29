@@ -28,13 +28,13 @@
                     <h:outputText value="#{empresa.idEmpresa}" />
                 </p:column>
                 <p:column headerText="Codigo Ciudad" >
-                    <h:outputText value="#{empresa.idCiudad}" />
+                    <h:outputText value="#{empresa.idCiudad.nombreCiudad}" />
                 </p:column>
                 <p:column headerText="Nombre Empresa" >
                     <h:outputText value="#{empresa.nombreEmpresa}" />
                 </p:column>
                 <p:column headerText="Estado Empresa" >
-                    <h:outputText value="#{empresa.estadoEmpresa}" />
+                    <h:outputText value="#{empresa.estadoEmpresaTxt}" />
                 </p:column>
             </p:dataTable>
         </p:panel>

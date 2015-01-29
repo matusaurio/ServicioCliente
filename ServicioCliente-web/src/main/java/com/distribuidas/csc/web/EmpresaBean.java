@@ -29,7 +29,7 @@ public class EmpresaBean implements Serializable {
     private EmpresaServicio empresaServicio;
 
     private List<SelectItem> listaCombo;
-    
+
     private List<Empresa> empresas;
     private Empresa empresa;
     private Empresa empresaSeleccionada;

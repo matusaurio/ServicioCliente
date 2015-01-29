@@ -28,7 +28,7 @@
                     <h:outputText value="#{sucursal.idSucursal}" />
                 </p:column>
                 <p:column headerText="Codigo Empresa" >
-                    <h:outputText value="#{sucursal.idEmpresa}" />
+                    <h:outputText value="#{sucursal.idEmpresa.nombreEmpresa}" />
                 </p:column>
                 <p:column headerText="Nombre Sucursal" >
                     <h:outputText value="#{sucursal.nombreSucursal}" />
@@ -40,7 +40,7 @@
                     <h:outputText value="#{sucursal.telefonoSucursal}" />
                 </p:column>
                 <p:column headerText="Estado Sucursal" >
-                    <h:outputText value="#{sucursal.estadoSucursal}" />
+                    <h:outputText value="#{sucursal.estadoSucursalTxt}" />
                 </p:column>
             </p:dataTable>
         </p:panel>

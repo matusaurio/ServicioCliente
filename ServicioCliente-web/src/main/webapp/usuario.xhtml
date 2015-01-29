@@ -28,10 +28,10 @@
                     <h:outputText value="#{usuario.idUsuario}" />
                 </p:column>
                 <p:column headerText="Codigo Rol" >
-                    <h:outputText value="#{usuario.idRol}" />
+                    <h:outputText value="#{usuario.idRol.nombreRol}" />
                 </p:column>
                 <p:column headerText="Codigo Empresa" >
-                    <h:outputText value="#{usuario.idEmpresa}" />
+                    <h:outputText value="#{usuario.idEmpresa.nombreEmpresa}" />
                 </p:column>
                 <p:column headerText="Nombre Usuario" >
                     <h:outputText value="#{usuario.nombreUsuario}" />
@@ -43,7 +43,7 @@
                     <h:outputScript value="#{usuario.passUsuario}" />
                 </p:column>
                 <p:column headerText="Estado Empresa" >
-                    <h:outputText value="#{usuario.estadoUsuario}" />
+                    <h:outputText value="#{usuario.estadoUsuarioTxt}" />
                 </p:column>
             </p:dataTable>
         </p:panel>

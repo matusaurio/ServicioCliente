@@ -28,13 +28,13 @@
                     <h:outputText value="#{bodega.idBodega}" />
                 </p:column>
                 <p:column headerText="Codigo Sucursal" >
-                    <h:outputText value="#{bodega.idSucursal}" />
+                    <h:outputText value="#{bodega.idSucursal.nombreSucursal}" />
                 </p:column>
                 <p:column headerText="Nombre Bodega" >
                     <h:outputText value="#{bodega.nombreBodega}" />
                 </p:column>
                 <p:column headerText="Estado Bodega" >
-                    <h:outputText value="#{bodega.estadoBodega}" />
+                    <h:outputText value="#{bodega.estadoBodegaTxt}" />
                 </p:column>
             </p:dataTable>
         </p:panel>
@@ -43,7 +43,7 @@
             <p:panel header="Nueva Bodega" rendered="#{bodegaBean.desplegarNuevo}" style="max-width: 800px;">
                 <p:panelGrid columns="3">
                     <p:outputLabel for="codigoBodega" value="Codigo Sucursal" />
-                    <p:selectOneMenu id="codigoBodega" value="#{bodegaBean.bodega.idSucursal}" required="true">                    
+                    <p:selectOneMenu id="codigoBodega" value="#{bodegaBean.bodega.idSucursal}" required="true" effect="puff">                    
                         <f:selectItems value="#{sucursalBean.sucursales}" var="sucursal"
                                        itemLabel="#{sucursal.nombreSucursal}" itemValue="#{sucursal}"/>
                         <f:converter converterId="sucursalConverter"/>
@@ -55,7 +55,7 @@
                     <p:message for="nombreBodega" />
 
                     <p:outputLabel for="estadoBodega" value="Estado:"/>
-                    <p:selectOneMenu id="estadoBodega" value="#{bodegaBean.bodega.estadoBodega}" >
+                    <p:selectOneMenu id="estadoBodega" value="#{bodegaBean.bodega.estadoBodega}" effect="explode">
                         <f:selectItem itemLabel="Seleccione" itemValue="#{null}" />
                         <f:selectItem itemLabel="0" itemValue="#{false}" />
                         <f:selectItem itemLabel="1" itemValue="#{true}" />
