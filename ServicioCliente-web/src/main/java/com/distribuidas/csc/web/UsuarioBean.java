@@ -54,6 +54,8 @@ public class UsuarioBean {
     
     public void nuevo(){
         this.desplegarNuevo = true;
+        this.enNuevo = true;
+        this.enModificar = false;
         this.usuario = new Usuario();
     }
     

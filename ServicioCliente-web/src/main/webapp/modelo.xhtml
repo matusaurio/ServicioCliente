@@ -8,41 +8,68 @@
                 template="/plantillaInterna.xhtml">
 
     <ui:define name="titulo">Bienvenido</ui:define>
-    <ui:define name="contenidoCiudad">
-        <p:growl autoUpdate="true" showDetail="true"/>
-        <p:menu class="menuLateral">
+    <ui:define name="contenidoModelo">
+        <p:growl autoUpdate="true"/>
+        <p:menu style="width: 250px">
             <p:submenu label="Opciones Modelo">
-                <p:menuitem value="Ver" update="@form" actionListener="#{ciudadBean.vista()}" />
-                <p:menuitem value="Nuevo" update="@form" actionListener="#{ciudadBean.nuevo()}"/>
-                <p:menuitem value="Editar" update="@form" actionListener="#{ciudadBean.modificar()}"/>
-                <p:menuitem value="Eliminar" update="@form" actionListener="#{ciudadBean.eliminar()}"/>
+                <p:menuitem value="Ver" update="@form" actionListener="#{modeloBean.vista()}"/>
+                <p:menuitem value="Nuevo" update="@form" actionListener="#{modeloBean.nuevo()}"/>
+                <p:menuitem value="Editar" update="@form" actionListener="#{modeloBean.modificar()}"/>
+                <p:menuitem value="Eliminar" update="@form" actionListener="#{modeloBean.eliminar()}"/>
             </p:submenu>
         </p:menu>
     </ui:define>
-    <ui:define name="tablaCiudad">
-        <p:panel header="MODELOS" rendered="#{ciudadBean.desplegarVista}" class="panelCentral">
-            <p:dataTable var="ciudad" value="#{ciudadBean.ciudades}" scrollable="true" scrollHeight="200" selectionMode="single" selection="#{ciudadBean.ciudadSeleccionada}" rowKey="#{ciudad.idCiudad}">
-                <p:ajax event="rowSelect" listener="#{ciudadBean.onRowSelect(event)}" update="@form"/>
-                <p:ajax event="rowUnselect" listener="#{ciudadBean.onRowUnselect(event)}" update="@form"/>
-                <p:column headerText="Codigo" >
-                    <h:outputText value="#{ciudad.idCiudad}" />
+    <ui:define name="tablaModelo">
+        <p:panel header="MODELOS" rendered="#{modeloBean.desplegarVista}" style="max-width: 800px;">
+            <p:dataTable var="modelo" value="#{modeloBean.modelos}" scrollable="true" scrollHeight="200" selectionMode="single" selection="#{modeloBean.modeloSeleccionada}" rowKey="#{modelo.idMarca}">
+                <p:ajax event="rowSelect" listener="#{modeloBean.onRowSelect(event)}" update="@form"/>
+                <p:ajax event="rowUnselect" listener="#{modeloBean.onRowUnselect(event)}" update="@form"/>
+                <p:column headerText="Codigo Modelo" >
+                    <h:outputText value="#{modelo.idModelo}" />
                 </p:column>
-                <p:column headerText="Descripcion" >
-                    <h:outputText value="#{ciudad.nombreCiudad}" />
+                <p:column headerText="Codigo Marca" >
+                    <h:outputText value="#{modelo.idMarca}" />
+                </p:column>
+                <p:column headerText="Nombre Modelo" >
+                    <h:outputText value="#{modelo.nombreModelo}" />
+                </p:column>
+                <p:column headerText="Observacion Modelo" >
+                    <h:outputText value="#{modelo.observacionModelo}" />
+                </p:column>
+                <p:column headerText="Estado Modelo" >
+                    <h:outputText value="#{modelo.estadoModelo}" />
                 </p:column>
             </p:dataTable>
         </p:panel>
     </ui:define>
-    <ui:define name="formularioCiudad">
-        <p:panel header="Nueva Ciudad" rendered="#{ciudadBean.desplegarNuevo}" class="panelCentral">
-            <p:panelGrid columns="3">
-                <p:outputLabel for="nombre" value="Nombre" />
-                <p:inputText id="nombre" value="#{ciudadBean.ciudad.nombreCiudad}" required="true" maxlength="100" requiredMessage="Debe ingresar la descripcion."/>
-                <p:message for="nombre" />
-            </p:panelGrid>
-            <br/>
-            <p:commandButton value="Aceptar" update="@form" actionListener="#{ciudadBean.guardar()}"/>
-            <p:commandButton value="Cancelar" update="@form" immediate="true" actionListener="#{ciudadBean.cancelar()}"/>
-        </p:panel>
+    <ui:define name="formularioModelo">
+            <p:panel header="Nuevo Modelo" rendered="#{modeloBean.desplegarNuevo}" style="max-width: 800px;">
+                <p:panelGrid columns="3">
+                    <p:outputLabel for="codigoMarca" value="Codigo Marca" />
+                    <p:selectOneMenu id="codigoMarca" value="#{modeloBean.modelo.idMarca}" required="true">                    
+                        <f:selectItems value="#{marcaBean.marcas}" var="marca"
+                                       itemLabel="#{marca.nombreMarca}" itemValue="#{marca}"/>
+                        <f:converter converterId="marcaConverter"/>
+                    </p:selectOneMenu>                    
+                    <p:message for="codigoMarca" />
+
+                    <p:outputLabel for="nombreModelo" value="Nombre Modelo" />
+                    <p:inputText id="nombreModelo" value="#{modeloBean.modelo.nombreModelo}" required="true" maxlength="100" requiredMessage="Debe ingresar el nombre de la empresa."/>
+                    <p:message for="nombreModelo" />
+                    <p:outputLabel for="observacionModelo" value="Observacion Modelo" />
+                    <p:inputText id="observacionModelo" value="#{modeloBean.modelo.observacionModelo}" required="true" maxlength="100" requiredMessage="Debe ingresar el nombre de la empresa."/>
+                    <p:message for="observacionModelo" />
+                    <p:outputLabel for="estadoModelo" value="Estado:"/>
+                    <p:selectOneMenu id="estadoModelo" value="#{modeloBean.modelo.estadoModelo}" >
+                        <f:selectItem itemLabel="Seleccione" itemValue="#{null}" />
+                        <f:selectItem itemLabel="0" itemValue="#{false}" />
+                        <f:selectItem itemLabel="1" itemValue="#{true}" />
+                    </p:selectOneMenu>
+                    <p:message for="estadoModelo" />
+                </p:panelGrid>
+                <br/>
+                <p:commandButton value="Aceptar" update="@form" actionListener="#{modeloBean.guardar()}"/>
+                <p:commandButton value="Cancelar" update="@form" immediate="true" actionListener="#{modeloBean.cancelar()}"/>
+            </p:panel>
     </ui:define>
 </ui:composition>

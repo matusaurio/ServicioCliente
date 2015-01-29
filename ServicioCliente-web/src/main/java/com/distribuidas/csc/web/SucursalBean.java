@@ -54,6 +54,8 @@ public class SucursalBean {
     
     public void nuevo(){
         this.desplegarNuevo = true;
+        this.enNuevo = true;
+        this.enModificar = false;
         this.sucursal = new Sucursal();
     }
     

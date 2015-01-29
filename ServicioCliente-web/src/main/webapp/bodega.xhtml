@@ -1,16 +1,70 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
-    <head>
-        <title>TODO supply a title</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    </head>
-    <body>
-        <div>TODO write content</div>
-    </body>
-</html>
+<?xml version='1.0' encoding='ISO-8859-1' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" 
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core" 
+                xmlns:ui="http://java.sun.com/jsf/facelets" 
+                xmlns:p="http://primefaces.org/ui"
+                template="/plantillaInterna.xhtml">
+
+    <ui:define name="titulo">Bienvenido</ui:define>
+    <ui:define name="contenidoBodega">
+        <p:growl autoUpdate="true"/>
+        <p:menu style="width: 250px">
+            <p:submenu label="Opciones Bodega">
+                <p:menuitem value="Ver" update="@form" actionListener="#{bodegaBean.vista()}"/>
+                <p:menuitem value="Nuevo" update="@form" actionListener="#{bodegaBean.nuevo()}"/>
+                <p:menuitem value="Editar" update="@form" actionListener="#{bodegaBean.modificar()}"/>
+                <p:menuitem value="Eliminar" update="@form" actionListener="#{bodegaBean.eliminar()}"/>
+            </p:submenu>
+        </p:menu>
+    </ui:define>
+    <ui:define name="tablaBodega">
+        <p:panel header="BODEGAS" rendered="#{bodegaBean.desplegarVista}" style="max-width: 800px;">
+            <p:dataTable var="bodega" value="#{bodegaBean.bodegas}" scrollable="true" scrollHeight="200" selectionMode="single" selection="#{bodegaBean.bodegaSeleccionada}" rowKey="#{bodega.idBodega}">
+                <p:ajax event="rowSelect" listener="#{bodegaBean.onRowSelect(event)}" update="@form"/>
+                <p:ajax event="rowUnselect" listener="#{bodegaBean.onRowUnselect(event)}" update="@form"/>
+                <p:column headerText="Codigo Bodega" >
+                    <h:outputText value="#{bodega.idBodega}" />
+                </p:column>
+                <p:column headerText="Codigo Sucursal" >
+                    <h:outputText value="#{bodega.idSucursal}" />
+                </p:column>
+                <p:column headerText="Nombre Bodega" >
+                    <h:outputText value="#{bodega.nombreBodega}" />
+                </p:column>
+                <p:column headerText="Estado Bodega" >
+                    <h:outputText value="#{bodega.estadoBodega}" />
+                </p:column>
+            </p:dataTable>
+        </p:panel>
+    </ui:define>
+    <ui:define name="formularioBodega">
+            <p:panel header="Nueva Bodega" rendered="#{bodegaBean.desplegarNuevo}" style="max-width: 800px;">
+                <p:panelGrid columns="3">
+                    <p:outputLabel for="codigoBodega" value="Codigo Sucursal" />
+                    <p:selectOneMenu id="codigoBodega" value="#{bodegaBean.bodega.idSucursal}" required="true">                    
+                        <f:selectItems value="#{sucursalBean.sucursales}" var="sucursal"
+                                       itemLabel="#{sucursal.nombreSucursal}" itemValue="#{sucursal}"/>
+                        <f:converter converterId="sucursalConverter"/>
+                    </p:selectOneMenu>                    
+                    <p:message for="codigoBodega" />
+
+                    <p:outputLabel for="nombreBodega" value="Nombre Bodega:" />
+                    <p:inputText id="nombreBodega" value="#{bodegaBean.bodega.nombreBodega}" required="true" maxlength="100" requiredMessage="Debe ingresar el nombre de la empresa."/>
+                    <p:message for="nombreBodega" />
+
+                    <p:outputLabel for="estadoBodega" value="Estado:"/>
+                    <p:selectOneMenu id="estadoBodega" value="#{bodegaBean.bodega.estadoBodega}" >
+                        <f:selectItem itemLabel="Seleccione" itemValue="#{null}" />
+                        <f:selectItem itemLabel="0" itemValue="#{false}" />
+                        <f:selectItem itemLabel="1" itemValue="#{true}" />
+                    </p:selectOneMenu>
+                    <p:message for="estadoBodega" />
+                </p:panelGrid>
+                <br/>
+                <p:commandButton value="Aceptar" update="@form" actionListener="#{bodegaBean.guardar()}"/>
+                <p:commandButton value="Cancelar" update="@form" immediate="true" actionListener="#{bodegaBean.cancelar()}"/>
+            </p:panel>
+    </ui:define>
+</ui:composition>
