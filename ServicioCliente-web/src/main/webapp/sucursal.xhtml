@@ -65,7 +65,7 @@
                     <p:message for="direccionSurcusal" />
                     
                     <p:outputLabel for="telefonoSurcusal" value="Telefono Sucursal" />
-                    <p:inputText id="telefonoSurcusal" value="#{sucursalBean.sucursal.telefonoSucursal}" required="true" maxlength="10" requiredMessage="Debe ingresar el nombre de la empresa.">
+                    <p:inputText id="telefonoSurcusal" value="#{sucursalBean.sucursal.telefonoSucursal}" required="true" maxlength="10" requiredMessage="Debe ingresar telefono." validatorMessage="No puede ingresar letras">
                         <f:validateRegex pattern="[0-9]+" />
                     </p:inputText>
                     <p:message for="telefonoSurcusal" />
