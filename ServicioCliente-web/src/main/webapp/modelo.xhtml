@@ -20,7 +20,7 @@
         </p:menu>
     </ui:define>
     <ui:define name="tablaModelo">
-        <p:panel header="MODELOS" rendered="#{modeloBean.desplegarVista}" style="max-width: 800px;">
+        <p:panel header="MODELOS" rendered="#{modeloBean.desplegarVista}" class="panelCentral">
             <p:dataTable var="modelo" value="#{modeloBean.modelos}" scrollable="true" scrollHeight="200" selectionMode="single" selection="#{modeloBean.modeloSeleccionada}" rowKey="#{modelo.idMarca}">
                 <p:ajax event="rowSelect" listener="#{modeloBean.onRowSelect(event)}" update="@form"/>
                 <p:ajax event="rowUnselect" listener="#{modeloBean.onRowUnselect(event)}" update="@form"/>
@@ -43,7 +43,7 @@
         </p:panel>
     </ui:define>
     <ui:define name="formularioModelo">
-            <p:panel header="Nuevo Modelo" rendered="#{modeloBean.desplegarNuevo}" style="max-width: 800px;">
+        <p:panel header="Nuevo Modelo" rendered="#{modeloBean.desplegarNuevo}" class="panelCentral">
                 <p:panelGrid columns="3">
                     <p:outputLabel for="codigoMarca" value="Codigo Marca" />
                     <p:selectOneMenu id="codigoMarca" value="#{modeloBean.modelo.idMarca}" required="true">                    

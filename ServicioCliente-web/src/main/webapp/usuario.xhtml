@@ -20,7 +20,7 @@
         </p:menu>
     </ui:define>
     <ui:define name="tablaUsuario">
-        <p:panel header="EMPRESAS" rendered="#{usuarioBean.desplegarVista}" style="max-width: 800px;">
+        <p:panel header="EMPRESAS" rendered="#{usuarioBean.desplegarVista}" class="panelCentral">
             <p:dataTable var="usuario" value="#{usuarioBean.usuarios}" scrollable="true" scrollHeight="200" selectionMode="single" selection="#{usuarioBean.usuarioSeleccionada}" rowKey="#{usuario.idUsuario}">
                 <p:ajax event="rowSelect" listener="#{usuarioBean.onRowSelect(event)}" update="@form"/>
                 <p:ajax event="rowUnselect" listener="#{usuarioBean.onRowUnselect(event)}" update="@form"/>
@@ -49,7 +49,7 @@
         </p:panel>
     </ui:define>
     <ui:define name="formularioUsuario">
-            <p:panel header="Nuevo Usuario" rendered="#{usuarioBean.desplegarNuevo}" style="max-width: 800px;">
+        <p:panel header="Nuevo Usuario" rendered="#{usuarioBean.desplegarNuevo}" class="panelCentral">
                 <p:panelGrid columns="3">
                     <p:outputLabel for="codigoRol" value="Codigo Rol" />
                     <p:selectOneMenu id="codigoRol" value="#{usuarioBean.usuario.idRol}" required="true">                    

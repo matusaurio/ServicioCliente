@@ -20,7 +20,7 @@
         </p:menu>
     </ui:define>
     <ui:define name="tablaSucursal">
-        <p:panel header="SUCURSALES" rendered="#{sucursalBean.desplegarVista}" style="max-width: 800px;">
+        <p:panel header="SUCURSALES" rendered="#{sucursalBean.desplegarVista}" class="panelCentral">
             <p:dataTable var="sucursal" value="#{sucursalBean.sucursales}" scrollable="true" scrollHeight="200" selectionMode="single" selection="#{sucursalBean.sucursalSeleccionada}" rowKey="#{sucursal.idSucursal}">
                 <p:ajax event="rowSelect" listener="#{sucursalBean.onRowSelect(event)}" update="@form"/>
                 <p:ajax event="rowUnselect" listener="#{sucursalBean.onRowUnselect(event)}" update="@form"/>
@@ -46,7 +46,7 @@
         </p:panel>
     </ui:define>
     <ui:define name="formularioSucursal">
-            <p:panel header="Nueva Surcusal" rendered="#{sucursalBean.desplegarNuevo}" style="max-width: 800px;">
+        <p:panel header="Nueva Sucursal" rendered="#{sucursalBean.desplegarNuevo}" class="panelCentral">
                 <p:panelGrid columns="3">
                     <p:outputLabel for="codigoEmpresa" value="Codigo Empresa" />
                     <p:selectOneMenu id="codigoEmpresa" value="#{sucursalBean.sucursal.idEmpresa}" required="true">                    
