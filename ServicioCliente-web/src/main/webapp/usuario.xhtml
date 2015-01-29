@@ -20,8 +20,8 @@
         </p:menu>
     </ui:define>
     <ui:define name="tablaUsuario">
-        <p:panel header="EMPRESAS" rendered="#{usuarioBean.desplegarVista}" style="max-width: 800px;">
-            <p:dataTable var="usuario" value="#{usuarioBean.usuarios}" scrollable="true" scrollHeight="200" selectionMode="single" selection="#{usuarioBean.usuarioSeleccionada}" rowKey="#{usuario.idUsuario}">
+        <p:panel header="EMPRESAS" rendered="#{usuarioBean.desplegarVista}" class="panelCentral">
+            <p:dataTable var="usuario" value="#{usuarioBean.usuarios}" paginator="true" rows="5" paginatorAlwaysVisible="false" selectionMode="single" selection="#{usuarioBean.usuarioSeleccionada}" rowKey="#{usuario.idUsuario}">
                 <p:ajax event="rowSelect" listener="#{usuarioBean.onRowSelect(event)}" update="@form"/>
                 <p:ajax event="rowUnselect" listener="#{usuarioBean.onRowUnselect(event)}" update="@form"/>
                 <p:column headerText="Codigo Usuario" >
@@ -49,10 +49,10 @@
         </p:panel>
     </ui:define>
     <ui:define name="formularioUsuario">
-            <p:panel header="Nuevo Usuario" rendered="#{usuarioBean.desplegarNuevo}" style="max-width: 800px;">
+        <p:panel header="Nuevo Usuario" rendered="#{usuarioBean.desplegarNuevo}" class="panelCentral">
                 <p:panelGrid columns="3">
                     <p:outputLabel for="codigoRol" value="Codigo Rol" />
-                    <p:selectOneMenu id="codigoRol" value="#{usuarioBean.usuario.idRol}" required="true">                    
+                    <p:selectOneMenu id="codigoRol" value="#{usuarioBean.usuario.idRol}" required="true" effect="puff">                    
                         <f:selectItems value="#{rolBean.roles}" var="rol"
                                        itemLabel="#{rol.nombreRol}" itemValue="#{rol}"/>
                         <f:converter converterId="rolConverter"/>
@@ -60,7 +60,7 @@
                     <p:message for="codigoRol" />
                     
                     <p:outputLabel for="codigoEmpresa" value="Codigo Empresa" />
-                    <p:selectOneMenu id="codigoEmpresa" value="#{usuarioBean.usuario.idEmpresa}" required="true">                    
+                    <p:selectOneMenu id="codigoEmpresa" value="#{usuarioBean.usuario.idEmpresa}" required="true" effect="puff">                    
                         <f:selectItems value="#{empresaBean.empresas}" var="empresa"
                                        itemLabel="#{empresa.nombreEmpresa}" itemValue="#{empresa}"/>
                         <f:converter converterId="empresaConverter"/>
@@ -82,7 +82,7 @@
                     <p:message for="claveUsuario" />
                     
                     <p:outputLabel for="estadoUsuario" value="Estado:"/>
-                    <p:selectOneMenu id="estadoUsuario" value="#{usuarioBean.usuario.estadoUsuario}" >
+                    <p:selectOneMenu id="estadoUsuario" value="#{usuarioBean.usuario.estadoUsuario}" effect="explode" >
                         <f:selectItem itemLabel="- Seleccione -" itemValue="#{null}" />
                         <f:selectItem itemLabel="INACTIVO" itemValue="#{false}" />
                         <f:selectItem itemLabel="ACTIVO" itemValue="#{true}" />

@@ -21,7 +21,7 @@
     </ui:define>
     <ui:define name="tablaEstado">
         <p:panel header="ESTADOS SOLICITUD SERVICIO" rendered="#{estadoBean.desplegarVista}" class="panelCentral">
-            <p:dataTable var="estado" value="#{estadoBean.estados}" scrollable="true" scrollHeight="200" selectionMode="single" selection="#{estadoBean.estadoSeleccionada}" rowKey="#{estado.idEstadoSolicitudservicio}">
+            <p:dataTable var="estado" value="#{estadoBean.estados}" paginator="true" rows="5" paginatorAlwaysVisible="false" selectionMode="single" selection="#{estadoBean.estadoSeleccionada}" rowKey="#{estado.idEstadoSolicitudservicio}">
                 <p:ajax event="rowSelect" listener="#{estadoBean.onRowSelect(event)}" update="@form"/>
                 <p:ajax event="rowUnselect" listener="#{estadoBean.onRowUnselect(event)}" update="@form"/>
                 <p:column headerText="Codigo" >

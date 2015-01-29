@@ -21,7 +21,7 @@
     </ui:define>
     <ui:define name="tablaTipoServicio">
         <p:panel header="TIPO SERVICIO SOLICITUD SERVICIO" rendered="#{tipoServicioBean.desplegarVista}" class="panelCentral">
-            <p:dataTable var="tipoServicio" value="#{tipoServicioBean.tipoServicios}" scrollable="true" scrollHeight="200" selectionMode="single" selection="#{tipoServicioBean.tipoServicioSeleccionada}" rowKey="#{tipoServicio.idTipoServicioSolicitudservicio}">
+            <p:dataTable var="tipoServicio" value="#{tipoServicioBean.tipoServicios}" paginator="true" rows="5" paginatorAlwaysVisible="false" selectionMode="single" selection="#{tipoServicioBean.tipoServicioSeleccionada}" rowKey="#{tipoServicio.idTipoServicioSolicitudservicio}">
                 <p:ajax event="rowSelect" listener="#{tipoServicioBean.onRowSelect(event)}" update="@form"/>
                 <p:ajax event="rowUnselect" listener="#{tipoServicioBean.onRowUnselect(event)}" update="@form"/>
                 <p:column headerText="Codigo" >
@@ -53,7 +53,7 @@
                 <p:message for="fechaT" />
 
                 <p:outputLabel for="estadoT" value="Estado:"/>
-                <p:selectOneMenu id="estadoT" value="#{tipoServicioBean.tipoServicio.estadoTipoServicioSolicitudservicio}" >
+                <p:selectOneMenu id="estadoT" value="#{tipoServicioBean.tipoServicio.estadoTipoServicioSolicitudservicio}" effect="explode" >
                     <f:selectItem itemLabel="- Seleccione -" itemValue="#{null}" />
                     <f:selectItem itemLabel="INACTIVO" itemValue="#{false}" />
                     <f:selectItem itemLabel="ACTIVO" itemValue="#{true}" />

@@ -20,8 +20,8 @@
         </p:menu>
     </ui:define>
     <ui:define name="tablaBodega">
-        <p:panel header="BODEGAS" rendered="#{bodegaBean.desplegarVista}" style="max-width: 800px;">
-            <p:dataTable var="bodega" value="#{bodegaBean.bodegas}" scrollable="true" scrollHeight="200" selectionMode="single" selection="#{bodegaBean.bodegaSeleccionada}" rowKey="#{bodega.idBodega}">
+        <p:panel header="BODEGAS" rendered="#{bodegaBean.desplegarVista}" class="panelCentral">
+            <p:dataTable var="bodega" value="#{bodegaBean.bodegas}" paginator="true" rows="5" paginatorAlwaysVisible="false"  selectionMode="single" selection="#{bodegaBean.bodegaSeleccionada}" rowKey="#{bodega.idBodega}">
                 <p:ajax event="rowSelect" listener="#{bodegaBean.onRowSelect(event)}" update="@form"/>
                 <p:ajax event="rowUnselect" listener="#{bodegaBean.onRowUnselect(event)}" update="@form"/>
                 <p:column headerText="Codigo Bodega" >
@@ -40,7 +40,7 @@
         </p:panel>
     </ui:define>
     <ui:define name="formularioBodega">
-            <p:panel header="Nueva Bodega" rendered="#{bodegaBean.desplegarNuevo}" style="max-width: 800px;">
+        <p:panel header="Nueva Bodega" rendered="#{bodegaBean.desplegarNuevo}" class="panelCentral">
                 <p:panelGrid columns="3">
                     <p:outputLabel for="codigoBodega" value="Codigo Sucursal" />
                     <p:selectOneMenu id="codigoBodega" value="#{bodegaBean.bodega.idSucursal}" required="true" effect="puff">                    

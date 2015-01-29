@@ -21,13 +21,13 @@
     </ui:define>
     <ui:define name="tablaEmpresa">
         <p:panel header="EMPRESAS" rendered="#{empresaBean.desplegarVista}" class="panelCentral">
-            <p:dataTable var="empresa" value="#{empresaBean.empresas}" scrollable="true" scrollHeight="200" selectionMode="single" selection="#{empresaBean.empresaSeleccionada}" rowKey="#{empresa.idEmpresa}">
+            <p:dataTable var="empresa" value="#{empresaBean.empresas}" paginator="true" rows="5" paginatorAlwaysVisible="false" selectionMode="single" selection="#{empresaBean.empresaSeleccionada}" rowKey="#{empresa.idEmpresa}">
                 <p:ajax event="rowSelect" listener="#{empresaBean.onRowSelect(event)}" update="@form"/>
                 <p:ajax event="rowUnselect" listener="#{empresaBean.onRowUnselect(event)}" update="@form"/>
                 <p:column headerText="Codigo Empresa" >
                     <h:outputText value="#{empresa.idEmpresa}" />
                 </p:column>
-                <p:column headerText="Codigo Ciudad" >
+                <p:column headerText="Ciudad" >
                     <h:outputText value="#{empresa.idCiudad.nombreCiudad}" />
                 </p:column>
                 <p:column headerText="Nombre Empresa" >
@@ -43,7 +43,7 @@
         <p:panel header="Nueva Empresa" rendered="#{empresaBean.desplegarNuevo}" class="panelCentral">
                 <p:panelGrid columns="3">
                     <p:outputLabel for="codigoCiudad" value="Codigo Ciudad:" />
-                    <p:selectOneMenu id="codigoCiudad" value="#{empresaBean.empresa.idCiudad}" required="true">                    
+                    <p:selectOneMenu id="codigoCiudad" value="#{empresaBean.empresa.idCiudad}" required="true" effect="puff">
                         <f:selectItems value="#{ciudadBean.ciudades}" var="ciudad"
                                        itemLabel="#{ciudad.nombreCiudad}" itemValue="#{ciudad}"/>
                         <f:converter converterId="ciudadConverter"/>
@@ -55,10 +55,9 @@
                     <p:message for="nombreEmpresa" />
 
                     <p:outputLabel for="estadoEmpresa" value="Estado:"/>
-                    <p:selectOneMenu id="estadoEmpresa" value="#{empresaBean.empresa.estadoEmpresa}" >
-                        <f:selectItem itemLabel="- Seleccione -" itemValue="#{null}" />
-                        <f:selectItem itemLabel="INACTIVO" itemValue="#{false}" />
-                        <f:selectItem itemLabel="ACTIVO" itemValue="#{true}" />
+                    <p:selectOneMenu id="estadoEmpresa" value="#{empresaBean.empresa.estadoEmpresa}" effect="explode" >
+                        <f:selectItem itemLabel="Inactivo" itemValue="#{false}" />
+                        <f:selectItem itemLabel="Activo" itemValue="#{true}" />
                     </p:selectOneMenu>
                     <p:message for="estadoEmpresa" />
                 </p:panelGrid>
