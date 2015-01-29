@@ -21,7 +21,7 @@
     </ui:define>
     <ui:define name="tablaModelo">
         <p:panel header="MODELOS" rendered="#{modeloBean.desplegarVista}" class="panelCentral">
-            <p:dataTable var="modelo" value="#{modeloBean.modelos}" scrollable="true" scrollHeight="200" selectionMode="single" selection="#{modeloBean.modeloSeleccionada}" rowKey="#{modelo.idMarca}">
+            <p:dataTable var="modelo" value="#{modeloBean.modelos}"paginator="true" rows="5" paginatorAlwaysVisible="false" selectionMode="single" selection="#{modeloBean.modeloSeleccionada}" rowKey="#{modelo.idMarca}">
                 <p:ajax event="rowSelect" listener="#{modeloBean.onRowSelect(event)}" update="@form"/>
                 <p:ajax event="rowUnselect" listener="#{modeloBean.onRowUnselect(event)}" update="@form"/>
                 <p:column headerText="Codigo Modelo" >

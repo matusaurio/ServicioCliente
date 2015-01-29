@@ -21,7 +21,7 @@
     </ui:define>
     <ui:define name="tablaBodega">
         <p:panel header="BODEGAS" rendered="#{bodegaBean.desplegarVista}" class="panelCentral">
-            <p:dataTable var="bodega" value="#{bodegaBean.bodegas}" scrollable="true" scrollHeight="200" selectionMode="single" selection="#{bodegaBean.bodegaSeleccionada}" rowKey="#{bodega.idBodega}">
+            <p:dataTable var="bodega" value="#{bodegaBean.bodegas}" paginator="true" rows="5" paginatorAlwaysVisible="false"  selectionMode="single" selection="#{bodegaBean.bodegaSeleccionada}" rowKey="#{bodega.idBodega}">
                 <p:ajax event="rowSelect" listener="#{bodegaBean.onRowSelect(event)}" update="@form"/>
                 <p:ajax event="rowUnselect" listener="#{bodegaBean.onRowUnselect(event)}" update="@form"/>
                 <p:column headerText="Codigo Bodega" >
