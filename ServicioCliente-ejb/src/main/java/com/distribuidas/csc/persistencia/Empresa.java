@@ -148,4 +148,12 @@ public class Empresa implements Serializable {
         return idEmpresa.toString();
     }
     
+    public String getEstadoEmpresaTxt() {
+        String tmp;
+        if("true".compareTo(String.valueOf(this.estadoEmpresa))==0)
+            tmp = "Activo";
+        else
+            tmp = "Inactivo";
+        return tmp;
+    }
 }

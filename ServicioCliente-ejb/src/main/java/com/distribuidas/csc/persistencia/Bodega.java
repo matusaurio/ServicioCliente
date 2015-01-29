@@ -137,4 +137,12 @@ public class Bodega implements Serializable {
         return idBodega.toString();
     }
     
+    public String getEstadoBodegaTxt() {
+        String tmp;
+        if("true".compareTo(String.valueOf(this.estadoBodega))==0)
+            tmp = "Activo";
+        else
+            tmp = "Inactivo";
+        return tmp;
+    }
 }

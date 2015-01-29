@@ -133,4 +133,12 @@ public class Marca implements Serializable {
         return idMarca.toString();
     }
     
+    public String getEstadoMarcaTxt() {
+        String tmp;
+        if("true".compareTo(String.valueOf(this.estadoMarca))==0)
+            tmp = "Activo";
+        else
+            tmp = "Inactivo";
+        return tmp;
+    }
 }

@@ -154,4 +154,12 @@ public class TipoServicio implements Serializable {
         return idTipoServicioSolicitudservicio.toString();
     }
     
+    public String getEstadoTipoServicioTxt() {
+        String tmp;
+        if("true".compareTo(String.valueOf(this.estadoTipoServicioSolicitudservicio))==0)
+            tmp = "Activo";
+        else
+            tmp = "Inactivo";
+        return tmp;
+    }
 }

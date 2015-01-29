@@ -29,7 +29,7 @@ public class EmpresaServicio {
     public List<Empresa> obtenerTodos() {
         return this.empresaFacade.findAll();
     }
-
+    
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public void crear(Empresa empresa) {
         this.empresaFacade.create(empresa);

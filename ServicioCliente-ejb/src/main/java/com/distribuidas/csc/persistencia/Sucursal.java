@@ -161,4 +161,12 @@ public class Sucursal implements Serializable {
         return idSucursal.toString();
     }
     
+    public String getEstadoSucursalTxt(){
+        String tmp;
+        if("true".compareTo(String.valueOf(this.estadoSucursal))==0)
+            tmp = "Activo";
+        else
+            tmp = "Inactivo";
+        return tmp;
+    }
 }

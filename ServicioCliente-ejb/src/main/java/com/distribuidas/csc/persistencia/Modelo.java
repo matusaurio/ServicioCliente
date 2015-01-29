@@ -146,4 +146,12 @@ public class Modelo implements Serializable {
         return idModelo.toString();
     }
     
+    public String getEstadoModeloTxt() {
+        String tmp;
+        if("true".compareTo(String.valueOf(this.estadoModelo))==0)
+            tmp = "Activo";
+        else
+            tmp = "Inactivo";
+        return tmp;
+    }
 }

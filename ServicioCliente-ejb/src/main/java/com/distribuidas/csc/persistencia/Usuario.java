@@ -189,4 +189,12 @@ public class Usuario implements Serializable {
         return idUsuario.toString();
     }
     
+    public String getEstadoUsuarioTxt() {
+        String tmp;
+        if("true".compareTo(String.valueOf(this.estadoUsuario))==0)
+            tmp = "Activo";
+        else
+            tmp = "Inactivo";
+        return tmp;
+    }
 }
