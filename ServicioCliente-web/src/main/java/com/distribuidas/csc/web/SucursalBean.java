@@ -7,11 +7,13 @@ package com.distribuidas.csc.web;
 
 import com.distribuidas.csc.persistencia.Sucursal;
 import com.distribuidas.csc.servicio.SucursalServicio;
+import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.model.SelectItem;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.event.UnselectEvent;
 
@@ -24,13 +26,15 @@ import org.primefaces.event.UnselectEvent;
 public class SucursalBean {
     
     private List<Sucursal> sucursales;
+    private List<Sucursal> sucursalesE;
     private Sucursal sucursal;
     private Sucursal sucursalSeleccionada;
-    
+        
     private Boolean desplegarVista = false;
     private Boolean desplegarNuevo = false;
     
     private String tituloFormulario;
+    private Integer codEmpresa;
     private Boolean enNuevo;
     private Boolean enModificar;
     
@@ -46,6 +50,13 @@ public class SucursalBean {
     @PostConstruct
     public void init(){
         this.sucursales = this.sucursalServicio.obtenerTodos();
+        this.sucursalesE = this.sucursalServicio.obtenerSurcursalesE(this.codEmpresa);
+    }
+    
+    public void cargarCombo(){
+        System.out.println("Codigo empresa");
+        System.out.println(codEmpresa);
+        this.sucursalesE = this.sucursalServicio.obtenerSurcursalesE(this.codEmpresa);
     }
     
     public void vista(){
@@ -95,6 +106,22 @@ public class SucursalBean {
 
     public void onRowUnselect(UnselectEvent event) {
 
+    }
+
+    public List<Sucursal> getSucursalesE() {
+        return sucursalesE;
+    }
+
+    public void setSucursalesE(List<Sucursal> sucursalesE) {
+        this.sucursalesE = sucursalesE;
+    }
+
+    public Integer getCodEmpresa() {
+        return codEmpresa;
+    }
+
+    public void setCodEmpresa(Integer codEmpresa) {
+        this.codEmpresa = codEmpresa;
     }
 
     public List<Sucursal> getSucursales() {

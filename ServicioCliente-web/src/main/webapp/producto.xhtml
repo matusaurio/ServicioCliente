@@ -1,0 +1,102 @@
+<?xml version='1.0' encoding='ISO-8859-1' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" 
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core" 
+                xmlns:ui="http://java.sun.com/jsf/facelets" 
+                xmlns:p="http://primefaces.org/ui"
+                template="/plantillaInterna.xhtml">
+
+    <ui:define name="titulo">Bienvenido</ui:define>
+    <ui:define name="contenidoProducto">
+        <p:growl autoUpdate="true"/>
+        <p:menu style="width: 250px">
+            <p:submenu label="Opciones Producto">
+                <p:menuitem value="Ver" update="@form" actionListener="#{productoBean.vista()}"/>
+                <p:menuitem value="Nuevo" update="@form" actionListener="#{productoBean.nuevo()}"/>
+                <p:menuitem value="Editar" update="@form" actionListener="#{productoBean.modificar()}"/>
+                <p:menuitem value="Eliminar" update="@form" actionListener="#{productoBean.eliminar()}"/>
+            </p:submenu>
+        </p:menu>
+    </ui:define>
+    <ui:define name="tablaProducto">
+        <p:panel header="PRODUCTOS" rendered="#{productoBean.desplegarVista}" class="panelCentral">
+            <p:dataTable var="producto" value="#{productoBean.productos}" paginator="true" rows="5" paginatorAlwaysVisible="false" selectionMode="single" selection="#{productoBean.productoSeleccionado}" rowKey="#{producto.idSucursal}">
+                <p:ajax event="rowSelect" listener="#{productoBean.onRowSelect(event)}" update="@form"/>
+                <p:ajax event="rowUnselect" listener="#{productoBean.onRowUnselect(event)}" update="@form"/>
+                <p:column headerText="Codigo Producto" >
+                    <h:outputText value="#{producto.idProducto}" />
+                </p:column>
+                <p:column headerText="Codigo Modelo" >
+                    <h:outputText value="#{producto.idModelo.nombreModelo}" />
+                </p:column>
+                <p:column headerText="Codigo Bodega" >
+                    <h:outputText value="#{producto.idBodega.nombreBodega}" />
+                </p:column>
+                <p:column headerText="Codigo Producto" >
+                    <h:outputText value="#{producto.codigoProducto}" />
+                </p:column>
+                <p:column headerText="Nombre  Producto" >
+                    <h:outputText value="#{producto.nombreProducto}" />
+                </p:column>
+                <p:column headerText="Precio  Producto" >
+                    <h:outputText value="#{producto.precioProducto}" />
+                </p:column>
+                <p:column headerText="Fecha Creacion Producto" >
+                    <h:outputText value="#{producto.fechaCreacionProducto}" />
+                </p:column>
+                <p:column headerText="Observacion Producto" >
+                    <h:outputText value="#{producto.observacionProducto}" />
+                </p:column>
+                <p:column headerText="Cantidad Producto" >
+                    <h:outputText value="#{producto.cantidadProducto}" />
+                </p:column>
+            </p:dataTable>
+        </p:panel>
+    </ui:define>
+    <ui:define name="formularioProducto">
+        <p:panel header="Nuevo Producto" rendered="#{productoBean.desplegarNuevo}" class="panelCentral">
+                <p:panelGrid columns="3">
+                    <p:outputLabel for="codigoModelo" value="Codigo Modelo" />
+                    <p:selectOneMenu id="codigoModelo" value="#{productoBean.producto.idModelo}" required="true" effect="puff">                    
+                        <f:selectItems value="#{modeloBean.modelos}" var="modelo"
+                                       itemLabel="#{modelo.nombreModelo}" itemValue="#{modelo}"/>
+                        <f:converter converterId="modeloConverter"/>
+                    </p:selectOneMenu>                    
+                    <p:message for="codigoModelo" />
+                    
+                    <p:outputLabel for="codigoBodega" value="Codigo Bodega" />
+                    <p:selectOneMenu id="codigoBodega" value="#{productoBean.producto.idBodega}" required="true" effect="puff">                    
+                        <f:selectItems value="#{bodegaBean.bodegas}" var="bodega"
+                                       itemLabel="#{bodega.nombreBodega}" itemValue="#{bodega}"/>
+                        <f:converter converterId="bodegaConverter"/>
+                    </p:selectOneMenu>                    
+                    <p:message for="codigoBodega" />
+                    
+                    <p:outputLabel for="nombreProducto" value="Nombre Producto" />
+                    <p:inputText id="nombreProducto" value="#{productoBean.producto.nombreProducto}" required="true" maxlength="100" requiredMessage="Debe ingresar el nombre de la empresa."/>
+                    <p:message for="nombreProducto" />
+                    
+                    <p:outputLabel for="cantidadProducto" value="Cantidad Producto" />
+                    <p:inputText id="cantidadProducto" value="#{productoBean.producto.cantidadProducto}" required="true" maxlength="100" requiredMessage="Debe ingresar el nombre de la empresa."/>
+                    <p:message for="cantidadProducto" />
+                    
+                    <p:outputLabel for="precioProducto" value="Precio Producto" />
+                    <p:inputText id="precioProducto" value="#{productoBean.producto.precioProducto}" required="true" maxlength="100" requiredMessage="Debe ingresar el nombre de la empresa."/>
+                    <p:message for="precioProducto" />
+                    
+                    <p:outputLabel for="fechaProducto" value="Fecha" />
+                    <p:inputText id="fechaProducto" value="#{productoBean.producto.fechaCreacionProducto}" required="true" maxlength="100" requiredMessage="Debe ingresar el nombre de la empresa."/>
+                    <p:message for="fechaProducto" />
+                    
+                    <p:outputLabel for="observacionProducto" value="Observacion Producto" />
+                    <p:inputText id="observacionProducto" value="#{productoBean.producto.observacionProducto}" required="true" maxlength="100" requiredMessage="Debe ingresar el nombre de la empresa."/>
+                    <p:message for="observacionProducto" />
+                    
+                </p:panelGrid>
+                <br/>
+                <p:commandButton value="Aceptar" update="@form" actionListener="#{productoBean.guardar()}"/>
+                <p:commandButton value="Cancelar" update="@form" immediate="true" actionListener="#{productoBean.cancelar()}"/>
+            </p:panel>
+    </ui:define>
+</ui:composition>

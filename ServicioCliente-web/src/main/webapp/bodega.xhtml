@@ -42,13 +42,22 @@
     <ui:define name="formularioBodega">
         <p:panel header="Nueva Bodega" rendered="#{bodegaBean.desplegarNuevo}" class="panelCentral">
                 <p:panelGrid columns="3">
-                    <p:outputLabel for="codigoBodega" value="Codigo Sucursal" />
-                    <p:selectOneMenu id="codigoBodega" value="#{bodegaBean.bodega.idSucursal}" required="true" effect="puff">                    
-                        <f:selectItems value="#{sucursalBean.sucursales}" var="sucursal"
+                    <p:outputLabel for="codigoEmpresa" value="Empresa" />
+                    <p:selectOneMenu id="codigoEmpresa" value="#{sucursalBean.codEmpresa}" required="true" effect="puff">                    
+                        <f:selectItem itemLabel="- Seleccione -" itemValue=""/>
+                        <f:selectItems value="#{empresaBean.listaCombo}"/>
+                        <p:ajax update="codigoSucursal" event="change" process="@this" listener="#{sucursalBean.cargarCombo()}"/>
+                    </p:selectOneMenu>                    
+                    <p:commandButton value="Aceptar" update="codigoSucursal" actionListener="#{sucursalBean.cargarCombo()}"/>
+                    
+                    <p:outputLabel for="codigoSucursal" value="Codigo Sucursal" />
+                    <p:selectOneMenu id="codigoSucursal" value="#{bodegaBean.bodega.idSucursal}" required="true" effect="puff">                    
+                        <f:selectItems value="#{sucursalBean.sucursalesE}" var="sucursal"
                                        itemLabel="#{sucursal.nombreSucursal}" itemValue="#{sucursal}"/>
                         <f:converter converterId="sucursalConverter"/>
+                        <p:ajax update="codigoSucursal" event="change" process="@this"/>
                     </p:selectOneMenu>                    
-                    <p:message for="codigoBodega" />
+                    <p:message for="codigoSucursal" />
 
                     <p:outputLabel for="nombreBodega" value="Nombre Bodega:" />
                     <p:inputText id="nombreBodega" value="#{bodegaBean.bodega.nombreBodega}" required="true" maxlength="100" requiredMessage="Debe ingresar el nombre de la empresa."/>

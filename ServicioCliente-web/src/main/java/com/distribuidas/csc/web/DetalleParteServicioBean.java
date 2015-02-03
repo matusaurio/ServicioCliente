@@ -5,16 +5,13 @@
  */
 package com.distribuidas.csc.web;
 
-import com.distribuidas.csc.persistencia.Empresa;
-import com.distribuidas.csc.servicio.EmpresaServicio;
-import java.io.Serializable;
-import java.util.ArrayList;
+import com.distribuidas.csc.persistencia.DetalleParteServicio;
+import com.distribuidas.csc.servicio.DetalleParteServicioServicio;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-import javax.faces.model.SelectItem;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.event.UnselectEvent;
 
@@ -24,16 +21,14 @@ import org.primefaces.event.UnselectEvent;
  */
 @ManagedBean
 @ViewScoped
-public class EmpresaBean implements Serializable {
-
+public class DetalleParteServicioBean {
+    
     @EJB
-    private EmpresaServicio empresaServicio;
+    private DetalleParteServicioServicio detalleParteServicioServicio;
 
-    private List<SelectItem> listaCombo;
-
-    private List<Empresa> empresas;
-    private Empresa empresa;
-    private Empresa empresaSeleccionada;
+    private List<DetalleParteServicio> detalleParteServicios;
+    private DetalleParteServicio detalleParteServicio;
+    private DetalleParteServicio detalleParteServicioSeleccionado;
 
     private Boolean desplegarVista = false;
     private Boolean desplegarNuevo = false;
@@ -49,7 +44,7 @@ public class EmpresaBean implements Serializable {
 
     @PostConstruct
     public void init() {
-        this.empresas = this.empresaServicio.obtenerTodos();
+        this.detalleParteServicios = this.detalleParteServicioServicio.obtenerTodos();
     }
 
     public void vista() {
@@ -60,18 +55,18 @@ public class EmpresaBean implements Serializable {
         this.desplegarNuevo = true;
         this.enNuevo = true;
         this.enModificar = false;
-        this.empresa = new Empresa();
+        this.detalleParteServicio = new DetalleParteServicio();
     }
 
     public void guardar() {
         if (this.enNuevo) {
-            this.empresaServicio.crear(this.empresa);
+            this.detalleParteServicioServicio.crear(this.detalleParteServicio);
             this.desplegarNuevo = false;
-            this.empresas.add(this.empresa);
+            this.detalleParteServicios.add(this.detalleParteServicio);
             this.enNuevo = false;
         } else if (this.enModificar) {
             System.err.println("modificar");
-            this.empresaServicio.actualizar(this.empresa);
+            this.detalleParteServicioServicio.actualizar(this.detalleParteServicio);
             this.desplegarNuevo = false;
             this.enModificar = false;
         }
@@ -81,12 +76,12 @@ public class EmpresaBean implements Serializable {
         this.enModificar = true;
         this.enNuevo = false;
         this.desplegarNuevo = true;
-        this.empresa = this.empresaSeleccionada;
+        this.detalleParteServicio = this.detalleParteServicioSeleccionado;
     }
 
     public void eliminar() {
-        this.empresaServicio.eliminar(this.empresaSeleccionada);
-        this.empresas.remove(this.empresaSeleccionada);
+        this.detalleParteServicioServicio.eliminar(this.detalleParteServicioSeleccionado);
+        this.detalleParteServicios.remove(this.detalleParteServicioSeleccionado);
     }
 
     public void cancelar() {
@@ -101,34 +96,24 @@ public class EmpresaBean implements Serializable {
 
     }
 
-    public List<SelectItem> getListaCombo() {
-        this.listaCombo = new ArrayList<SelectItem>();
-        List<Empresa> empresas2 = this.empresaServicio.obtenerTodos();
-        
-        this.listaCombo.clear();
-        
-        for(Empresa e:empresas2){
-            SelectItem selectItem = new SelectItem(e.getIdEmpresa(), e.getNombreEmpresa());
-            this.listaCombo.add(selectItem);
-        }
-        System.out.println("Se cargaron las empresas");
-        return this.listaCombo;
+    public List<DetalleParteServicio> getDetalleParteServicios() {
+        return detalleParteServicios;
     }
 
-    public void setListaCombo(List<SelectItem> listaCombo) {
-        this.listaCombo = listaCombo;
+    public DetalleParteServicio getDetalleParteServicio() {
+        return detalleParteServicio;
     }
 
-    public List<Empresa> getEmpresas() {
-        return empresas;
+    public void setDetalleParteServicio(DetalleParteServicio detalleParteServicio) {
+        this.detalleParteServicio = detalleParteServicio;
     }
 
-    public Empresa getEmpresa() {
-        return empresa;
+    public DetalleParteServicio getDetalleParteServicioSeleccionado() {
+        return detalleParteServicioSeleccionado;
     }
 
-    public void setEmpresa(Empresa empresa) {
-        this.empresa = empresa;
+    public void setDetalleParteServicioSeleccionado(DetalleParteServicio detalleParteServicioSeleccionado) {
+        this.detalleParteServicioSeleccionado = detalleParteServicioSeleccionado;
     }
 
     public Boolean getDesplegarVista() {
@@ -145,14 +130,6 @@ public class EmpresaBean implements Serializable {
 
     public void setDesplegarNuevo(Boolean desplegarNuevo) {
         this.desplegarNuevo = desplegarNuevo;
-    }
-
-    public Empresa getEmpresaSeleccionada() {
-        return empresaSeleccionada;
-    }
-
-    public void setEmpresaSeleccionada(Empresa empresaSeleccionada) {
-        this.empresaSeleccionada = empresaSeleccionada;
     }
 
     public String getTituloFormulario() {
@@ -210,5 +187,5 @@ public class EmpresaBean implements Serializable {
     public void setActivarCambiarEstado(Boolean activarCambiarEstado) {
         this.activarCambiarEstado = activarCambiarEstado;
     }
-
+    
 }

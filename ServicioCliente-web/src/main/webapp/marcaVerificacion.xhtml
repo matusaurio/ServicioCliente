@@ -1,0 +1,69 @@
+<?xml version='1.0' encoding='ISO-8859-1' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" 
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core" 
+                xmlns:ui="http://java.sun.com/jsf/facelets" 
+                xmlns:p="http://primefaces.org/ui"
+                template="/plantillaInterna.xhtml">
+
+    <ui:define name="titulo">Bienvenido</ui:define>
+    <ui:define name="contenidoMarcaVerificacion">
+        <p:growl autoUpdate="true"/>
+        <p:menu class="menuLateral">
+            <p:submenu label="Opciones SMarca">
+                <p:menuitem value="Ver" update="@form" actionListener="#{empresaBean.vista()}"/>
+                <p:menuitem value="Nuevo" update="@form" actionListener="#{empresaBean.nuevo()}"/>
+                <p:menuitem value="Editar" update="@form" actionListener="#{empresaBean.modificar()}"/>
+                <p:menuitem value="Eliminar" update="@form" actionListener="#{empresaBean.eliminar()}"/>
+            </p:submenu>
+        </p:menu>
+    </ui:define>
+    <ui:define name="tablaMarcaVerificacion">
+        <p:panel header="EMPRESAS" rendered="#{empresaBean.desplegarVista}" class="panelCentral">
+            <p:dataTable var="empresa" value="#{empresaBean.empresas}" paginator="true" rows="5" paginatorAlwaysVisible="false" selectionMode="single" selection="#{empresaBean.empresaSeleccionada}" rowKey="#{empresa.idEmpresa}">
+                <p:ajax event="rowSelect" listener="#{empresaBean.onRowSelect(event)}" update="@form"/>
+                <p:ajax event="rowUnselect" listener="#{empresaBean.onRowUnselect(event)}" update="@form"/>
+                <p:column headerText="Codigo Empresa" >
+                    <h:outputText value="#{empresa.idEmpresa}" />
+                </p:column>
+                <p:column headerText="Ciudad" >
+                    <h:outputText value="#{empresa.idCiudad.nombreCiudad}" />
+                </p:column>
+                <p:column headerText="Nombre Empresa" >
+                    <h:outputText value="#{empresa.nombreEmpresa}" />
+                </p:column>
+                <p:column headerText="Estado Empresa" >
+                    <h:outputText value="#{empresa.estadoEmpresaTxt}" />
+                </p:column>
+            </p:dataTable>
+        </p:panel>
+    </ui:define>
+    <ui:define name="formularioMarcaVerificacion">
+        <p:panel header="Nueva Empresa" rendered="#{empresaBean.desplegarNuevo}" class="panelCentral">
+                <p:panelGrid columns="3">
+                    <p:outputLabel for="codigoCiudad" value="Codigo Ciudad:" />
+                    <p:selectOneMenu id="codigoCiudad" value="#{empresaBean.empresa.idCiudad}" required="true" effect="puff">
+                        <f:selectItems value="#{ciudadBean.ciudades}" var="ciudad"
+                                       itemLabel="#{ciudad.nombreCiudad}" itemValue="#{ciudad}"/>
+                        <f:converter converterId="ciudadConverter"/>
+                    </p:selectOneMenu>                    
+                    <p:message for="codigoCiudad" />
+
+                    <p:outputLabel for="nombreEmpresa" value="Nombre Empresa:" />
+                    <p:inputText id="nombreEmpresa" value="#{empresaBean.empresa.nombreEmpresa}" required="true" maxlength="100" requiredMessage="Debe ingresar el nombre de la empresa."/>
+                    <p:message for="nombreEmpresa" />
+
+                    <p:outputLabel for="estadoEmpresa" value="Estado:"/>
+                    <p:selectOneMenu id="estadoEmpresa" value="#{empresaBean.empresa.estadoEmpresa}" effect="explode" >
+                        <f:selectItem itemLabel="Inactivo" itemValue="#{false}" />
+                        <f:selectItem itemLabel="Activo" itemValue="#{true}" />
+                    </p:selectOneMenu>
+                    <p:message for="estadoEmpresa" />
+                </p:panelGrid>
+                <br/>
+                <p:commandButton value="Aceptar" update="@form" actionListener="#{empresaBean.guardar()}"/>
+                <p:commandButton value="Cancelar" update="@form" immediate="true" actionListener="#{empresaBean.cancelar()}"/>
+            </p:panel>
+    </ui:define>
+</ui:composition>
