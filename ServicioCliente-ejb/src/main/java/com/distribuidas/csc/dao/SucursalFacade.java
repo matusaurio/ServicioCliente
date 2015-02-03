@@ -6,9 +6,11 @@
 package com.distribuidas.csc.dao;
 
 import com.distribuidas.csc.persistencia.Sucursal;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -26,6 +28,13 @@ public class SucursalFacade extends AbstractFacade<Sucursal> {
 
     public SucursalFacade() {
         super(Sucursal.class);
+    }
+    
+    public List<Sucursal> findByEmpresa(Integer idEmpresa) {
+        Query qry = this.em.createQuery(
+                "SELECT obj FROM Sucursal obj WHERE obj.idEmpresa=?1");
+        qry.setParameter(1, idEmpresa);
+        return qry.getResultList();
     }
     
 }

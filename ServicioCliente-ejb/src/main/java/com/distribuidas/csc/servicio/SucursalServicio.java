@@ -28,7 +28,11 @@ public class SucursalServicio {
     public List<Sucursal> obtenerTodos() {
         return this.sucursalFacade.findAll();
     }
-
+    
+    public List<Sucursal> obtenerSurcursalesE(Integer idEmpresa) {
+        return this.sucursalFacade.findByEmpresa(idEmpresa);
+    }
+    
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public void crear(Sucursal sucursal) {
         this.sucursalFacade.create(sucursal);
