@@ -7,20 +7,21 @@ package com.distribuidas.csc.persistencia;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -51,9 +52,8 @@ public class DetalleParteServicio implements Serializable {
     @NotNull
     @Column(name = "CANTIDAD_DETALLE_PARTESERVICIO")
     private BigDecimal cantidadDetalleParteservicio;
-    @JoinColumn(name = "ID_PARTESERVICIO", referencedColumnName = "ID_PARTESERVICIO")
-    @ManyToOne
-    private ParteServicio idParteservicio;
+    @OneToMany(mappedBy = "idDetalleParteservicio")
+    private List<ParteServicio> parteServicioList;
 
     public DetalleParteServicio() {
     }
@@ -92,12 +92,13 @@ public class DetalleParteServicio implements Serializable {
         this.cantidadDetalleParteservicio = cantidadDetalleParteservicio;
     }
 
-    public ParteServicio getIdParteservicio() {
-        return idParteservicio;
+    @XmlTransient
+    public List<ParteServicio> getParteServicioList() {
+        return parteServicioList;
     }
 
-    public void setIdParteservicio(ParteServicio idParteservicio) {
-        this.idParteservicio = idParteservicio;
+    public void setParteServicioList(List<ParteServicio> parteServicioList) {
+        this.parteServicioList = parteServicioList;
     }
 
     @Override

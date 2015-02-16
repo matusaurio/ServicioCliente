@@ -34,8 +34,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Empresa.findAll", query = "SELECT e FROM Empresa e"),
     @NamedQuery(name = "Empresa.findByIdEmpresa", query = "SELECT e FROM Empresa e WHERE e.idEmpresa = :idEmpresa"),
-    @NamedQuery(name = "Empresa.findByNombreEmpresa", query = "SELECT e FROM Empresa e WHERE e.nombreEmpresa = :nombreEmpresa"),
-    @NamedQuery(name = "Empresa.findByEstadoEmpresa", query = "SELECT e FROM Empresa e WHERE e.estadoEmpresa = :estadoEmpresa")})
+    @NamedQuery(name = "Empresa.findByNombreEmpresa", query = "SELECT e FROM Empresa e WHERE e.nombreEmpresa = :nombreEmpresa")})
 public class Empresa implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -48,14 +47,14 @@ public class Empresa implements Serializable {
     @Size(min = 1, max = 30)
     @Column(name = "NOMBRE_EMPRESA")
     private String nombreEmpresa;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "ESTADO_EMPRESA")
-    private boolean estadoEmpresa;
     @OneToMany(mappedBy = "idEmpresa")
     private List<Sucursal> sucursalList;
     @OneToMany(mappedBy = "idEmpresa")
-    private List<Usuario> usuarioList;
+    private List<SolicitudServicio> solicitudServicioList;
+    @OneToMany(mappedBy = "idEmpresa")
+    private List<Contacto> contactoList;
+    @OneToMany(mappedBy = "idEmpresa")
+    private List<ParteServicio> parteServicioList;
     @JoinColumn(name = "ID_CIUDAD", referencedColumnName = "ID_CIUDAD")
     @ManyToOne
     private Ciudad idCiudad;
@@ -67,10 +66,9 @@ public class Empresa implements Serializable {
         this.idEmpresa = idEmpresa;
     }
 
-    public Empresa(Integer idEmpresa, String nombreEmpresa, boolean estadoEmpresa) {
+    public Empresa(Integer idEmpresa, String nombreEmpresa) {
         this.idEmpresa = idEmpresa;
         this.nombreEmpresa = nombreEmpresa;
-        this.estadoEmpresa = estadoEmpresa;
     }
 
     public Integer getIdEmpresa() {
@@ -89,14 +87,6 @@ public class Empresa implements Serializable {
         this.nombreEmpresa = nombreEmpresa;
     }
 
-    public boolean getEstadoEmpresa() {
-        return estadoEmpresa;
-    }
-
-    public void setEstadoEmpresa(boolean estadoEmpresa) {
-        this.estadoEmpresa = estadoEmpresa;
-    }
-
     @XmlTransient
     public List<Sucursal> getSucursalList() {
         return sucursalList;
@@ -107,12 +97,30 @@ public class Empresa implements Serializable {
     }
 
     @XmlTransient
-    public List<Usuario> getUsuarioList() {
-        return usuarioList;
+    public List<SolicitudServicio> getSolicitudServicioList() {
+        return solicitudServicioList;
     }
 
-    public void setUsuarioList(List<Usuario> usuarioList) {
-        this.usuarioList = usuarioList;
+    public void setSolicitudServicioList(List<SolicitudServicio> solicitudServicioList) {
+        this.solicitudServicioList = solicitudServicioList;
+    }
+
+    @XmlTransient
+    public List<Contacto> getContactoList() {
+        return contactoList;
+    }
+
+    public void setContactoList(List<Contacto> contactoList) {
+        this.contactoList = contactoList;
+    }
+
+    @XmlTransient
+    public List<ParteServicio> getParteServicioList() {
+        return parteServicioList;
+    }
+
+    public void setParteServicioList(List<ParteServicio> parteServicioList) {
+        this.parteServicioList = parteServicioList;
     }
 
     public Ciudad getIdCiudad() {
@@ -148,12 +156,4 @@ public class Empresa implements Serializable {
         return idEmpresa.toString();
     }
     
-    public String getEstadoEmpresaTxt() {
-        String tmp;
-        if("true".compareTo(String.valueOf(this.estadoEmpresa))==0)
-            tmp = "Activo";
-        else
-            tmp = "Inactivo";
-        return tmp;
-    }
 }

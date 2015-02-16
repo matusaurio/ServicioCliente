@@ -35,8 +35,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Modelo.findAll", query = "SELECT m FROM Modelo m"),
     @NamedQuery(name = "Modelo.findByIdModelo", query = "SELECT m FROM Modelo m WHERE m.idModelo = :idModelo"),
     @NamedQuery(name = "Modelo.findByNombreModelo", query = "SELECT m FROM Modelo m WHERE m.nombreModelo = :nombreModelo"),
-    @NamedQuery(name = "Modelo.findByObservacionModelo", query = "SELECT m FROM Modelo m WHERE m.observacionModelo = :observacionModelo"),
-    @NamedQuery(name = "Modelo.findByEstadoModelo", query = "SELECT m FROM Modelo m WHERE m.estadoModelo = :estadoModelo")})
+    @NamedQuery(name = "Modelo.findByObservacionModelo", query = "SELECT m FROM Modelo m WHERE m.observacionModelo = :observacionModelo")})
 public class Modelo implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -52,8 +51,8 @@ public class Modelo implements Serializable {
     @Size(max = 60)
     @Column(name = "OBSERVACION_MODELO")
     private String observacionModelo;
-    @Column(name = "ESTADO_MODELO")
-    private Boolean estadoModelo;
+    @OneToMany(mappedBy = "idModelo")
+    private List<SolicitudServicio> solicitudServicioList;
     @OneToMany(mappedBy = "idModelo")
     private List<Producto> productoList;
     @JoinColumn(name = "ID_MARCA", referencedColumnName = "ID_MARCA")
@@ -96,12 +95,13 @@ public class Modelo implements Serializable {
         this.observacionModelo = observacionModelo;
     }
 
-    public Boolean getEstadoModelo() {
-        return estadoModelo;
+    @XmlTransient
+    public List<SolicitudServicio> getSolicitudServicioList() {
+        return solicitudServicioList;
     }
 
-    public void setEstadoModelo(Boolean estadoModelo) {
-        this.estadoModelo = estadoModelo;
+    public void setSolicitudServicioList(List<SolicitudServicio> solicitudServicioList) {
+        this.solicitudServicioList = solicitudServicioList;
     }
 
     @XmlTransient
@@ -146,12 +146,4 @@ public class Modelo implements Serializable {
         return idModelo.toString();
     }
     
-    public String getEstadoModeloTxt() {
-        String tmp;
-        if("true".compareTo(String.valueOf(this.estadoModelo))==0)
-            tmp = "Activo";
-        else
-            tmp = "Inactivo";
-        return tmp;
-    }
 }

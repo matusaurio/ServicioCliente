@@ -6,8 +6,6 @@
 package com.distribuidas.csc.persistencia;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
-import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -21,10 +19,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -40,13 +35,8 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "ParteServicio.findAll", query = "SELECT p FROM ParteServicio p"),
     @NamedQuery(name = "ParteServicio.findByIdParteservicio", query = "SELECT p FROM ParteServicio p WHERE p.idParteservicio = :idParteservicio"),
-    @NamedQuery(name = "ParteServicio.findByFechaInicioParteservicio", query = "SELECT p FROM ParteServicio p WHERE p.fechaInicioParteservicio = :fechaInicioParteservicio"),
-    @NamedQuery(name = "ParteServicio.findByFechaFinParteservicio", query = "SELECT p FROM ParteServicio p WHERE p.fechaFinParteservicio = :fechaFinParteservicio"),
-    @NamedQuery(name = "ParteServicio.findByTotalHorasParteservicio", query = "SELECT p FROM ParteServicio p WHERE p.totalHorasParteservicio = :totalHorasParteservicio"),
     @NamedQuery(name = "ParteServicio.findByEstadoParteservicio", query = "SELECT p FROM ParteServicio p WHERE p.estadoParteservicio = :estadoParteservicio"),
     @NamedQuery(name = "ParteServicio.findByFirmaParteservicio", query = "SELECT p FROM ParteServicio p WHERE p.firmaParteservicio = :firmaParteservicio"),
-    @NamedQuery(name = "ParteServicio.findByFechaFirmaParteservicio", query = "SELECT p FROM ParteServicio p WHERE p.fechaFirmaParteservicio = :fechaFirmaParteservicio"),
-    @NamedQuery(name = "ParteServicio.findBySugerenciaParteservicio", query = "SELECT p FROM ParteServicio p WHERE p.sugerenciaParteservicio = :sugerenciaParteservicio"),
     @NamedQuery(name = "ParteServicio.findByObservacionParteservicio", query = "SELECT p FROM ParteServicio p WHERE p.observacionParteservicio = :observacionParteservicio")})
 public class ParteServicio implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -57,35 +47,12 @@ public class ParteServicio implements Serializable {
     private Integer idParteservicio;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "FECHA_INICIO_PARTESERVICIO")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date fechaInicioParteservicio;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "FECHA_FIN_PARTESERVICIO")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date fechaFinParteservicio;
-    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "TOTAL_HORAS_PARTESERVICIO")
-    private BigDecimal totalHorasParteservicio;
-    @Basic(optional = false)
-    @NotNull
     @Column(name = "ESTADO_PARTESERVICIO")
     private boolean estadoParteservicio;
     @Basic(optional = false)
     @NotNull
     @Column(name = "FIRMA_PARTESERVICIO")
     private boolean firmaParteservicio;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "FECHA_FIRMA_PARTESERVICIO")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date fechaFirmaParteservicio;
-    @Size(max = 120)
-    @Column(name = "SUGERENCIA_PARTESERVICIO")
-    private String sugerenciaParteservicio;
     @Size(max = 120)
     @Column(name = "OBSERVACION_PARTESERVICIO")
     private String observacionParteservicio;
@@ -94,18 +61,24 @@ public class ParteServicio implements Serializable {
         @JoinColumn(name = "ID_MARCAVERIFICACION", referencedColumnName = "ID_MARCAVERIFICACION")})
     @ManyToMany
     private List<MarcaVerificacion> marcaVerificacionList;
-    @OneToMany(mappedBy = "idParteservicio")
-    private List<HorarioServicio> horarioServicioList;
-    @OneToMany(mappedBy = "idParteservicio")
-    private List<DetalleParteServicio> detalleParteServicioList;
-    @OneToMany(mappedBy = "idParteservicio")
-    private List<SolicitudServicio> solicitudServicioList;
+    @JoinColumn(name = "ID_TECNICO", referencedColumnName = "ID_TECNICO")
+    @ManyToOne
+    private Tecnico idTecnico;
     @JoinColumn(name = "ID_SOLICITUDSERVICIO", referencedColumnName = "ID_SOLICITUDSERVICIO")
     @ManyToOne
     private SolicitudServicio idSolicitudservicio;
-    @JoinColumn(name = "ID_USUARIO", referencedColumnName = "ID_USUARIO")
+    @JoinColumn(name = "ID_HORARIOSERVICIO", referencedColumnName = "ID_HORARIOSERVICIO")
     @ManyToOne
-    private Usuario idUsuario;
+    private HorarioServicio idHorarioservicio;
+    @JoinColumn(name = "ID_EMPRESA", referencedColumnName = "ID_EMPRESA")
+    @ManyToOne
+    private Empresa idEmpresa;
+    @JoinColumn(name = "ID_DETALLE_PARTESERVICIO", referencedColumnName = "ID_DETALLE_PARTESERVICIO")
+    @ManyToOne
+    private DetalleParteServicio idDetalleParteservicio;
+    @JoinColumn(name = "ID_CONTACTO", referencedColumnName = "ID_CONTACTO")
+    @ManyToOne
+    private Contacto idContacto;
 
     public ParteServicio() {
     }
@@ -114,14 +87,10 @@ public class ParteServicio implements Serializable {
         this.idParteservicio = idParteservicio;
     }
 
-    public ParteServicio(Integer idParteservicio, Date fechaInicioParteservicio, Date fechaFinParteservicio, BigDecimal totalHorasParteservicio, boolean estadoParteservicio, boolean firmaParteservicio, Date fechaFirmaParteservicio) {
+    public ParteServicio(Integer idParteservicio, boolean estadoParteservicio, boolean firmaParteservicio) {
         this.idParteservicio = idParteservicio;
-        this.fechaInicioParteservicio = fechaInicioParteservicio;
-        this.fechaFinParteservicio = fechaFinParteservicio;
-        this.totalHorasParteservicio = totalHorasParteservicio;
         this.estadoParteservicio = estadoParteservicio;
         this.firmaParteservicio = firmaParteservicio;
-        this.fechaFirmaParteservicio = fechaFirmaParteservicio;
     }
 
     public Integer getIdParteservicio() {
@@ -130,30 +99,6 @@ public class ParteServicio implements Serializable {
 
     public void setIdParteservicio(Integer idParteservicio) {
         this.idParteservicio = idParteservicio;
-    }
-
-    public Date getFechaInicioParteservicio() {
-        return fechaInicioParteservicio;
-    }
-
-    public void setFechaInicioParteservicio(Date fechaInicioParteservicio) {
-        this.fechaInicioParteservicio = fechaInicioParteservicio;
-    }
-
-    public Date getFechaFinParteservicio() {
-        return fechaFinParteservicio;
-    }
-
-    public void setFechaFinParteservicio(Date fechaFinParteservicio) {
-        this.fechaFinParteservicio = fechaFinParteservicio;
-    }
-
-    public BigDecimal getTotalHorasParteservicio() {
-        return totalHorasParteservicio;
-    }
-
-    public void setTotalHorasParteservicio(BigDecimal totalHorasParteservicio) {
-        this.totalHorasParteservicio = totalHorasParteservicio;
     }
 
     public boolean getEstadoParteservicio() {
@@ -170,22 +115,6 @@ public class ParteServicio implements Serializable {
 
     public void setFirmaParteservicio(boolean firmaParteservicio) {
         this.firmaParteservicio = firmaParteservicio;
-    }
-
-    public Date getFechaFirmaParteservicio() {
-        return fechaFirmaParteservicio;
-    }
-
-    public void setFechaFirmaParteservicio(Date fechaFirmaParteservicio) {
-        this.fechaFirmaParteservicio = fechaFirmaParteservicio;
-    }
-
-    public String getSugerenciaParteservicio() {
-        return sugerenciaParteservicio;
-    }
-
-    public void setSugerenciaParteservicio(String sugerenciaParteservicio) {
-        this.sugerenciaParteservicio = sugerenciaParteservicio;
     }
 
     public String getObservacionParteservicio() {
@@ -205,31 +134,12 @@ public class ParteServicio implements Serializable {
         this.marcaVerificacionList = marcaVerificacionList;
     }
 
-    @XmlTransient
-    public List<HorarioServicio> getHorarioServicioList() {
-        return horarioServicioList;
+    public Tecnico getIdTecnico() {
+        return idTecnico;
     }
 
-    public void setHorarioServicioList(List<HorarioServicio> horarioServicioList) {
-        this.horarioServicioList = horarioServicioList;
-    }
-
-    @XmlTransient
-    public List<DetalleParteServicio> getDetalleParteServicioList() {
-        return detalleParteServicioList;
-    }
-
-    public void setDetalleParteServicioList(List<DetalleParteServicio> detalleParteServicioList) {
-        this.detalleParteServicioList = detalleParteServicioList;
-    }
-
-    @XmlTransient
-    public List<SolicitudServicio> getSolicitudServicioList() {
-        return solicitudServicioList;
-    }
-
-    public void setSolicitudServicioList(List<SolicitudServicio> solicitudServicioList) {
-        this.solicitudServicioList = solicitudServicioList;
+    public void setIdTecnico(Tecnico idTecnico) {
+        this.idTecnico = idTecnico;
     }
 
     public SolicitudServicio getIdSolicitudservicio() {
@@ -240,12 +150,36 @@ public class ParteServicio implements Serializable {
         this.idSolicitudservicio = idSolicitudservicio;
     }
 
-    public Usuario getIdUsuario() {
-        return idUsuario;
+    public HorarioServicio getIdHorarioservicio() {
+        return idHorarioservicio;
     }
 
-    public void setIdUsuario(Usuario idUsuario) {
-        this.idUsuario = idUsuario;
+    public void setIdHorarioservicio(HorarioServicio idHorarioservicio) {
+        this.idHorarioservicio = idHorarioservicio;
+    }
+
+    public Empresa getIdEmpresa() {
+        return idEmpresa;
+    }
+
+    public void setIdEmpresa(Empresa idEmpresa) {
+        this.idEmpresa = idEmpresa;
+    }
+
+    public DetalleParteServicio getIdDetalleParteservicio() {
+        return idDetalleParteservicio;
+    }
+
+    public void setIdDetalleParteservicio(DetalleParteServicio idDetalleParteservicio) {
+        this.idDetalleParteservicio = idDetalleParteservicio;
+    }
+
+    public Contacto getIdContacto() {
+        return idContacto;
+    }
+
+    public void setIdContacto(Contacto idContacto) {
+        this.idContacto = idContacto;
     }
 
     @Override
@@ -273,4 +207,21 @@ public class ParteServicio implements Serializable {
         return idParteservicio.toString();
     }
     
+    public String getEstadoParteServicioTxt() {
+        String tmp;
+        if("true".compareTo(String.valueOf(this.estadoParteservicio))==0)
+            tmp = "Activo";
+        else
+            tmp = "Inactivo";
+        return tmp;
+    }
+    
+    public String getEstadoFirmaTxt() {
+        String tmp;
+        if("true".compareTo(String.valueOf(this.firmaParteservicio))==0)
+            tmp = "FIRMADO";
+        else
+            tmp = "NO FIRMADO";
+        return tmp;
+    }
 }

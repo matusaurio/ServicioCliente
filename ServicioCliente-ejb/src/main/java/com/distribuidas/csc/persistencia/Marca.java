@@ -53,6 +53,8 @@ public class Marca implements Serializable {
     @Column(name = "ESTADO_MARCA")
     private Boolean estadoMarca;
     @OneToMany(mappedBy = "idMarca")
+    private List<SolicitudServicio> solicitudServicioList;
+    @OneToMany(mappedBy = "idMarca")
     private List<Modelo> modeloList;
 
     public Marca() {
@@ -100,6 +102,15 @@ public class Marca implements Serializable {
     }
 
     @XmlTransient
+    public List<SolicitudServicio> getSolicitudServicioList() {
+        return solicitudServicioList;
+    }
+
+    public void setSolicitudServicioList(List<SolicitudServicio> solicitudServicioList) {
+        this.solicitudServicioList = solicitudServicioList;
+    }
+
+    @XmlTransient
     public List<Modelo> getModeloList() {
         return modeloList;
     }
@@ -133,12 +144,4 @@ public class Marca implements Serializable {
         return idMarca.toString();
     }
     
-    public String getEstadoMarcaTxt() {
-        String tmp;
-        if("true".compareTo(String.valueOf(this.estadoMarca))==0)
-            tmp = "Activo";
-        else
-            tmp = "Inactivo";
-        return tmp;
-    }
 }

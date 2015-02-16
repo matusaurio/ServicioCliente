@@ -10,6 +10,7 @@ import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -36,9 +37,9 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Sucursal.findByIdSucursal", query = "SELECT s FROM Sucursal s WHERE s.idSucursal = :idSucursal"),
     @NamedQuery(name = "Sucursal.findByNombreSucursal", query = "SELECT s FROM Sucursal s WHERE s.nombreSucursal = :nombreSucursal"),
     @NamedQuery(name = "Sucursal.findByDireccionSucursal", query = "SELECT s FROM Sucursal s WHERE s.direccionSucursal = :direccionSucursal"),
-    @NamedQuery(name = "Sucursal.findByTelefonoSucursal", query = "SELECT s FROM Sucursal s WHERE s.telefonoSucursal = :telefonoSucursal"),
-    @NamedQuery(name = "Sucursal.findByEstadoSucursal", query = "SELECT s FROM Sucursal s WHERE s.estadoSucursal = :estadoSucursal")})
+    @NamedQuery(name = "Sucursal.findByTelefonoSucursal", query = "SELECT s FROM Sucursal s WHERE s.telefonoSucursal = :telefonoSucursal")})
 public class Sucursal implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -56,15 +57,13 @@ public class Sucursal implements Serializable {
     @Size(max = 30)
     @Column(name = "TELEFONO_SUCURSAL")
     private String telefonoSucursal;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "ESTADO_SUCURSAL")
-    private boolean estadoSucursal;
     @JoinColumn(name = "ID_EMPRESA", referencedColumnName = "ID_EMPRESA")
     @ManyToOne
     private Empresa idEmpresa;
     @OneToMany(mappedBy = "idSucursal")
     private List<Bodega> bodegaList;
+    @OneToMany(mappedBy = "idSucursal")
+    private List<SolicitudServicio> solicitudServicioList;
 
     public Sucursal() {
     }
@@ -73,10 +72,9 @@ public class Sucursal implements Serializable {
         this.idSucursal = idSucursal;
     }
 
-    public Sucursal(Integer idSucursal, String nombreSucursal, boolean estadoSucursal) {
+    public Sucursal(Integer idSucursal, String nombreSucursal) {
         this.idSucursal = idSucursal;
         this.nombreSucursal = nombreSucursal;
-        this.estadoSucursal = estadoSucursal;
     }
 
     public Integer getIdSucursal() {
@@ -111,14 +109,6 @@ public class Sucursal implements Serializable {
         this.telefonoSucursal = telefonoSucursal;
     }
 
-    public boolean getEstadoSucursal() {
-        return estadoSucursal;
-    }
-
-    public void setEstadoSucursal(boolean estadoSucursal) {
-        this.estadoSucursal = estadoSucursal;
-    }
-
     public Empresa getIdEmpresa() {
         return idEmpresa;
     }
@@ -134,6 +124,15 @@ public class Sucursal implements Serializable {
 
     public void setBodegaList(List<Bodega> bodegaList) {
         this.bodegaList = bodegaList;
+    }
+
+    @XmlTransient
+    public List<SolicitudServicio> getSolicitudServicioList() {
+        return solicitudServicioList;
+    }
+
+    public void setSolicitudServicioList(List<SolicitudServicio> solicitudServicioList) {
+        this.solicitudServicioList = solicitudServicioList;
     }
 
     @Override
@@ -160,13 +159,5 @@ public class Sucursal implements Serializable {
     public String toString() {
         return idSucursal.toString();
     }
-    
-    public String getEstadoSucursalTxt(){
-        String tmp;
-        if("true".compareTo(String.valueOf(this.estadoSucursal))==0)
-            tmp = "Activo";
-        else
-            tmp = "Inactivo";
-        return tmp;
-    }
+
 }

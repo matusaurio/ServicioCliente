@@ -5,8 +5,8 @@
  */
 package com.distribuidas.csc.servicio;
 
-import com.distribuidas.csc.dao.RolFacade;
-import com.distribuidas.csc.persistencia.Rol;
+import com.distribuidas.csc.dao.TecnicoFacade;
+import com.distribuidas.csc.persistencia.Tecnico;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.LocalBean;
@@ -20,28 +20,28 @@ import javax.ejb.TransactionAttributeType;
  */
 @Stateless
 @LocalBean
-public class RolServicio {
+public class TecnicoServicio {
     
     @EJB
-    private RolFacade rolFacade;
+    private TecnicoFacade tecnicoFacade;
     
-    public List<Rol> obtenerTodos(){
-        return this.rolFacade.findAll();
+    public List<Tecnico> obtenerTodos(){
+        return this.tecnicoFacade.findAll();
     }
     
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
-    public void crear(Rol rol){
-        this.rolFacade.create(rol);
+    public void crear(Tecnico tecnico){
+        this.tecnicoFacade.create(tecnico);
     }
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
-    public void actualizar(Rol rol){
-        this.rolFacade.edit(rol);
+    public void actualizar(Tecnico tecnico){
+        this.tecnicoFacade.edit(tecnico);
     }
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
-    public void eliminar(Rol rol){
-        Rol rolTmp = this.rolFacade.find(rol.getIdRol());
-        if (rolTmp!=null){
-            this.rolFacade.remove(rolTmp);
+    public void eliminar(Tecnico tecnico){
+        Tecnico tecnicoTmp = this.tecnicoFacade.find(tecnico.getIdTecnico());
+        if (tecnicoTmp!=null){
+            this.tecnicoFacade.remove(tecnicoTmp);
         }
     }
     

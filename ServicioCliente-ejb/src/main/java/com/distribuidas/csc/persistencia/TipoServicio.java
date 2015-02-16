@@ -6,7 +6,6 @@
 package com.distribuidas.csc.persistencia;
 
 import java.io.Serializable;
-import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -18,8 +17,6 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -36,8 +33,6 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "TipoServicio.findAll", query = "SELECT t FROM TipoServicio t"),
     @NamedQuery(name = "TipoServicio.findByIdTipoServicioSolicitudservicio", query = "SELECT t FROM TipoServicio t WHERE t.idTipoServicioSolicitudservicio = :idTipoServicioSolicitudservicio"),
     @NamedQuery(name = "TipoServicio.findByNombreTipoServicioSolicitudservicio", query = "SELECT t FROM TipoServicio t WHERE t.nombreTipoServicioSolicitudservicio = :nombreTipoServicioSolicitudservicio"),
-    @NamedQuery(name = "TipoServicio.findByFechaTipoServicioSolicitudservicio", query = "SELECT t FROM TipoServicio t WHERE t.fechaTipoServicioSolicitudservicio = :fechaTipoServicioSolicitudservicio"),
-    @NamedQuery(name = "TipoServicio.findByEstadoTipoServicioSolicitudservicio", query = "SELECT t FROM TipoServicio t WHERE t.estadoTipoServicioSolicitudservicio = :estadoTipoServicioSolicitudservicio"),
     @NamedQuery(name = "TipoServicio.findByObservacionTipoServicioSolicitudservicio", query = "SELECT t FROM TipoServicio t WHERE t.observacionTipoServicioSolicitudservicio = :observacionTipoServicioSolicitudservicio")})
 public class TipoServicio implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -51,15 +46,6 @@ public class TipoServicio implements Serializable {
     @Size(min = 1, max = 30)
     @Column(name = "NOMBRE_TIPO_SERVICIO_SOLICITUDSERVICIO")
     private String nombreTipoServicioSolicitudservicio;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "FECHA_TIPO_SERVICIO_SOLICITUDSERVICIO")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date fechaTipoServicioSolicitudservicio;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "ESTADO_TIPO_SERVICIO_SOLICITUDSERVICIO")
-    private boolean estadoTipoServicioSolicitudservicio;
     @Size(max = 120)
     @Column(name = "OBSERVACION_TIPO_SERVICIO_SOLICITUDSERVICIO")
     private String observacionTipoServicioSolicitudservicio;
@@ -73,11 +59,9 @@ public class TipoServicio implements Serializable {
         this.idTipoServicioSolicitudservicio = idTipoServicioSolicitudservicio;
     }
 
-    public TipoServicio(Integer idTipoServicioSolicitudservicio, String nombreTipoServicioSolicitudservicio, Date fechaTipoServicioSolicitudservicio, boolean estadoTipoServicioSolicitudservicio) {
+    public TipoServicio(Integer idTipoServicioSolicitudservicio, String nombreTipoServicioSolicitudservicio) {
         this.idTipoServicioSolicitudservicio = idTipoServicioSolicitudservicio;
         this.nombreTipoServicioSolicitudservicio = nombreTipoServicioSolicitudservicio;
-        this.fechaTipoServicioSolicitudservicio = fechaTipoServicioSolicitudservicio;
-        this.estadoTipoServicioSolicitudservicio = estadoTipoServicioSolicitudservicio;
     }
 
     public Integer getIdTipoServicioSolicitudservicio() {
@@ -94,22 +78,6 @@ public class TipoServicio implements Serializable {
 
     public void setNombreTipoServicioSolicitudservicio(String nombreTipoServicioSolicitudservicio) {
         this.nombreTipoServicioSolicitudservicio = nombreTipoServicioSolicitudservicio;
-    }
-
-    public Date getFechaTipoServicioSolicitudservicio() {
-        return fechaTipoServicioSolicitudservicio;
-    }
-
-    public void setFechaTipoServicioSolicitudservicio(Date fechaTipoServicioSolicitudservicio) {
-        this.fechaTipoServicioSolicitudservicio = fechaTipoServicioSolicitudservicio;
-    }
-
-    public boolean getEstadoTipoServicioSolicitudservicio() {
-        return estadoTipoServicioSolicitudservicio;
-    }
-
-    public void setEstadoTipoServicioSolicitudservicio(boolean estadoTipoServicioSolicitudservicio) {
-        this.estadoTipoServicioSolicitudservicio = estadoTipoServicioSolicitudservicio;
     }
 
     public String getObservacionTipoServicioSolicitudservicio() {
@@ -154,12 +122,4 @@ public class TipoServicio implements Serializable {
         return idTipoServicioSolicitudservicio.toString();
     }
     
-    public String getEstadoTipoServicioTxt() {
-        String tmp;
-        if("true".compareTo(String.valueOf(this.estadoTipoServicioSolicitudservicio))==0)
-            tmp = "Activo";
-        else
-            tmp = "Inactivo";
-        return tmp;
-    }
 }

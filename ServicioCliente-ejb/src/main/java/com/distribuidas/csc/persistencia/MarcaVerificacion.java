@@ -36,7 +36,6 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "MarcaVerificacion.findAll", query = "SELECT m FROM MarcaVerificacion m"),
     @NamedQuery(name = "MarcaVerificacion.findByIdMarcaverificacion", query = "SELECT m FROM MarcaVerificacion m WHERE m.idMarcaverificacion = :idMarcaverificacion"),
     @NamedQuery(name = "MarcaVerificacion.findByNombreMarcaverificacion", query = "SELECT m FROM MarcaVerificacion m WHERE m.nombreMarcaverificacion = :nombreMarcaverificacion"),
-    @NamedQuery(name = "MarcaVerificacion.findByEstadoMarcaverificacion", query = "SELECT m FROM MarcaVerificacion m WHERE m.estadoMarcaverificacion = :estadoMarcaverificacion"),
     @NamedQuery(name = "MarcaVerificacion.findByFechaMarcaverificacion", query = "SELECT m FROM MarcaVerificacion m WHERE m.fechaMarcaverificacion = :fechaMarcaverificacion")})
 public class MarcaVerificacion implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -50,10 +49,6 @@ public class MarcaVerificacion implements Serializable {
     @Size(min = 1, max = 30)
     @Column(name = "NOMBRE_MARCAVERIFICACION")
     private String nombreMarcaverificacion;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "ESTADO_MARCAVERIFICACION")
-    private boolean estadoMarcaverificacion;
     @Column(name = "FECHA_MARCAVERIFICACION")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaMarcaverificacion;
@@ -67,10 +62,9 @@ public class MarcaVerificacion implements Serializable {
         this.idMarcaverificacion = idMarcaverificacion;
     }
 
-    public MarcaVerificacion(Integer idMarcaverificacion, String nombreMarcaverificacion, boolean estadoMarcaverificacion) {
+    public MarcaVerificacion(Integer idMarcaverificacion, String nombreMarcaverificacion) {
         this.idMarcaverificacion = idMarcaverificacion;
         this.nombreMarcaverificacion = nombreMarcaverificacion;
-        this.estadoMarcaverificacion = estadoMarcaverificacion;
     }
 
     public Integer getIdMarcaverificacion() {
@@ -87,14 +81,6 @@ public class MarcaVerificacion implements Serializable {
 
     public void setNombreMarcaverificacion(String nombreMarcaverificacion) {
         this.nombreMarcaverificacion = nombreMarcaverificacion;
-    }
-
-    public boolean getEstadoMarcaverificacion() {
-        return estadoMarcaverificacion;
-    }
-
-    public void setEstadoMarcaverificacion(boolean estadoMarcaverificacion) {
-        this.estadoMarcaverificacion = estadoMarcaverificacion;
     }
 
     public Date getFechaMarcaverificacion() {

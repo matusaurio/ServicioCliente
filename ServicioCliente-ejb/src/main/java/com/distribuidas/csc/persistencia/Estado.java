@@ -6,7 +6,6 @@
 package com.distribuidas.csc.persistencia;
 
 import java.io.Serializable;
-import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -18,8 +17,6 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -35,8 +32,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Estado.findAll", query = "SELECT e FROM Estado e"),
     @NamedQuery(name = "Estado.findByIdEstadoSolicitudservicio", query = "SELECT e FROM Estado e WHERE e.idEstadoSolicitudservicio = :idEstadoSolicitudservicio"),
-    @NamedQuery(name = "Estado.findByNombreEstadoSolicitudservicio", query = "SELECT e FROM Estado e WHERE e.nombreEstadoSolicitudservicio = :nombreEstadoSolicitudservicio"),
-    @NamedQuery(name = "Estado.findByFechaEstadoSolicitudservicio", query = "SELECT e FROM Estado e WHERE e.fechaEstadoSolicitudservicio = :fechaEstadoSolicitudservicio")})
+    @NamedQuery(name = "Estado.findByNombreEstadoSolicitudservicio", query = "SELECT e FROM Estado e WHERE e.nombreEstadoSolicitudservicio = :nombreEstadoSolicitudservicio")})
 public class Estado implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -49,11 +45,6 @@ public class Estado implements Serializable {
     @Size(min = 1, max = 30)
     @Column(name = "NOMBRE_ESTADO_SOLICITUDSERVICIO")
     private String nombreEstadoSolicitudservicio;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "FECHA_ESTADO_SOLICITUDSERVICIO")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date fechaEstadoSolicitudservicio;
     @OneToMany(mappedBy = "idEstadoSolicitudservicio")
     private List<SolicitudServicio> solicitudServicioList;
 
@@ -64,10 +55,9 @@ public class Estado implements Serializable {
         this.idEstadoSolicitudservicio = idEstadoSolicitudservicio;
     }
 
-    public Estado(Integer idEstadoSolicitudservicio, String nombreEstadoSolicitudservicio, Date fechaEstadoSolicitudservicio) {
+    public Estado(Integer idEstadoSolicitudservicio, String nombreEstadoSolicitudservicio) {
         this.idEstadoSolicitudservicio = idEstadoSolicitudservicio;
         this.nombreEstadoSolicitudservicio = nombreEstadoSolicitudservicio;
-        this.fechaEstadoSolicitudservicio = fechaEstadoSolicitudservicio;
     }
 
     public Integer getIdEstadoSolicitudservicio() {
@@ -84,14 +74,6 @@ public class Estado implements Serializable {
 
     public void setNombreEstadoSolicitudservicio(String nombreEstadoSolicitudservicio) {
         this.nombreEstadoSolicitudservicio = nombreEstadoSolicitudservicio;
-    }
-
-    public Date getFechaEstadoSolicitudservicio() {
-        return fechaEstadoSolicitudservicio;
-    }
-
-    public void setFechaEstadoSolicitudservicio(Date fechaEstadoSolicitudservicio) {
-        this.fechaEstadoSolicitudservicio = fechaEstadoSolicitudservicio;
     }
 
     @XmlTransient

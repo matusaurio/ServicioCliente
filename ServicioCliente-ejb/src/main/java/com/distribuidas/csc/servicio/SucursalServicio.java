@@ -29,8 +29,8 @@ public class SucursalServicio {
         return this.sucursalFacade.findAll();
     }
     
-    public List<Sucursal> obtenerSurcursalesE(Integer idEmpresa) {
-        return this.sucursalFacade.findByEmpresa(idEmpresa);
+    public List<Sucursal> obtenerSurcursalesE(Integer condEmpresa) {
+        return this.sucursalFacade.findByEmpresa(condEmpresa);
     }
     
     @TransactionAttribute(TransactionAttributeType.REQUIRED)

@@ -28,6 +28,10 @@ public class BodegaServicio {
     public List<Bodega> obtenerTodos() {
         return this.bodegaFacade.findAll();
     }
+    
+    public List<Bodega> obtenerBodegasS(Integer codSucursal){
+        return this.bodegaFacade.findBySucursal(codSucursal);
+    }
 
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public void crear(Bodega bodega) {

@@ -37,7 +37,6 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "SolicitudServicio.findAll", query = "SELECT s FROM SolicitudServicio s"),
     @NamedQuery(name = "SolicitudServicio.findByIdSolicitudservicio", query = "SELECT s FROM SolicitudServicio s WHERE s.idSolicitudservicio = :idSolicitudservicio"),
-    @NamedQuery(name = "SolicitudServicio.findByCodigoSolicitudservicio", query = "SELECT s FROM SolicitudServicio s WHERE s.codigoSolicitudservicio = :codigoSolicitudservicio"),
     @NamedQuery(name = "SolicitudServicio.findByInconvenienteSolicitudservicio", query = "SELECT s FROM SolicitudServicio s WHERE s.inconvenienteSolicitudservicio = :inconvenienteSolicitudservicio"),
     @NamedQuery(name = "SolicitudServicio.findByObservacionSolicitudservicio", query = "SELECT s FROM SolicitudServicio s WHERE s.observacionSolicitudservicio = :observacionSolicitudservicio"),
     @NamedQuery(name = "SolicitudServicio.findByFechaCreacionSolicitudservicio", query = "SELECT s FROM SolicitudServicio s WHERE s.fechaCreacionSolicitudservicio = :fechaCreacionSolicitudservicio"),
@@ -52,10 +51,7 @@ public class SolicitudServicio implements Serializable {
     private Integer idSolicitudservicio;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 6)
-    @Column(name = "CODIGO_SOLICITUDSERVICIO")
-    private String codigoSolicitudservicio;
-    @Size(max = 120)
+    @Size(min = 1, max = 120)
     @Column(name = "INCONVENIENTE_SOLICITUDSERVICIO")
     private String inconvenienteSolicitudservicio;
     @Size(max = 120)
@@ -66,8 +62,6 @@ public class SolicitudServicio implements Serializable {
     @Column(name = "FECHA_CREACION_SOLICITUDSERVICIO")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaCreacionSolicitudservicio;
-    @Basic(optional = false)
-    @NotNull
     @Column(name = "FECHA_ATENCION_SOLICITUDSERVICIO")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaAtencionSolicitudservicio;
@@ -77,18 +71,39 @@ public class SolicitudServicio implements Serializable {
     private boolean estadoSolicitudservicio;
     @OneToMany(mappedBy = "idSolicitudservicio")
     private List<DetalleSolicitudServicio> detalleSolicitudServicioList;
-    @JoinColumn(name = "ID_USUARIO", referencedColumnName = "ID_USUARIO")
-    @ManyToOne
-    private Usuario idUsuario;
-    @JoinColumn(name = "ID_ESTADO_SOLICITUDSERVICIO", referencedColumnName = "ID_ESTADO_SOLICITUDSERVICIO")
-    @ManyToOne
-    private Estado idEstadoSolicitudservicio;
     @JoinColumn(name = "ID_TIPO_SERVICIO_SOLICITUDSERVICIO", referencedColumnName = "ID_TIPO_SERVICIO_SOLICITUDSERVICIO")
     @ManyToOne
     private TipoServicio idTipoServicioSolicitudservicio;
-    @JoinColumn(name = "ID_PARTESERVICIO", referencedColumnName = "ID_PARTESERVICIO")
+    @JoinColumn(name = "ID_TECNICO", referencedColumnName = "ID_TECNICO")
     @ManyToOne
-    private ParteServicio idParteservicio;
+    private Tecnico idTecnico;
+    @JoinColumn(name = "ID_SUCURSAL", referencedColumnName = "ID_SUCURSAL")
+    @ManyToOne
+    private Sucursal idSucursal;
+    @JoinColumn(name = "ID_PRODUCTO", referencedColumnName = "ID_PRODUCTO")
+    @ManyToOne
+    private Producto idProducto;
+    @JoinColumn(name = "ID_MODELO", referencedColumnName = "ID_MODELO")
+    @ManyToOne
+    private Modelo idModelo;
+    @JoinColumn(name = "ID_MARCA", referencedColumnName = "ID_MARCA")
+    @ManyToOne
+    private Marca idMarca;
+    @JoinColumn(name = "ID_ESTADO_SOLICITUDSERVICIO", referencedColumnName = "ID_ESTADO_SOLICITUDSERVICIO")
+    @ManyToOne
+    private Estado idEstadoSolicitudservicio;
+    @JoinColumn(name = "ID_EMPRESA", referencedColumnName = "ID_EMPRESA")
+    @ManyToOne
+    private Empresa idEmpresa;
+    @JoinColumn(name = "ID_CONTACTO", referencedColumnName = "ID_CONTACTO")
+    @ManyToOne
+    private Contacto idContacto;
+    @JoinColumn(name = "ID_CIUDAD", referencedColumnName = "ID_CIUDAD")
+    @ManyToOne
+    private Ciudad idCiudad;
+    @JoinColumn(name = "ID_BODEGA", referencedColumnName = "ID_BODEGA")
+    @ManyToOne
+    private Bodega idBodega;
     @OneToMany(mappedBy = "idSolicitudservicio")
     private List<ParteServicio> parteServicioList;
 
@@ -99,11 +114,10 @@ public class SolicitudServicio implements Serializable {
         this.idSolicitudservicio = idSolicitudservicio;
     }
 
-    public SolicitudServicio(Integer idSolicitudservicio, String codigoSolicitudservicio, Date fechaCreacionSolicitudservicio, Date fechaAtencionSolicitudservicio, boolean estadoSolicitudservicio) {
+    public SolicitudServicio(Integer idSolicitudservicio, String inconvenienteSolicitudservicio, Date fechaCreacionSolicitudservicio, boolean estadoSolicitudservicio) {
         this.idSolicitudservicio = idSolicitudservicio;
-        this.codigoSolicitudservicio = codigoSolicitudservicio;
+        this.inconvenienteSolicitudservicio = inconvenienteSolicitudservicio;
         this.fechaCreacionSolicitudservicio = fechaCreacionSolicitudservicio;
-        this.fechaAtencionSolicitudservicio = fechaAtencionSolicitudservicio;
         this.estadoSolicitudservicio = estadoSolicitudservicio;
     }
 
@@ -113,14 +127,6 @@ public class SolicitudServicio implements Serializable {
 
     public void setIdSolicitudservicio(Integer idSolicitudservicio) {
         this.idSolicitudservicio = idSolicitudservicio;
-    }
-
-    public String getCodigoSolicitudservicio() {
-        return codigoSolicitudservicio;
-    }
-
-    public void setCodigoSolicitudservicio(String codigoSolicitudservicio) {
-        this.codigoSolicitudservicio = codigoSolicitudservicio;
     }
 
     public String getInconvenienteSolicitudservicio() {
@@ -172,12 +178,52 @@ public class SolicitudServicio implements Serializable {
         this.detalleSolicitudServicioList = detalleSolicitudServicioList;
     }
 
-    public Usuario getIdUsuario() {
-        return idUsuario;
+    public TipoServicio getIdTipoServicioSolicitudservicio() {
+        return idTipoServicioSolicitudservicio;
     }
 
-    public void setIdUsuario(Usuario idUsuario) {
-        this.idUsuario = idUsuario;
+    public void setIdTipoServicioSolicitudservicio(TipoServicio idTipoServicioSolicitudservicio) {
+        this.idTipoServicioSolicitudservicio = idTipoServicioSolicitudservicio;
+    }
+
+    public Tecnico getIdTecnico() {
+        return idTecnico;
+    }
+
+    public void setIdTecnico(Tecnico idTecnico) {
+        this.idTecnico = idTecnico;
+    }
+
+    public Sucursal getIdSucursal() {
+        return idSucursal;
+    }
+
+    public void setIdSucursal(Sucursal idSucursal) {
+        this.idSucursal = idSucursal;
+    }
+
+    public Producto getIdProducto() {
+        return idProducto;
+    }
+
+    public void setIdProducto(Producto idProducto) {
+        this.idProducto = idProducto;
+    }
+
+    public Modelo getIdModelo() {
+        return idModelo;
+    }
+
+    public void setIdModelo(Modelo idModelo) {
+        this.idModelo = idModelo;
+    }
+
+    public Marca getIdMarca() {
+        return idMarca;
+    }
+
+    public void setIdMarca(Marca idMarca) {
+        this.idMarca = idMarca;
     }
 
     public Estado getIdEstadoSolicitudservicio() {
@@ -188,20 +234,36 @@ public class SolicitudServicio implements Serializable {
         this.idEstadoSolicitudservicio = idEstadoSolicitudservicio;
     }
 
-    public TipoServicio getIdTipoServicioSolicitudservicio() {
-        return idTipoServicioSolicitudservicio;
+    public Empresa getIdEmpresa() {
+        return idEmpresa;
     }
 
-    public void setIdTipoServicioSolicitudservicio(TipoServicio idTipoServicioSolicitudservicio) {
-        this.idTipoServicioSolicitudservicio = idTipoServicioSolicitudservicio;
+    public void setIdEmpresa(Empresa idEmpresa) {
+        this.idEmpresa = idEmpresa;
     }
 
-    public ParteServicio getIdParteservicio() {
-        return idParteservicio;
+    public Contacto getIdContacto() {
+        return idContacto;
     }
 
-    public void setIdParteservicio(ParteServicio idParteservicio) {
-        this.idParteservicio = idParteservicio;
+    public void setIdContacto(Contacto idContacto) {
+        this.idContacto = idContacto;
+    }
+
+    public Ciudad getIdCiudad() {
+        return idCiudad;
+    }
+
+    public void setIdCiudad(Ciudad idCiudad) {
+        this.idCiudad = idCiudad;
+    }
+
+    public Bodega getIdBodega() {
+        return idBodega;
+    }
+
+    public void setIdBodega(Bodega idBodega) {
+        this.idBodega = idBodega;
     }
 
     @XmlTransient

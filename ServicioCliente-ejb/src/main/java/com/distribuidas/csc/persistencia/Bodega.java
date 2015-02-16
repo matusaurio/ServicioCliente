@@ -10,6 +10,7 @@ import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -34,8 +35,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Bodega.findAll", query = "SELECT b FROM Bodega b"),
     @NamedQuery(name = "Bodega.findByIdBodega", query = "SELECT b FROM Bodega b WHERE b.idBodega = :idBodega"),
-    @NamedQuery(name = "Bodega.findByNombreBodega", query = "SELECT b FROM Bodega b WHERE b.nombreBodega = :nombreBodega"),
-    @NamedQuery(name = "Bodega.findByEstadoBodega", query = "SELECT b FROM Bodega b WHERE b.estadoBodega = :estadoBodega")})
+    @NamedQuery(name = "Bodega.findByNombreBodega", query = "SELECT b FROM Bodega b WHERE b.nombreBodega = :nombreBodega")})
 public class Bodega implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -48,13 +48,11 @@ public class Bodega implements Serializable {
     @Size(min = 1, max = 30)
     @Column(name = "NOMBRE_BODEGA")
     private String nombreBodega;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "ESTADO_BODEGA")
-    private boolean estadoBodega;
     @JoinColumn(name = "ID_SUCURSAL", referencedColumnName = "ID_SUCURSAL")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY )
     private Sucursal idSucursal;
+    @OneToMany(mappedBy = "idBodega")
+    private List<SolicitudServicio> solicitudServicioList;
     @OneToMany(mappedBy = "idBodega")
     private List<Producto> productoList;
 
@@ -65,10 +63,9 @@ public class Bodega implements Serializable {
         this.idBodega = idBodega;
     }
 
-    public Bodega(Integer idBodega, String nombreBodega, boolean estadoBodega) {
+    public Bodega(Integer idBodega, String nombreBodega) {
         this.idBodega = idBodega;
         this.nombreBodega = nombreBodega;
-        this.estadoBodega = estadoBodega;
     }
 
     public Integer getIdBodega() {
@@ -87,20 +84,21 @@ public class Bodega implements Serializable {
         this.nombreBodega = nombreBodega;
     }
 
-    public boolean getEstadoBodega() {
-        return estadoBodega;
-    }
-
-    public void setEstadoBodega(boolean estadoBodega) {
-        this.estadoBodega = estadoBodega;
-    }
-
     public Sucursal getIdSucursal() {
         return idSucursal;
     }
 
     public void setIdSucursal(Sucursal idSucursal) {
         this.idSucursal = idSucursal;
+    }
+
+    @XmlTransient
+    public List<SolicitudServicio> getSolicitudServicioList() {
+        return solicitudServicioList;
+    }
+
+    public void setSolicitudServicioList(List<SolicitudServicio> solicitudServicioList) {
+        this.solicitudServicioList = solicitudServicioList;
     }
 
     @XmlTransient
@@ -137,12 +135,4 @@ public class Bodega implements Serializable {
         return idBodega.toString();
     }
     
-    public String getEstadoBodegaTxt() {
-        String tmp;
-        if("true".compareTo(String.valueOf(this.estadoBodega))==0)
-            tmp = "Activo";
-        else
-            tmp = "Inactivo";
-        return tmp;
-    }
 }

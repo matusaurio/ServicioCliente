@@ -8,6 +8,7 @@ package com.distribuidas.csc.persistencia;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -18,12 +19,14 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -35,7 +38,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Producto.findAll", query = "SELECT p FROM Producto p"),
     @NamedQuery(name = "Producto.findByIdProducto", query = "SELECT p FROM Producto p WHERE p.idProducto = :idProducto"),
-    @NamedQuery(name = "Producto.findByCodigoProducto", query = "SELECT p FROM Producto p WHERE p.codigoProducto = :codigoProducto"),
     @NamedQuery(name = "Producto.findByNombreProducto", query = "SELECT p FROM Producto p WHERE p.nombreProducto = :nombreProducto"),
     @NamedQuery(name = "Producto.findByPrecioProducto", query = "SELECT p FROM Producto p WHERE p.precioProducto = :precioProducto"),
     @NamedQuery(name = "Producto.findByFechaCreacionProducto", query = "SELECT p FROM Producto p WHERE p.fechaCreacionProducto = :fechaCreacionProducto"),
@@ -48,11 +50,6 @@ public class Producto implements Serializable {
     @Basic(optional = false)
     @Column(name = "ID_PRODUCTO")
     private Integer idProducto;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 30)
-    @Column(name = "CODIGO_PRODUCTO")
-    private String codigoProducto;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 30)
@@ -75,6 +72,8 @@ public class Producto implements Serializable {
     @NotNull
     @Column(name = "CANTIDAD_PRODUCTO")
     private int cantidadProducto;
+    @OneToMany(mappedBy = "idProducto")
+    private List<SolicitudServicio> solicitudServicioList;
     @JoinColumn(name = "ID_MODELO", referencedColumnName = "ID_MODELO")
     @ManyToOne
     private Modelo idModelo;
@@ -89,9 +88,8 @@ public class Producto implements Serializable {
         this.idProducto = idProducto;
     }
 
-    public Producto(Integer idProducto, String codigoProducto, String nombreProducto, BigDecimal precioProducto, Date fechaCreacionProducto, int cantidadProducto) {
+    public Producto(Integer idProducto, String nombreProducto, BigDecimal precioProducto, Date fechaCreacionProducto, int cantidadProducto) {
         this.idProducto = idProducto;
-        this.codigoProducto = codigoProducto;
         this.nombreProducto = nombreProducto;
         this.precioProducto = precioProducto;
         this.fechaCreacionProducto = fechaCreacionProducto;
@@ -104,14 +102,6 @@ public class Producto implements Serializable {
 
     public void setIdProducto(Integer idProducto) {
         this.idProducto = idProducto;
-    }
-
-    public String getCodigoProducto() {
-        return codigoProducto;
-    }
-
-    public void setCodigoProducto(String codigoProducto) {
-        this.codigoProducto = codigoProducto;
     }
 
     public String getNombreProducto() {
@@ -152,6 +142,15 @@ public class Producto implements Serializable {
 
     public void setCantidadProducto(int cantidadProducto) {
         this.cantidadProducto = cantidadProducto;
+    }
+
+    @XmlTransient
+    public List<SolicitudServicio> getSolicitudServicioList() {
+        return solicitudServicioList;
+    }
+
+    public void setSolicitudServicioList(List<SolicitudServicio> solicitudServicioList) {
+        this.solicitudServicioList = solicitudServicioList;
     }
 
     public Modelo getIdModelo() {

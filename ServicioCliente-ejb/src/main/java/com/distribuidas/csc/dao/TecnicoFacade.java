@@ -5,7 +5,7 @@
  */
 package com.distribuidas.csc.dao;
 
-import com.distribuidas.csc.persistencia.Rol;
+import com.distribuidas.csc.persistencia.Tecnico;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -15,7 +15,7 @@ import javax.persistence.PersistenceContext;
  * @author Stephen
  */
 @Stateless
-public class RolFacade extends AbstractFacade<Rol> {
+public class TecnicoFacade extends AbstractFacade<Tecnico> {
     @PersistenceContext(unitName = "com.distribuidas_ServicioCliente-ejb_ejb_1.0PU")
     private EntityManager em;
 
@@ -24,8 +24,8 @@ public class RolFacade extends AbstractFacade<Rol> {
         return em;
     }
 
-    public RolFacade() {
-        super(Rol.class);
+    public TecnicoFacade() {
+        super(Tecnico.class);
     }
     
 }

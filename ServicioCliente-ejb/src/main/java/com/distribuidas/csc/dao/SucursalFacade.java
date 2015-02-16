@@ -30,11 +30,19 @@ public class SucursalFacade extends AbstractFacade<Sucursal> {
         super(Sucursal.class);
     }
     
-    public List<Sucursal> findByEmpresa(Integer idEmpresa) {
+    public List<Sucursal> findByEmpresa(Integer codEmpresa) {
+        try{
         Query qry = this.em.createQuery(
-                "SELECT obj FROM Sucursal obj WHERE obj.idEmpresa=?1");
-        qry.setParameter(1, idEmpresa);
+                "SELECT obj FROM Sucursal obj WHERE obj.idEmpresa.idEmpresa=?1");
+        qry.setParameter(1, codEmpresa);
         return qry.getResultList();
+        }
+        catch(Exception e)
+        {
+            
+            System.out.println(e);
+        }
+        return null;
     }
     
 }
