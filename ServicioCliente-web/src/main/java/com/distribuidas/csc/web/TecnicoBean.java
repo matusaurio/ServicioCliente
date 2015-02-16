@@ -5,8 +5,9 @@
  */
 package com.distribuidas.csc.web;
 
-import com.distribuidas.csc.persistencia.Rol;
-import com.distribuidas.csc.servicio.RolServicio;
+import com.distribuidas.csc.persistencia.Tecnico;
+import com.distribuidas.csc.servicio.TecnicoServicio;
+import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -21,11 +22,11 @@ import org.primefaces.event.UnselectEvent;
  */
 @ManagedBean
 @ViewScoped
-public class RolBean {
+public class TecnicoBean implements Serializable{
     
-    private List<Rol> roles;
-    private Rol rol;
-    private Rol rolSeleccionada;
+    private List<Tecnico> tecnicos;
+    private Tecnico tecnico;
+    private Tecnico tecnicoSeleccionada;
     
     private Boolean desplegarVista = false;
     private Boolean desplegarNuevo = false;
@@ -41,11 +42,11 @@ public class RolBean {
     private Boolean activarCambiarEstado;
     
     @EJB
-    private RolServicio rolServicio;
+    private TecnicoServicio tecnicoServicio;
     
     @PostConstruct
     public void init(){
-        this.roles = this.rolServicio.obtenerTodos();
+        this.tecnicos = this.tecnicoServicio.obtenerTodos();
     }
     
     public void vista(){
@@ -56,19 +57,18 @@ public class RolBean {
         this.desplegarNuevo = true;
         this.enNuevo = true;
         this.enModificar = false;
-        this.rol = new Rol();
+        this.tecnico = new Tecnico();
     }
     
     public void guardar() {
         if (this.enNuevo) {
-            System.err.println("HOLOOOOO");
-            this.rolServicio.crear(this.rol);
+            this.tecnicoServicio.crear(this.tecnico);
             this.desplegarNuevo = false;
-            this.roles.add(this.rol);
+            this.tecnicos.add(this.tecnico);
             this.enNuevo = false;
         } else if (this.enModificar) {
             System.err.println("modificar");
-            this.rolServicio.actualizar(this.rol);
+            this.tecnicoServicio.actualizar(this.tecnico);
             this.desplegarNuevo = false;
             this.enModificar = false;
         }
@@ -78,12 +78,12 @@ public class RolBean {
         this.enModificar = true;
         this.enNuevo = false;
         this.desplegarNuevo = true;
-        this.rol = this.rolSeleccionada;
+        this.tecnico = this.tecnicoSeleccionada;
     }
 
     public void eliminar() {
-        this.rolServicio.eliminar(this.rolSeleccionada);
-        this.roles.remove(this.rolSeleccionada);
+        this.tecnicoServicio.eliminar(this.tecnicoSeleccionada);
+        this.tecnicos.remove(this.tecnicoSeleccionada);
     }
 
     public void cancelar() {
@@ -98,24 +98,24 @@ public class RolBean {
 
     }
 
-    public List<Rol> getRoles() {
-        return roles;
+    public List<Tecnico> getTecnicos() {
+        return tecnicos;
     }
 
-    public Rol getRol() {
-        return rol;
+    public Tecnico getTecnico() {
+        return tecnico;
     }
 
-    public void setRol(Rol rol) {
-        this.rol = rol;
+    public void setTecnico(Tecnico tecnico) {
+        this.tecnico = tecnico;
     }
 
-    public Rol getRolSeleccionada() {
-        return rolSeleccionada;
+    public Tecnico getTecnicoSeleccionada() {
+        return tecnicoSeleccionada;
     }
 
-    public void setRolSeleccionada(Rol rolSeleccionada) {
-        this.rolSeleccionada = rolSeleccionada;
+    public void setTecnicoSeleccionada(Tecnico tecnicoSeleccionada) {
+        this.tecnicoSeleccionada = tecnicoSeleccionada;
     }
 
     public Boolean getDesplegarVista() {
@@ -189,7 +189,6 @@ public class RolBean {
     public void setActivarCambiarEstado(Boolean activarCambiarEstado) {
         this.activarCambiarEstado = activarCambiarEstado;
     }
-    
     
     
 }

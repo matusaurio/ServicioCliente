@@ -1,0 +1,68 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" 
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core" 
+                xmlns:ui="http://java.sun.com/jsf/facelets" 
+                xmlns:p="http://primefaces.org/ui"
+                template="/plantillaInterna.xhtml">
+
+    <ui:define name="titulo">Bienvenido</ui:define>
+    <ui:define name="contenidoContacto">
+        <p:growl autoUpdate="true"/>
+        <p:menu style="width: 250px">
+            <p:submenu label="Opciones Contacto">
+                <p:menuitem value="Ver" update="@form" actionListener="#{contactoBean.vista()}"/>
+                <p:menuitem value="Nuevo" update="@form" actionListener="#{contactoBean.nuevo()}"/>
+                <p:menuitem value="Editar" update="@form" actionListener="#{contactoBean.modificar()}"/>
+                <p:menuitem value="Eliminar" update="@form" actionListener="#{contactoBean.eliminar()}"/>
+            </p:submenu>
+        </p:menu>
+    </ui:define>
+    <ui:define name="tablaContacto">
+        <p:panel header="CONTACTOS" rendered="#{contactoBean.desplegarVista}" class="panelCentral">
+            <p:dataTable var="contacto" value="#{contactoBean.contactos}" paginator="true" rows="5" paginatorAlwaysVisible="false"  selectionMode="single" selection="#{contactoBean.contactoSeleccionada}" rowKey="#{contacto.idContacto}">
+                <p:ajax event="rowSelect" listener="#{contactoBean.onRowSelect(event)}" update="@form"/>
+                <p:ajax event="rowUnselect" listener="#{contactoBean.onRowUnselect(event)}" update="@form"/>
+                <p:column headerText="Codigo Contacto" >
+                    <h:outputText value="#{contacto.idContacto}" />
+                </p:column>
+                <p:column headerText="Empresa" >
+                    <h:outputText value="#{contacto.idEmpresa.nombreEmpresa}" />
+                </p:column>
+                <p:column headerText="Nombre Contacto" >
+                    <h:outputText value="#{contacto.nombreContacto}" />
+                </p:column>
+                <p:column headerText="Mail Contacto" >
+                    <h:outputText value="#{contacto.mailContacto}" />
+                </p:column>
+            </p:dataTable>
+        </p:panel>
+    </ui:define>
+    <ui:define name="formularioContacto">
+        <p:panel header="Nueva Contacto" rendered="#{contactoBean.desplegarNuevo}" class="panelCentral">
+                <p:panelGrid columns="3">
+
+                    <p:outputLabel for="codigoEmpresa" value="Codigo Sucursal" />
+                    <p:selectOneMenu id="codigoEmpresa" value="#{contactoBean.contacto.idEmpresa}" effect="puff">
+                        <f:selectItem itemLabel="- Seleccione -" itemValue="#{null}"/>
+                        <f:selectItems value="#{empresaBean.empresas}" var="empresa"
+                                       itemLabel="#{empresa.nombreEmpresa}" itemValue="#{empresa}"/>
+                        <f:converter converterId="sucursalConverter"/>
+                    </p:selectOneMenu>                    
+                    <p:message for="codigoEmpresa" />
+
+                    <p:outputLabel for="nombreContacto" value="Nombre Contacto" />
+                    <p:inputText id="nombreContacto" value="#{contactoBean.contacto.nombreContacto}" required="true" maxlength="100" requiredMessage="Debe ingresar el nombre del contacto."/>
+                    <p:message for="nombreContacto" />
+                    
+                    <p:outputLabel for="mailContacto" value="Mail Contacto" />
+                    <p:inputText id="mailContacto" value="#{contactoBean.contacto.mailContacto}" required="true" maxlength="100" requiredMessage="Debe ingresar el nombre del contacto."/>
+                    <p:message for="mailContacto" />
+                </p:panelGrid>
+                <br/>
+                <p:commandButton value="Aceptar" update="@form" actionListener="#{contactoBean.guardar()}"/>
+                <p:commandButton value="Cancelar" update="@form" immediate="true" actionListener="#{contactoBean.cancelar()}"/>
+            </p:panel>
+    </ui:define>
+</ui:composition>

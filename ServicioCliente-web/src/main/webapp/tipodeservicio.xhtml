@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='ISO-8859-1' ?>
+<?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:composition xmlns="http://www.w3.org/1999/xhtml" 
                 xmlns:h="http://java.sun.com/jsf/html"
@@ -30,12 +30,6 @@
                 <p:column headerText="Nombre" >
                     <h:outputText value="#{tipoServicio.nombreTipoServicioSolicitudservicio}" />
                 </p:column>
-                <p:column headerText="Fecha" >
-                    <h:outputText value="#{tipoServicio.fechaTipoServicioSolicitudservicio}" />
-                </p:column>
-                <p:column headerText="Estado" >
-                    <h:outputText value="#{tipoServicio.estadoTipoServicioTxt}" />
-                </p:column>
                 <p:column headerText="Observacion" >
                     <h:outputText value="#{tipoServicio.observacionTipoServicioSolicitudservicio}" />
                 </p:column>
@@ -48,17 +42,6 @@
                 <p:outputLabel for="nombreT" value="Nombre" />
                 <p:inputText id="nombreT" value="#{tipoServicioBean.tipoServicio.nombreTipoServicioSolicitudservicio}" required="true" maxlength="100" requiredMessage="Debe ingresar la descripcion."/>
                 <p:message for="nombreT" />
-                <p:outputLabel for="fechaT" value="Fecha" />
-                <p:calendar id="fechaT" value="#{tipoServicioBean.tipoServicio.fechaTipoServicioSolicitudservicio}" pattern="yyyy/MM/dd HH:mm:ss"/>
-                <p:message for="fechaT" />
-
-                <p:outputLabel for="estadoT" value="Estado:"/>
-                <p:selectOneMenu id="estadoT" value="#{tipoServicioBean.tipoServicio.estadoTipoServicioSolicitudservicio}" effect="explode" >
-                    <f:selectItem itemLabel="- Seleccione -" itemValue="#{null}" />
-                    <f:selectItem itemLabel="INACTIVO" itemValue="#{false}" />
-                    <f:selectItem itemLabel="ACTIVO" itemValue="#{true}" />
-                </p:selectOneMenu>
-                <p:message for="estadoT" />
                 <p:outputLabel for="observacionT" value="Observacion" />
                 <p:inputText id="observacionT" value="#{tipoServicioBean.tipoServicio.observacionTipoServicioSolicitudservicio}" required="true" maxlength="100" requiredMessage="Debe ingresar la descripcion."/>
                 <p:message for="observacionT" />

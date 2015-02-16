@@ -5,8 +5,8 @@
  */
 package com.distribuidas.csc.converters;
 
-import com.distribuidas.csc.dao.BodegaFacade;
-import com.distribuidas.csc.persistencia.Bodega;
+import com.distribuidas.csc.dao.TipoServicioFacade;
+import com.distribuidas.csc.persistencia.TipoServicio;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
@@ -19,34 +19,32 @@ import javax.faces.convert.FacesConverter;
  *
  * @author Stephen
  */
-@FacesConverter(value="bodegaConverter", forClass = com.distribuidas.csc.persistencia.Bodega.class)
-public class BodegaConverter implements Converter{
-    
+@FacesConverter(value="tipoServicioConverter", forClass = com.distribuidas.csc.persistencia.TipoServicio.class)
+public class TipoServicioConverter implements Converter{
     @EJB
-    private BodegaFacade bodegaFacade;
+    private TipoServicioFacade tipoServicioFacade;
     
     @Override
     public Object getAsObject(FacesContext context, UIComponent component, String submittedValue){
-        int bodegaId;
+        int tipoServicioId;
         try {            
-            bodegaId = Integer.parseInt(submittedValue);
+            tipoServicioId = Integer.parseInt(submittedValue);
         } catch (NumberFormatException e) {
             throw new ConverterException(new FacesMessage(FacesMessage.SEVERITY_ERROR, 
                     "Error CiudadConverter", "Please try again!"));
         }
-        return bodegaFacade.find(bodegaId);
+        return tipoServicioFacade.find(tipoServicioId);
     }
     
     @Override
     public String getAsString(FacesContext context, UIComponent component, Object modelValue){
-        Bodega bodega = null;
-        if(modelValue instanceof Bodega){
-            bodega = (Bodega) modelValue;
+        TipoServicio tipoServicio = null;
+        if(modelValue instanceof TipoServicio){
+            tipoServicio = (TipoServicio) modelValue;
             StringBuilder asString = new StringBuilder();
-            asString.append(bodega.getIdBodega());
+            asString.append(tipoServicio.getIdTipoServicioSolicitudservicio());
             return asString.toString();
         }
         return "";
     }
-    
 }

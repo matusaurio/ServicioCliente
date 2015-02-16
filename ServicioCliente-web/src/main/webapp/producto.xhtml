@@ -21,7 +21,7 @@
     </ui:define>
     <ui:define name="tablaProducto">
         <p:panel header="PRODUCTOS" rendered="#{productoBean.desplegarVista}" class="panelCentral">
-            <p:dataTable var="producto" value="#{productoBean.productos}" paginator="true" rows="5" paginatorAlwaysVisible="false" selectionMode="single" selection="#{productoBean.productoSeleccionado}" rowKey="#{producto.idSucursal}">
+            <p:dataTable var="producto" value="#{productoBean.productos}" paginator="true" rows="5" paginatorAlwaysVisible="false" selectionMode="single" selection="#{productoBean.productoSeleccionado}" rowKey="#{producto.idProducto}">
                 <p:ajax event="rowSelect" listener="#{productoBean.onRowSelect(event)}" update="@form"/>
                 <p:ajax event="rowUnselect" listener="#{productoBean.onRowUnselect(event)}" update="@form"/>
                 <p:column headerText="Codigo Producto" >
@@ -32,9 +32,6 @@
                 </p:column>
                 <p:column headerText="Codigo Bodega" >
                     <h:outputText value="#{producto.idBodega.nombreBodega}" />
-                </p:column>
-                <p:column headerText="Codigo Producto" >
-                    <h:outputText value="#{producto.codigoProducto}" />
                 </p:column>
                 <p:column headerText="Nombre  Producto" >
                     <h:outputText value="#{producto.nombreProducto}" />
@@ -86,7 +83,7 @@
                     <p:message for="precioProducto" />
                     
                     <p:outputLabel for="fechaProducto" value="Fecha" />
-                    <p:inputText id="fechaProducto" value="#{productoBean.producto.fechaCreacionProducto}" required="true" maxlength="100" requiredMessage="Debe ingresar el nombre de la empresa."/>
+                    <p:outputLabel id="fechaProducto" value="#{productoBean.producto.fechaCreacionProducto}" />
                     <p:message for="fechaProducto" />
                     
                     <p:outputLabel for="observacionProducto" value="Observacion Producto" />

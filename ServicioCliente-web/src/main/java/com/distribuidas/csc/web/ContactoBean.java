@@ -5,14 +5,14 @@
  */
 package com.distribuidas.csc.web;
 
-import com.distribuidas.csc.persistencia.ParteServicio;
-import com.distribuidas.csc.servicio.ParteServicioServicio;
+import com.distribuidas.csc.persistencia.Contacto;
+import com.distribuidas.csc.servicio.ContactoServicio;
+import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-import javax.faces.model.SelectItem;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.event.UnselectEvent;
 
@@ -22,52 +22,53 @@ import org.primefaces.event.UnselectEvent;
  */
 @ManagedBean
 @ViewScoped
-public class ParteServicioBean {
+public class ContactoBean implements Serializable{
     
-    @EJB
-    private ParteServicioServicio parteServicioServicio;
-
-    private List<ParteServicio> parteServicios;
-    private ParteServicio parteServicio;
-    private ParteServicio parteServicioSeleccionado;
-
+    private List<Contacto> contactos;
+    private Contacto contacto;
+    private Contacto contactoSeleccionada;
+    
     private Boolean desplegarVista = false;
     private Boolean desplegarNuevo = false;
-
+    
     private String tituloFormulario;
     private Boolean enNuevo;
     private Boolean enModificar;
-
+    
+    
     private Boolean activarNuevo;
     private Boolean activarModificar;
     private Boolean activarEliminar;
     private Boolean activarCambiarEstado;
-
+    
+    @EJB
+    private ContactoServicio contactoServicio;
+    
     @PostConstruct
-    public void init() {
-        this.parteServicios = this.parteServicioServicio.obtenerTodos();
+    public void init(){
+        this.contactos = this.contactoServicio.obtenerTodos();
     }
-
-    public void vista() {
+    
+    public void vista(){
         this.desplegarVista = true;
     }
-
-    public void nuevo() {
+    
+    public void nuevo(){
         this.desplegarNuevo = true;
         this.enNuevo = true;
         this.enModificar = false;
-        this.parteServicio = new ParteServicio();
+        this.contacto = new Contacto();
     }
-
+    
     public void guardar() {
         if (this.enNuevo) {
-            this.parteServicioServicio.crear(this.parteServicio);
+            this.contactoServicio.crear(this.contacto);
             this.desplegarNuevo = false;
-            this.parteServicios.add(this.parteServicio);
+            this.contactos.add(this.contacto);
             this.enNuevo = false;
         } else if (this.enModificar) {
             System.err.println("modificar");
-            this.parteServicioServicio.actualizar(this.parteServicio);
+            this.contactoServicio.actualizar(this.contacto);
             this.desplegarNuevo = false;
             this.enModificar = false;
         }
@@ -77,18 +78,18 @@ public class ParteServicioBean {
         this.enModificar = true;
         this.enNuevo = false;
         this.desplegarNuevo = true;
-        this.parteServicio = this.parteServicioSeleccionado;
+        this.contacto = this.contactoSeleccionada;
     }
 
     public void eliminar() {
-        this.parteServicioServicio.eliminar(this.parteServicioSeleccionado);
-        this.parteServicios.remove(this.parteServicioSeleccionado);
+        this.contactoServicio.eliminar(this.contactoSeleccionada);
+        this.contactos.remove(this.contactoSeleccionada);
     }
 
     public void cancelar() {
         this.desplegarNuevo = false;
     }
-    
+
     public void onRowSelect(SelectEvent event) {
 
     }
@@ -97,24 +98,24 @@ public class ParteServicioBean {
 
     }
 
-    public List<ParteServicio> getParteServicios() {
-        return parteServicios;
+    public List<Contacto> getContactos() {
+        return contactos;
     }
 
-    public ParteServicio getParteServicio() {
-        return parteServicio;
+    public Contacto getContacto() {
+        return contacto;
     }
 
-    public void setParteServicio(ParteServicio parteServicio) {
-        this.parteServicio = parteServicio;
+    public void setContacto(Contacto contacto) {
+        this.contacto = contacto;
     }
 
-    public ParteServicio getParteServicioSeleccionado() {
-        return parteServicioSeleccionado;
+    public Contacto getContactoSeleccionada() {
+        return contactoSeleccionada;
     }
 
-    public void setParteServicioSeleccionado(ParteServicio parteServicioSeleccionado) {
-        this.parteServicioSeleccionado = parteServicioSeleccionado;
+    public void setContactoSeleccionada(Contacto contactoSeleccionada) {
+        this.contactoSeleccionada = contactoSeleccionada;
     }
 
     public Boolean getDesplegarVista() {
@@ -188,6 +189,5 @@ public class ParteServicioBean {
     public void setActivarCambiarEstado(Boolean activarCambiarEstado) {
         this.activarCambiarEstado = activarCambiarEstado;
     }
-    
     
 }

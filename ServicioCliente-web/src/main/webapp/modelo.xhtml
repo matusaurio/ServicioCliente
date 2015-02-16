@@ -21,7 +21,7 @@
     </ui:define>
     <ui:define name="tablaModelo">
         <p:panel header="MODELOS" rendered="#{modeloBean.desplegarVista}" class="panelCentral">
-            <p:dataTable var="modelo" value="#{modeloBean.modelos}"paginator="true" rows="5" paginatorAlwaysVisible="false" selectionMode="single" selection="#{modeloBean.modeloSeleccionada}" rowKey="#{modelo.idMarca}">
+            <p:dataTable var="modelo" value="#{modeloBean.modelos}" paginator="true" rows="5" paginatorAlwaysVisible="false" selectionMode="single" selection="#{modeloBean.modeloSeleccionada}" rowKey="#{modelo.idMarca}" >
                 <p:ajax event="rowSelect" listener="#{modeloBean.onRowSelect(event)}" update="@form"/>
                 <p:ajax event="rowUnselect" listener="#{modeloBean.onRowUnselect(event)}" update="@form"/>
                 <p:column headerText="Codigo Modelo" >
@@ -35,9 +35,6 @@
                 </p:column>
                 <p:column headerText="Observacion Modelo" >
                     <h:outputText value="#{modelo.observacionModelo}" />
-                </p:column>
-                <p:column headerText="Estado Modelo" >
-                    <h:outputText value="#{modelo.estadoModeloTxt}" />
                 </p:column>
             </p:dataTable>
         </p:panel>
@@ -59,13 +56,6 @@
                     <p:outputLabel for="observacionModelo" value="Observacion Modelo" />
                     <p:inputText id="observacionModelo" value="#{modeloBean.modelo.observacionModelo}" required="true" maxlength="100" requiredMessage="Debe ingresar el nombre de la empresa."/>
                     <p:message for="observacionModelo" />
-                    <p:outputLabel for="estadoModelo" value="Estado:"/>
-                    <p:selectOneMenu id="estadoModelo" value="#{modeloBean.modelo.estadoModelo}" effect="explode" >
-                        <f:selectItem itemLabel="- Seleccione -" itemValue="#{null}" />
-                        <f:selectItem itemLabel="INACTIVO" itemValue="#{false}" />
-                        <f:selectItem itemLabel="ACTIVO" itemValue="#{true}" />
-                    </p:selectOneMenu>
-                    <p:message for="estadoModelo" />
                 </p:panelGrid>
                 <br/>
                 <p:commandButton value="Aceptar" update="@form" actionListener="#{modeloBean.guardar()}"/>

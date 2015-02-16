@@ -7,11 +7,13 @@ package com.distribuidas.csc.web;
 
 import com.distribuidas.csc.persistencia.Usuario;
 import com.distribuidas.csc.servicio.UsuarioServicio;
+import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.model.SelectItem;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.event.UnselectEvent;
 
@@ -24,6 +26,7 @@ import org.primefaces.event.UnselectEvent;
 public class UsuarioBean {
     
     private List<Usuario> usuarios;
+    private List<SelectItem> listaCombo;
     private Usuario usuario;
     private Usuario usuarioSeleccionada;
     
@@ -97,6 +100,21 @@ public class UsuarioBean {
 
     }
 
+    public List<SelectItem> getListaCombo() {
+        this.listaCombo = new ArrayList<SelectItem>();
+        List<Usuario> usuarios2 = this.usuarioServicio.obtenerTodos();
+        
+        this.listaCombo.clear();
+        
+        for(Usuario u:usuarios2){
+            SelectItem selectItem = new SelectItem(u.getIdUsuario(), u.getNombreUsuario());
+            this.listaCombo.add(selectItem);
+        }
+        System.out.println("Se cargaron las empresas");
+        return this.listaCombo;
+    }
+
+    
     public List<Usuario> getUsuarios() {
         return usuarios;
     }

@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='ISO-8859-1' ?>
+<?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:composition xmlns="http://www.w3.org/1999/xhtml" 
                 xmlns:h="http://java.sun.com/jsf/html"
@@ -27,12 +27,6 @@
                 <p:column headerText="Codigo Usuario" >
                     <h:outputText value="#{usuario.idUsuario}" />
                 </p:column>
-                <p:column headerText="Codigo Rol" >
-                    <h:outputText value="#{usuario.idRol.nombreRol}" />
-                </p:column>
-                <p:column headerText="Codigo Empresa" >
-                    <h:outputText value="#{usuario.idEmpresa.nombreEmpresa}" />
-                </p:column>
                 <p:column headerText="Nombre Usuario" >
                     <h:outputText value="#{usuario.nombreUsuario}" />
                 </p:column>
@@ -42,31 +36,12 @@
                 <p:column headerText="Clave Usuario" >
                     <h:outputScript value="#{usuario.passUsuario}" />
                 </p:column>
-                <p:column headerText="Estado Empresa" >
-                    <h:outputText value="#{usuario.estadoUsuarioTxt}" />
-                </p:column>
             </p:dataTable>
         </p:panel>
     </ui:define>
     <ui:define name="formularioUsuario">
         <p:panel header="Nuevo Usuario" rendered="#{usuarioBean.desplegarNuevo}" class="panelCentral">
                 <p:panelGrid columns="3">
-                    <p:outputLabel for="codigoRol" value="Codigo Rol" />
-                    <p:selectOneMenu id="codigoRol" value="#{usuarioBean.usuario.idRol}" required="true" effect="puff">                    
-                        <f:selectItems value="#{rolBean.roles}" var="rol"
-                                       itemLabel="#{rol.nombreRol}" itemValue="#{rol}"/>
-                        <f:converter converterId="rolConverter"/>
-                    </p:selectOneMenu>                    
-                    <p:message for="codigoRol" />
-                    
-                    <p:outputLabel for="codigoEmpresa" value="Codigo Empresa" />
-                    <p:selectOneMenu id="codigoEmpresa" value="#{usuarioBean.usuario.idEmpresa}" required="true" effect="puff">                    
-                        <f:selectItems value="#{empresaBean.empresas}" var="empresa"
-                                       itemLabel="#{empresa.nombreEmpresa}" itemValue="#{empresa}"/>
-                        <f:converter converterId="empresaConverter"/>
-                    </p:selectOneMenu>                    
-                    <p:message for="codigoEmpresa" />
-
                     <p:outputLabel for="nombreUsuario" value="Nombre Usuario:" />
                     <p:inputText id="nombreUsuario" value="#{usuarioBean.usuario.nombreUsuario}" required="true" maxlength="100" requiredMessage="Debe ingresar un nombre."/>
                     <p:message for="nombreUsuario" />
@@ -80,14 +55,6 @@
                     <p:outputLabel for="claveUsuario" value="Clave Usuario:" />
                     <p:password id="claveUsuario" value="#{usuarioBean.usuario.passUsuario}" required="true" requiredMessage="Debe ingresar una contraseña."/>
                     <p:message for="claveUsuario" />
-                    
-                    <p:outputLabel for="estadoUsuario" value="Estado:"/>
-                    <p:selectOneMenu id="estadoUsuario" value="#{usuarioBean.usuario.estadoUsuario}" effect="explode" >
-                        <f:selectItem itemLabel="- Seleccione -" itemValue="#{null}" />
-                        <f:selectItem itemLabel="INACTIVO" itemValue="#{false}" />
-                        <f:selectItem itemLabel="ACTIVO" itemValue="#{true}" />
-                    </p:selectOneMenu>
-                    <p:message for="estadoUsuario" />
                 </p:panelGrid>
                 <br/>
                 <p:commandButton value="Aceptar" update="@form" actionListener="#{usuarioBean.guardar()}"/>

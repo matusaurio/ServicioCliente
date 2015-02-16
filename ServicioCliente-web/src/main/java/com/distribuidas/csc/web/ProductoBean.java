@@ -7,6 +7,8 @@ package com.distribuidas.csc.web;
 
 import com.distribuidas.csc.persistencia.Producto;
 import com.distribuidas.csc.servicio.ProductoServicio;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -25,6 +27,10 @@ public class ProductoBean {
     
     @EJB
     private ProductoServicio productoServicio;
+    
+    private String fechaCreacion;
+    Date fecha = new Date();
+    SimpleDateFormat formatoFecha = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     private List<Producto> productos;
     private Producto producto;
@@ -56,6 +62,7 @@ public class ProductoBean {
         this.enNuevo = true;
         this.enModificar = false;
         this.producto = new Producto();
+        this.producto.setFechaCreacionProducto((this.fecha));
     }
 
     public void guardar() {
@@ -98,6 +105,22 @@ public class ProductoBean {
 
     public List<Producto> getProductos() {
         return productos;
+    }
+
+    public String getFechaCreacion() {
+        return fechaCreacion;
+    }
+
+    public void setFechaCreacion(String fechaCreacion) {
+        this.fechaCreacion = fechaCreacion;
+    }
+
+    public Date getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(Date fecha) {
+        this.fecha = fecha;
     }
 
     public Producto getProducto() {

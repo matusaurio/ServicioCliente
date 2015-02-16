@@ -33,9 +33,6 @@
                 <p:column headerText="Nombre Empresa" >
                     <h:outputText value="#{empresa.nombreEmpresa}" />
                 </p:column>
-                <p:column headerText="Estado Empresa" >
-                    <h:outputText value="#{empresa.estadoEmpresaTxt}" />
-                </p:column>
             </p:dataTable>
         </p:panel>
     </ui:define>
@@ -53,13 +50,6 @@
                     <p:outputLabel for="nombreEmpresa" value="Nombre Empresa:" />
                     <p:inputText id="nombreEmpresa" value="#{empresaBean.empresa.nombreEmpresa}" required="true" maxlength="100" requiredMessage="Debe ingresar el nombre de la empresa."/>
                     <p:message for="nombreEmpresa" />
-
-                    <p:outputLabel for="estadoEmpresa" value="Estado:"/>
-                    <p:selectOneMenu id="estadoEmpresa" value="#{empresaBean.empresa.estadoEmpresa}" effect="explode" >
-                        <f:selectItem itemLabel="Inactivo" itemValue="#{false}" />
-                        <f:selectItem itemLabel="Activo" itemValue="#{true}" />
-                    </p:selectOneMenu>
-                    <p:message for="estadoEmpresa" />
                 </p:panelGrid>
                 <br/>
                 <p:commandButton value="Aceptar" update="@form" actionListener="#{empresaBean.guardar()}"/>

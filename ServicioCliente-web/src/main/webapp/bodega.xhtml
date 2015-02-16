@@ -33,25 +33,23 @@
                 <p:column headerText="Nombre Bodega" >
                     <h:outputText value="#{bodega.nombreBodega}" />
                 </p:column>
-                <p:column headerText="Estado Bodega" >
-                    <h:outputText value="#{bodega.estadoBodegaTxt}" />
-                </p:column>
             </p:dataTable>
         </p:panel>
     </ui:define>
     <ui:define name="formularioBodega">
         <p:panel header="Nueva Bodega" rendered="#{bodegaBean.desplegarNuevo}" class="panelCentral">
                 <p:panelGrid columns="3">
+                    
                     <p:outputLabel for="codigoEmpresa" value="Empresa" />
-                    <p:selectOneMenu id="codigoEmpresa" value="#{sucursalBean.codEmpresa}" required="true" effect="puff">                    
+                    <h:selectOneMenu id="codigoEmpresa" value="#{sucursalBean.idEmpresa}" required="true">
                         <f:selectItem itemLabel="- Seleccione -" itemValue=""/>
                         <f:selectItems value="#{empresaBean.listaCombo}"/>
-                        <p:ajax update="codigoSucursal" event="change" process="@this" listener="#{sucursalBean.cargarCombo()}"/>
-                    </p:selectOneMenu>                    
-                    <p:commandButton value="Aceptar" update="codigoSucursal" actionListener="#{sucursalBean.cargarCombo()}"/>
+                        <p:ajax update="codigoSucursal" event="change" process="@this" listener="#{sucursalBean.cargarSucursales()}"/>
+                    </h:selectOneMenu>
+                    <p:message for="codigoEmpresa" />
                     
                     <p:outputLabel for="codigoSucursal" value="Codigo Sucursal" />
-                    <p:selectOneMenu id="codigoSucursal" value="#{bodegaBean.bodega.idSucursal}" required="true" effect="puff">                    
+                    <p:selectOneMenu id="codigoSucursal" value="#{bodegaBean.bodega.idSucursal}" effect="puff">                    
                         <f:selectItems value="#{sucursalBean.sucursalesE}" var="sucursal"
                                        itemLabel="#{sucursal.nombreSucursal}" itemValue="#{sucursal}"/>
                         <f:converter converterId="sucursalConverter"/>
@@ -62,14 +60,6 @@
                     <p:outputLabel for="nombreBodega" value="Nombre Bodega:" />
                     <p:inputText id="nombreBodega" value="#{bodegaBean.bodega.nombreBodega}" required="true" maxlength="100" requiredMessage="Debe ingresar el nombre de la empresa."/>
                     <p:message for="nombreBodega" />
-
-                    <p:outputLabel for="estadoBodega" value="Estado:"/>
-                    <p:selectOneMenu id="estadoBodega" value="#{bodegaBean.bodega.estadoBodega}" effect="explode">
-                        <f:selectItem itemLabel="Seleccione" itemValue="#{null}" />
-                        <f:selectItem itemLabel="0" itemValue="#{false}" />
-                        <f:selectItem itemLabel="1" itemValue="#{true}" />
-                    </p:selectOneMenu>
-                    <p:message for="estadoBodega" />
                 </p:panelGrid>
                 <br/>
                 <p:commandButton value="Aceptar" update="@form" actionListener="#{bodegaBean.guardar()}"/>

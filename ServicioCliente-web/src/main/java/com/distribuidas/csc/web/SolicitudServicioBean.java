@@ -5,8 +5,19 @@
  */
 package com.distribuidas.csc.web;
 
+import com.distribuidas.csc.persistencia.Bodega;
+import com.distribuidas.csc.persistencia.Contacto;
+import com.distribuidas.csc.persistencia.Estado;
 import com.distribuidas.csc.persistencia.SolicitudServicio;
+import com.distribuidas.csc.persistencia.Sucursal;
+import com.distribuidas.csc.servicio.BodegaServicio;
+import com.distribuidas.csc.servicio.ContactoServicio;
+import com.distribuidas.csc.servicio.EstadoServicio;
 import com.distribuidas.csc.servicio.SolicitudServicioServicio;
+import com.distribuidas.csc.servicio.SucursalServicio;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -25,6 +36,19 @@ public class SolicitudServicioBean {
     
     @EJB
     private SolicitudServicioServicio solicitudServicioServicio;
+    @EJB
+    private SucursalServicio sucursalServicio;
+    @EJB
+    private BodegaServicio bodegaServicio;
+    @EJB
+    private ContactoServicio contactoServicio;
+    @EJB
+    private EstadoServicio estadoServicio;
+    
+    private List<Sucursal> sucursales;
+    private List<Bodega> bodegas;
+    private List<Contacto> contactos;
+    private List<Estado> estados;
 
     private List<SolicitudServicio> solicitudServicios;
     private SolicitudServicio solicitudServicio;
@@ -32,6 +56,7 @@ public class SolicitudServicioBean {
 
     private Boolean desplegarVista = false;
     private Boolean desplegarNuevo = false;
+    private Boolean elegirTecnico = false;
 
     private String tituloFormulario;
     private Boolean enNuevo;
@@ -41,13 +66,51 @@ public class SolicitudServicioBean {
     private Boolean activarModificar;
     private Boolean activarEliminar;
     private Boolean activarCambiarEstado;
+    
+    Date fecha = new Date();
+    SimpleDateFormat formatoFecha = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     @PostConstruct
     public void init() {
         this.solicitudServicios = this.solicitudServicioServicio.obtenerTodos();
+        this.estados = this.estadoServicio.obtenerTodos();
+        this.sucursales = new ArrayList<>();
+        this.bodegas = new ArrayList<>();
+        this.estados = new ArrayList<>();
     }
 
+    public void cargarSucursales(){
+        System.out.println("CARGAR SUCURSALES");
+        this.sucursales = this.sucursalServicio.obtenerSurcursalesE(this.solicitudServicio.getIdContacto().getIdEmpresa().getIdEmpresa());
+    }
+    
+    public void cargarContactos(){
+        System.out.println("CARGAR CONTACTOS");
+        this.contactos = this.contactoServicio.obtenerContactosE(this.solicitudServicio.getIdEmpresa().getIdEmpresa());
+    }
+    
+    public void cargarBodegas(){
+        System.out.println("CARGAR BODEGAS");
+        this.bodegas = this.bodegaServicio.obtenerBodegasS(this.solicitudServicio.getIdSucursal().getIdSucursal());
+    }
+    
+    public void cargarTecnicos(){
+        System.out.println("CARGAR TECNICOS");
+        int aux = this.solicitudServicio.getIdEstadoSolicitudservicio().getIdEstadoSolicitudservicio();
+        if((aux)==(2)){
+            this.elegirTecnico = true;
+        }
+        else 
+            this.elegirTecnico = false;
+    }
+    
     public void vista() {
+        for(int i=0;i<this.solicitudServicios.size();i++){
+            if(this.solicitudServicios.get(i).getIdEstadoSolicitudservicio().getIdEstadoSolicitudservicio().compareTo(3)==0)
+                this.tituloFormulario = "Parte Servicio";
+            else
+                this.tituloFormulario = "Gestionar Servicio";
+        }
         this.desplegarVista = true;
     }
 
@@ -56,6 +119,7 @@ public class SolicitudServicioBean {
         this.enNuevo = true;
         this.enModificar = false;
         this.solicitudServicio = new SolicitudServicio();
+        this.solicitudServicio.setFechaCreacionSolicitudservicio((this.fecha));
     }
 
     public void guardar() {
@@ -96,8 +160,36 @@ public class SolicitudServicioBean {
 
     }
 
+    public List<Estado> getEstados() {
+        return estados;
+    }
+
+    public void setEstados(List<Estado> estados) {
+        this.estados = estados;
+    }
+
+    public List<Contacto> getContactos() {
+        return contactos;
+    }
+
+    public List<Sucursal> getSucursales() {
+        return sucursales;
+    }
+
+    public List<Bodega> getBodegas() {
+        return bodegas;
+    }
+
     public List<SolicitudServicio> getSolicitudServicios() {
         return solicitudServicios;
+    }
+
+    public Boolean getElegirTecnico() {
+        return elegirTecnico;
+    }
+
+    public void setElegirTecnico(Boolean elegirTecnico) {
+        this.elegirTecnico = elegirTecnico;
     }
 
     public SolicitudServicio getSolicitudServicio() {
@@ -107,7 +199,7 @@ public class SolicitudServicioBean {
     public void setSolicitudServicio(SolicitudServicio solicitudServicio) {
         this.solicitudServicio = solicitudServicio;
     }
-
+    
     public SolicitudServicio getSolicitudServicioSeleccionada() {
         return solicitudServicioSeleccionada;
     }

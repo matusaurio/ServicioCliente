@@ -32,8 +32,12 @@
                                 <p:menuitem value="Modelo" update="@form" ajax="false" action="modelo"/>
                                 <p:menuitem value="Marca" update="@form" ajax="false" action="marca"/>
                                 <p:menuitem value="Usuario" update="@form" ajax="false" action="usuario"/>
+                                <p:menuitem value="Solicitud Servicio" update="@form" ajax="false" action="solicitudServicio"/>
                                 <p:menuitem value="Tipo Servicio" update="@form" ajax="false" action="tipodeservicio"/>
                                 <p:menuitem value="Estado" update="@form" ajax="false" action="estado"/>
+                                <p:menuitem value="Producto" update="@form" ajax="false" action="producto"/>
+                                <p:menuitem value="Contacto" update="@form" ajax="false" action="contacto"/>
+                                <p:menuitem value="Tecnico" update="@form" ajax="false" action="tecnico"/>
                             </p:submenu>                         
                             <p:menuitem value="Logout" action="index" style="right: inherit" />
                         </p:menubar>
@@ -49,6 +53,10 @@
                                 <ui:insert name="contenidoBodega"/>
                                 <ui:insert name="contenidoSucursal"/>
                                 <ui:insert name="contenidoUsuario"/>
+                                <ui:insert name="contenidoProducto"/>
+                                <ui:insert name="contenidoSolicitudServicio"/>
+                                <ui:insert name="contenidoContacto"/>
+                                <ui:insert name="contenidoTecnico"/>
                             </p:layoutUnit>
                             <p:layoutUnit position="center" id="principal">
                                 <ui:insert name="tablaCiudad"/>
@@ -69,6 +77,14 @@
                                 <ui:insert name="formularioSucursal"/>
                                 <ui:insert name="tablaUsuario"/>
                                 <ui:insert name="formularioUsuario"/>
+                                <ui:insert name="tablaProducto"/>
+                                <ui:insert name="formularioProducto"/>
+                                <ui:insert name="tablaSolicitudServicio"/>
+                                <ui:insert name="formularioSolicitudServicio"/>
+                                <ui:insert name="tablaContacto"/>
+                                <ui:insert name="formularioContacto"/>
+                                <ui:insert name="tablaTecnico"/>
+                                <ui:insert name="formularioTecnico"/>
                             </p:layoutUnit>
                         </p:layout>
                     </div>

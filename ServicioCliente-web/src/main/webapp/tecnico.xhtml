@@ -1,0 +1,49 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" 
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core" 
+                xmlns:ui="http://java.sun.com/jsf/facelets" 
+                xmlns:p="http://primefaces.org/ui"
+                template="/plantillaInterna.xhtml">
+
+    <ui:define name="titulo">Bienvenido</ui:define>
+    <ui:define name="contenidoTecnico">
+        <p:growl autoUpdate="true"/>
+        <p:menu style="width: 250px">
+            <p:submenu label="Opciones Tecnico">
+                <p:menuitem value="Ver" update="@form" actionListener="#{tecnicoBean.vista()}"/>
+                <p:menuitem value="Nuevo" update="@form" actionListener="#{tecnicoBean.nuevo()}"/>
+                <p:menuitem value="Editar" update="@form" actionListener="#{tecnicoBean.modificar()}"/>
+                <p:menuitem value="Eliminar" update="@form" actionListener="#{tecnicoBean.eliminar()}"/>
+            </p:submenu>
+        </p:menu>
+    </ui:define>
+    <ui:define name="tablaTecnico">
+        <p:panel header="CONTACTOS" rendered="#{tecnicoBean.desplegarVista}" class="panelCentral">
+            <p:dataTable var="tecnico" value="#{tecnicoBean.tecnicos}" paginator="true" rows="5" paginatorAlwaysVisible="false"  selectionMode="single" selection="#{tecnicoBean.tecnicoSeleccionada}" rowKey="#{tecnico.idTecnico}">
+                <p:ajax event="rowSelect" listener="#{tecnicoBean.onRowSelect(event)}" update="@form"/>
+                <p:ajax event="rowUnselect" listener="#{tecnicoBean.onRowUnselect(event)}" update="@form"/>
+                <p:column headerText="Codigo Tecnico" >
+                    <h:outputText value="#{tecnico.idTecnico}" />
+                </p:column>
+                <p:column headerText="Nombre Tecnico" >
+                    <h:outputText value="#{tecnico.nombreTecnico}" />
+                </p:column>
+            </p:dataTable>
+        </p:panel>
+    </ui:define>
+    <ui:define name="formularioTecnico">
+        <p:panel header="Nueva Tecnico" rendered="#{tecnicoBean.desplegarNuevo}" class="panelCentral">
+                <p:panelGrid columns="3">
+
+                    <p:outputLabel for="nombreTecnico" value="Nombre Tecnico" />
+                    <p:inputText id="nombreTecnico" value="#{tecnicoBean.tecnico.nombreTecnico}" required="true" maxlength="100" requiredMessage="Debe ingresar el nombre del tecnico."/>
+                    <p:message for="nombreTecnico" />
+                </p:panelGrid>
+                <br/>
+                <p:commandButton value="Aceptar" update="@form" actionListener="#{tecnicoBean.guardar()}"/>
+                <p:commandButton value="Cancelar" update="@form" immediate="true" actionListener="#{tecnicoBean.cancelar()}"/>
+            </p:panel>
+    </ui:define>
+</ui:composition>

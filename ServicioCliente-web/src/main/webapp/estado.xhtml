@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='ISO-8859-1' ?>
+<?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:composition xmlns="http://www.w3.org/1999/xhtml" 
                 xmlns:h="http://java.sun.com/jsf/html"
@@ -30,9 +30,6 @@
                 <p:column headerText="Nombre" >
                     <h:outputText value="#{estado.nombreEstadoSolicitudservicio}" />
                 </p:column>
-                <p:column headerText="Fecha" >
-                    <h:outputText value="#{estado.fechaEstadoSolicitudservicio}" />
-                </p:column>
             </p:dataTable>
         </p:panel>
     </ui:define>
@@ -42,9 +39,6 @@
                 <p:outputLabel for="nombreE" value="Nombre" />
                 <p:inputText id="nombreE" value="#{estadoBean.estado.nombreEstadoSolicitudservicio}" required="true" maxlength="100" requiredMessage="Debe ingresar la descripcion."/>
                 <p:message for="nombreE" />
-                <p:outputLabel for="fechaE" value="Fecha" />
-                <p:calendar id="fechaE" value="#{estadoBean.estado.fechaEstadoSolicitudservicio}" pattern="yyyy/MM/dd HH:mm:ss"/>
-                <p:message for="fechaE" />
             </p:panelGrid>
             <br/>
             <p:commandButton value="Aceptar" update="@form" actionListener="#{estadoBean.guardar()}"/>

@@ -39,9 +39,6 @@
                 <p:column headerText="Telefono Sucursal" >
                     <h:outputText value="#{sucursal.telefonoSucursal}" />
                 </p:column>
-                <p:column headerText="Estado Sucursal" >
-                    <h:outputText value="#{sucursal.estadoSucursalTxt}" />
-                </p:column>
             </p:dataTable>
         </p:panel>
     </ui:define>
@@ -69,14 +66,6 @@
                         <f:validateRegex pattern="[0-9]+" />
                     </p:inputText>
                     <p:message for="telefonoSurcusal" />
-
-                    <p:outputLabel for="estadoSucursal" value="Estado:"/>
-                    <p:selectOneMenu id="estadoSucursal" value="#{sucursalBean.sucursal.estadoSucursal}" effect="explode" >
-                        <f:selectItem itemLabel="- Seleccione -" itemValue="#{null}" />
-                        <f:selectItem itemLabel="INACTIVO" itemValue="#{false}" />
-                        <f:selectItem itemLabel="ACTIVO" itemValue="#{true}" />
-                    </p:selectOneMenu>
-                    <p:message for="estadoSucursal" />
                 </p:panelGrid>
                 <br/>
                 <p:commandButton value="Aceptar" update="@form" actionListener="#{sucursalBean.guardar()}"/>

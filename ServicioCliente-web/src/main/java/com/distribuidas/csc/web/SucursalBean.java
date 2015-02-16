@@ -5,6 +5,7 @@
  */
 package com.distribuidas.csc.web;
 
+import com.distribuidas.csc.persistencia.Empresa;
 import com.distribuidas.csc.persistencia.Sucursal;
 import com.distribuidas.csc.servicio.SucursalServicio;
 import java.util.ArrayList;
@@ -13,6 +14,7 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.event.UnselectEvent;
@@ -34,7 +36,8 @@ public class SucursalBean {
     private Boolean desplegarNuevo = false;
     
     private String tituloFormulario;
-    private Integer codEmpresa;
+    private Empresa codEmpresa;
+    private Integer idEmpresa;
     private Boolean enNuevo;
     private Boolean enModificar;
     
@@ -50,15 +53,16 @@ public class SucursalBean {
     @PostConstruct
     public void init(){
         this.sucursales = this.sucursalServicio.obtenerTodos();
-        this.sucursalesE = this.sucursalServicio.obtenerSurcursalesE(this.codEmpresa);
+        this.sucursalesE = new ArrayList<Sucursal>();
+        System.err.println(this.sucursalesE.size());
     }
     
-    public void cargarCombo(){
-        System.out.println("Codigo empresa");
-        System.out.println(codEmpresa);
-        this.sucursalesE = this.sucursalServicio.obtenerSurcursalesE(this.codEmpresa);
+    public void cargarSucursales(){
+        System.out.println("CARGAR COMBO");
+        this.sucursalesE = this.sucursalServicio.obtenerSurcursalesE(this.idEmpresa);
+        System.err.println(this.sucursalesE.size());
     }
-    
+      
     public void vista(){
         this.desplegarVista = true;
     }
@@ -108,6 +112,14 @@ public class SucursalBean {
 
     }
 
+    public Integer getIdEmpresa() {
+        return idEmpresa;
+    }
+
+    public void setIdEmpresa(Integer idEmpresa) {
+        this.idEmpresa = idEmpresa;
+    }
+
     public List<Sucursal> getSucursalesE() {
         return sucursalesE;
     }
@@ -116,11 +128,11 @@ public class SucursalBean {
         this.sucursalesE = sucursalesE;
     }
 
-    public Integer getCodEmpresa() {
+    public Empresa getCodEmpresa() {
         return codEmpresa;
     }
 
-    public void setCodEmpresa(Integer codEmpresa) {
+    public void setCodEmpresa(Empresa codEmpresa) {
         this.codEmpresa = codEmpresa;
     }
 
