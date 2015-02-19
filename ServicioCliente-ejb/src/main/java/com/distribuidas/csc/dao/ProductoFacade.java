@@ -6,9 +6,11 @@
 package com.distribuidas.csc.dao;
 
 import com.distribuidas.csc.persistencia.Producto;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -28,4 +30,18 @@ public class ProductoFacade extends AbstractFacade<Producto> {
         super(Producto.class);
     }
     
+    public List<Producto> findByBodega(Integer codBodega) {
+        try{
+        Query qry = this.em.createQuery(
+                "SELECT obj FROM Producto obj WHERE obj.idBodega.idBodega=?1");
+        qry.setParameter(1, codBodega);
+        return qry.getResultList();
+        }
+        catch(Exception e)
+        {
+            
+            System.out.println(e);
+        }
+        return null;
+    }
 }

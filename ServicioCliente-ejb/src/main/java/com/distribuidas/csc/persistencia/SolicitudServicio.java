@@ -69,6 +69,9 @@ public class SolicitudServicio implements Serializable {
     @NotNull
     @Column(name = "ESTADO_SOLICITUDSERVICIO")
     private boolean estadoSolicitudservicio;
+    @Size(min = 1, max = 45)
+    @Column(name = "GP_SOLICITUDSERVICIO")
+    private String gpSolicitudservicio;
     @OneToMany(mappedBy = "idSolicitudservicio")
     private List<DetalleSolicitudServicio> detalleSolicitudServicioList;
     @JoinColumn(name = "ID_TIPO_SERVICIO_SOLICITUDSERVICIO", referencedColumnName = "ID_TIPO_SERVICIO_SOLICITUDSERVICIO")
@@ -167,6 +170,14 @@ public class SolicitudServicio implements Serializable {
 
     public void setEstadoSolicitudservicio(boolean estadoSolicitudservicio) {
         this.estadoSolicitudservicio = estadoSolicitudservicio;
+    }
+
+    public String getGpSolicitudservicio() {
+        return gpSolicitudservicio;
+    }
+
+    public void setGpSolicitudservicio(String gpSolicitudservicio) {
+        this.gpSolicitudservicio = gpSolicitudservicio;
     }
 
     @XmlTransient

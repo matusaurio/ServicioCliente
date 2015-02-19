@@ -28,6 +28,10 @@ public class ProductoServicio {
     public List<Producto> obtenerTodos() {
         return this.productoFacade.findAll();
     }
+    
+    public List<Producto> obtenerProductoB(Integer codBodega){
+        return this.productoFacade.findByBodega(codBodega);
+    }
 
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public void crear(Producto producto) {
