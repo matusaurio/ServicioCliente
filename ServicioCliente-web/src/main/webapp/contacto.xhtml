@@ -43,12 +43,12 @@
         <p:panel header="Nueva Contacto" rendered="#{contactoBean.desplegarNuevo}" class="panelCentral">
                 <p:panelGrid columns="3">
 
-                    <p:outputLabel for="codigoEmpresa" value="Codigo Sucursal" />
+                    <p:outputLabel for="codigoEmpresa" value="Empresa:" />
                     <p:selectOneMenu id="codigoEmpresa" value="#{contactoBean.contacto.idEmpresa}" effect="puff">
                         <f:selectItem itemLabel="- Seleccione -" itemValue="#{null}"/>
                         <f:selectItems value="#{empresaBean.empresas}" var="empresa"
                                        itemLabel="#{empresa.nombreEmpresa}" itemValue="#{empresa}"/>
-                        <f:converter converterId="sucursalConverter"/>
+                        <f:converter converterId="empresaConverter"/>
                     </p:selectOneMenu>                    
                     <p:message for="codigoEmpresa" />
 

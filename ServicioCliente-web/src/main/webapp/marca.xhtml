@@ -45,14 +45,6 @@
                 <p:outputLabel for="observacionMarca" value="Observacion Marca:" />
                 <p:inputText id="observacionMarca" value="#{marcaBean.marca.observacionMarca}" required="true" maxlength="100" requiredMessage="Debe ingresar la descripcion."/>
                 <p:message for="observacionMarca" />
-
-                <p:outputLabel for="estadoMarca" value="Estado:"/>
-                <p:selectOneMenu id="estadoMarca" value="#{marcaBean.marca.estadoMarca}" effect="explode" >
-                    <f:selectItem itemLabel="Seleccione" itemValue="#{null}" />
-                    <f:selectItem itemLabel="INACTIVO" itemValue="#{false}" />
-                    <f:selectItem itemLabel="ACTIVO" itemValue="#{true}" />
-                </p:selectOneMenu>
-                <p:message for="estadoMarca" />
             </p:panelGrid>
             <br/>
             <p:commandButton value="Aceptar" update="@form" actionListener="#{marcaBean.guardar()}"/>

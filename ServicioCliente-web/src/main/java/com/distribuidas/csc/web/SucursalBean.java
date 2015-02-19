@@ -58,7 +58,7 @@ public class SucursalBean {
     }
     
     public void cargarSucursales(){
-        System.out.println("CARGAR COMBO");
+        System.out.println("CARGAR SUCURSALES");
         this.sucursalesE = this.sucursalServicio.obtenerSurcursalesE(this.idEmpresa);
         System.err.println(this.sucursalesE.size());
     }

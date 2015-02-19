@@ -44,6 +44,7 @@
                 <p:panelGrid columns="3">
                     <p:outputLabel for="codigoMarca" value="Codigo Marca" />
                     <p:selectOneMenu id="codigoMarca" value="#{modeloBean.modelo.idMarca}" required="true"  effect="puff">                    
+                        <f:selectItem itemLabel="- Seleccione -" itemValue="#{null}"/>
                         <f:selectItems value="#{marcaBean.marcas}" var="marca"
                                        itemLabel="#{marca.nombreMarca}" itemValue="#{marca}"/>
                         <f:converter converterId="marcaConverter"/>
