@@ -11,8 +11,12 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
+import javax.servlet.http.HttpSession;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.event.UnselectEvent;
 
@@ -23,9 +27,11 @@ import org.primefaces.event.UnselectEvent;
 @ManagedBean
 @ViewScoped
 public class ParteServicioBean {
-    
+
     @EJB
     private ParteServicioServicio parteServicioServicio;
+    @ManagedProperty(value = "#{solicitudServicio}")
+    private SolicitudServicioBean solicitudServicio;
 
     private List<ParteServicio> parteServicios;
     private ParteServicio parteServicio;
@@ -37,6 +43,7 @@ public class ParteServicioBean {
     private String tituloFormulario;
     private Boolean enNuevo;
     private Boolean enModificar;
+    private Integer idSolicitud;
 
     private Boolean activarNuevo;
     private Boolean activarModificar;
@@ -50,6 +57,10 @@ public class ParteServicioBean {
 
     public void vista() {
         this.desplegarVista = true;
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(false);
+        this.idSolicitud = (Integer) session.getAttribute("idSolicitud");
+        System.out.println(this.idSolicitud);
     }
 
     public void nuevo() {
@@ -88,13 +99,29 @@ public class ParteServicioBean {
     public void cancelar() {
         this.desplegarNuevo = false;
     }
-    
+
     public void onRowSelect(SelectEvent event) {
 
     }
 
     public void onRowUnselect(UnselectEvent event) {
 
+    }
+
+    public SolicitudServicioBean getSolicitudServicio() {
+        return solicitudServicio;
+    }
+
+    public void setSolicitudServicio(SolicitudServicioBean solicitudServicio) {
+        this.solicitudServicio = solicitudServicio;
+    }
+
+    public Integer getIdSolicitud() {
+        return idSolicitud;
+    }
+
+    public void setIdSolicitud(Integer idSolicitud) {
+        this.idSolicitud = idSolicitud;
     }
 
     public List<ParteServicio> getParteServicios() {
@@ -188,6 +215,5 @@ public class ParteServicioBean {
     public void setActivarCambiarEstado(Boolean activarCambiarEstado) {
         this.activarCambiarEstado = activarCambiarEstado;
     }
-    
-    
+
 }

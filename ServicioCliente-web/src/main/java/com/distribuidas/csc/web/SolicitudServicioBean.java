@@ -9,6 +9,7 @@ import com.distribuidas.csc.persistencia.Bodega;
 import com.distribuidas.csc.persistencia.Contacto;
 import com.distribuidas.csc.persistencia.Estado;
 import com.distribuidas.csc.persistencia.Modelo;
+import com.distribuidas.csc.persistencia.ParteServicio;
 import com.distribuidas.csc.persistencia.Producto;
 import com.distribuidas.csc.persistencia.SolicitudServicio;
 import com.distribuidas.csc.persistencia.Sucursal;
@@ -28,7 +29,10 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpSession;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.event.UnselectEvent;
 
@@ -120,12 +124,12 @@ public class SolicitudServicioBean {
             this.tecnicos.clear();
         }
     }
-    
+
     public void cargarProductos() {
         System.out.println("CARGAR PRODUCTOS");
         this.productos = this.productoServicio.obtenerProductoB(this.solicitudServicio.getIdBodega().getIdBodega());
     }
-    
+
     public void cargarModelos() {
         System.out.println("CARGAR MODELOS");
         this.modelos = this.modeloServicio.obtenerModeloM(this.solicitudServicio.getIdMarca().getIdMarca());
@@ -171,6 +175,9 @@ public class SolicitudServicioBean {
 
     public String modificar() {
         if (this.solicitudServicioSeleccionada.getGpSolicitudservicio().compareTo("Parte Servicio") == 0) {
+            FacesContext facesContext = FacesContext.getCurrentInstance();
+            HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(true);
+            session.setAttribute("idSolicitud", this.solicitudServicioSeleccionada.getIdSolicitudservicio());
             return "parteServicio.xhtml";
         } else {
             this.enModificar = true;
