@@ -38,6 +38,7 @@ public class BodegaBean {
     private Boolean desplegarNuevo = false;
     
     private String tituloFormulario;
+    private Empresa codEmpresa;
     private Integer idEmpresa;
     private Boolean enNuevo;
     private Boolean enModificar;
@@ -102,8 +103,7 @@ public class BodegaBean {
         this.desplegarNuevo = false;
     }
     public void cargarSucursales(){
-        System.out.println("CARGAR SUCURSALES");
-        this.sucursales = this.sucursalServicio.obtenerSurcursalesE(Integer.SIZE);
+        this.sucursales = this.sucursalServicio.obtenerSurcursalesE(codEmpresa.getIdEmpresa());
     }
 
     public void onRowSelect(SelectEvent event) {
@@ -228,6 +228,14 @@ public class BodegaBean {
 
     public void setActivarCambiarEstado(Boolean activarCambiarEstado) {
         this.activarCambiarEstado = activarCambiarEstado;
+    }
+
+    public Empresa getCodEmpresa() {
+        return codEmpresa;
+    }
+
+    public void setCodEmpresa(Empresa codEmpresa) {
+        this.codEmpresa = codEmpresa;
     }
     
     
