@@ -27,6 +27,10 @@ public class ModeloServicio {
     public List<Modelo> obtenerTodos() {
         return this.modeloFacade.findAll();
     }
+    
+    public List<Modelo> obtenerModeloM(Integer codMarca){
+        return this.modeloFacade.findByMarca(codMarca);
+    }
 
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public void crear(Modelo modelo) {

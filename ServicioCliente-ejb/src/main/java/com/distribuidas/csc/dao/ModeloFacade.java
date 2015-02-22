@@ -6,9 +6,11 @@
 package com.distribuidas.csc.dao;
 
 import com.distribuidas.csc.persistencia.Modelo;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -28,4 +30,18 @@ public class ModeloFacade extends AbstractFacade<Modelo> {
         super(Modelo.class);
     }
     
+    public List<Modelo> findByMarca(Integer codMarca) {
+        try{
+        Query qry = this.em.createQuery(
+                "SELECT obj FROM Modelo obj WHERE obj.idMarca.idMarca=?1");
+        qry.setParameter(1, codMarca);
+        return qry.getResultList();
+        }
+        catch(Exception e)
+        {
+            
+            System.out.println(e);
+        }
+        return null;
+    }
 }
