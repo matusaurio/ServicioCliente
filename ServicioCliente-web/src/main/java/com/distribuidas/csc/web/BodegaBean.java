@@ -92,6 +92,8 @@ public class BodegaBean {
         this.enNuevo = false;
         this.desplegarNuevo = true;
         this.bodega = this.bodegaSeleccionada;
+        this.codEmpresa = this.bodegaSeleccionada.getIdSucursal().getIdEmpresa();
+        cargarSucursales();
     }
 
     public void eliminar() {
