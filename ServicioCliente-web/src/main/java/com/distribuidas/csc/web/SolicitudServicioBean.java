@@ -155,6 +155,7 @@ public class SolicitudServicioBean {
         aux = this.solicitudServicio.getIdEstadoSolicitudservicio().getIdEstadoSolicitudservicio();
         if (aux == 3) {
             this.solicitudServicio.setGpSolicitudservicio("Parte Servicio");
+            this.solicitudServicio.setIdTecnico(this.solicitudServicioSeleccionada.getIdTecnico());
             ParteServicio p = new ParteServicio();
             p.setIdSolicitudservicio(this.solicitudServicioSeleccionada);
             p.setIdEmpresa(this.solicitudServicioSeleccionada.getIdEmpresa());

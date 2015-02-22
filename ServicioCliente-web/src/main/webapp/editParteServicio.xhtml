@@ -19,7 +19,7 @@
                 </p:column>
                 <p:column headerText="Contacto">
                     <h:selectOneMenu id="contactoParteServicio" value="#{parteServicio.idContacto}">
-                        <f:selectItem itemLabel="- Seleccione -" itemValue="#{parteServicio.idContacto.nombreContacto}"/>
+                        <f:selectItem itemLabel="- Seleccione -" itemValue="#{null}"/>
                         <f:selectItems value="#{parteServicioBean.contactos}" var="contactos" itemLabel="#{contactos.nombreContacto}" itemValue="#{contactos}"/>
                         <f:converter converterId="contactoConverter"/>
                     </h:selectOneMenu>
@@ -31,14 +31,14 @@
             <p:dataTable var="parteServicio" value="#{parteServicioBean.parteServicios}">
                 <p:column headerText="Sucursal">
                     <h:selectOneMenu id="sucursalParteServicio" value="#{parteServicio.idSolicitudservicio.idSucursal}">
-                        <f:selectItem itemLabel="- Seleccione -" itemValue="#{parteServicio.idSolicitudservicio.idSucursal.nombreSucursal}"/>
+                        <f:selectItem itemLabel="- Seleccione -" itemValue="#{null}"/>
                         <f:selectItems value="#{parteServicioBean.solicitudServicios}" var="sucursales" itemLabel="#{sucursales.idSucursal.nombreSucursal}" itemValue="#{sucursales}"/>
                         <f:converter converterId="sucursalConverter"/>
                     </h:selectOneMenu>
                 </p:column>
                 <p:column headerText="Equipo">
                     <h:selectOneMenu id="equipoParteServicio" value="#{parteServicio.idSolicitudservicio.idProducto}">
-                        <f:selectItem itemLabel="- Seleccione -" itemValue="#{parteServicio.idSolicitudservicio.idProducto.nombreProducto}"/>
+                        <f:selectItem itemLabel="- Seleccione -" itemValue="#{null}"/>
                         <f:selectItems value="#{parteServicioBean.solicitudServicios}" var="equipos" itemLabel="#{equipos.idProducto}" itemValue="#{equipos}"/>
                         <f:converter converterId="contactoConverter"/>
                     </h:selectOneMenu>
@@ -65,7 +65,7 @@
                     <p:calendar id="horaInicio" value="#{parteServicio.idHorarioservicio.inicioHorarioservicio}"/>                    
                 </p:column>
                 <p:column headerText="Hora Fin">
-                    <p:calendar id="horaInicio" value="#{parteServicio.idHorarioservicio.finHorarioservicio}"/>                    
+                    <p:calendar id="horaFin" value="#{parteServicio.idHorarioservicio.finHorarioservicio}"/>                    
                 </p:column>
                 <p:column headerText="Total Horas">
                     <h:outputText value="#{parteServicio.idHorarioservicio.totalHorarioservicio}"/>
