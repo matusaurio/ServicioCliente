@@ -69,14 +69,14 @@ public class ParteServicioBean {
     @PostConstruct
     public void init() {
         this.parteServicios = this.parteServicioServicio.obtenerTodos();
-    }
-
-    public void vista() {
-        this.desplegarVista = true;
         FacesContext facesContext = FacesContext.getCurrentInstance();
         HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(false);
         this.idSolicitud = (Integer) session.getAttribute("idSolicitud");
         System.out.println(this.idSolicitud);
+    }
+
+    public void vista() {
+        this.desplegarVista = true;
     }
 
     public void nuevo() {

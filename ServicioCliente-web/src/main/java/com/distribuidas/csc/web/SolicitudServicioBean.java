@@ -18,6 +18,7 @@ import com.distribuidas.csc.servicio.BodegaServicio;
 import com.distribuidas.csc.servicio.ContactoServicio;
 import com.distribuidas.csc.servicio.EstadoServicio;
 import com.distribuidas.csc.servicio.ModeloServicio;
+import com.distribuidas.csc.servicio.ParteServicioServicio;
 import com.distribuidas.csc.servicio.ProductoServicio;
 import com.distribuidas.csc.servicio.SolicitudServicioServicio;
 import com.distribuidas.csc.servicio.SucursalServicio;
@@ -60,6 +61,8 @@ public class SolicitudServicioBean {
     private ProductoServicio productoServicio;
     @EJB
     private ModeloServicio modeloServicio;
+    @EJB
+    private ParteServicioServicio parteServicioServicio;
 
     private List<Sucursal> sucursales;
     private List<Modelo> modelos;
@@ -152,6 +155,12 @@ public class SolicitudServicioBean {
         aux = this.solicitudServicio.getIdEstadoSolicitudservicio().getIdEstadoSolicitudservicio();
         if (aux == 3) {
             this.solicitudServicio.setGpSolicitudservicio("Parte Servicio");
+            ParteServicio p = new ParteServicio();
+            p.setIdSolicitudservicio(this.solicitudServicioSeleccionada);
+            p.setIdEmpresa(this.solicitudServicioSeleccionada.getIdEmpresa());
+            p.setIdContacto(this.solicitudServicioSeleccionada.getIdContacto());
+            p.setIdTecnico(this.solicitudServicioSeleccionada.getIdTecnico());
+            this.parteServicioServicio.crear(p);
         } else {
             this.solicitudServicio.setGpSolicitudservicio("Gestionar Servicio");
         }
