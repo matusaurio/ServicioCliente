@@ -19,7 +19,7 @@ import javax.faces.context.FacesContext;
 public class DialogView {
     
     public void enviar(){
-        addMessage("Enviado","Se envio a su correo la contrase�a");
+        addMessage("Enviado","Se envio a su correo la contraseña");
     }
     
     public void addMessage(String summary, String detail){

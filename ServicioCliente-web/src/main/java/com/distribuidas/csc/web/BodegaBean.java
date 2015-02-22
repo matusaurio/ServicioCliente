@@ -6,7 +6,11 @@
 package com.distribuidas.csc.web;
 
 import com.distribuidas.csc.persistencia.Bodega;
+import com.distribuidas.csc.persistencia.Empresa;
+import com.distribuidas.csc.persistencia.Sucursal;
 import com.distribuidas.csc.servicio.BodegaServicio;
+import com.distribuidas.csc.servicio.EmpresaServicio;
+import com.distribuidas.csc.servicio.SucursalServicio;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -24,6 +28,9 @@ import org.primefaces.event.UnselectEvent;
 public class BodegaBean {
     
     private List<Bodega> bodegas;
+    private List<Sucursal> sucursales;
+    private List<Empresa> empresas;
+    
     private Bodega bodega;
     private Bodega bodegaSeleccionada;
     
@@ -31,6 +38,7 @@ public class BodegaBean {
     private Boolean desplegarNuevo = false;
     
     private String tituloFormulario;
+    private Integer idEmpresa;
     private Boolean enNuevo;
     private Boolean enModificar;
     
@@ -42,10 +50,15 @@ public class BodegaBean {
     
     @EJB
     private BodegaServicio bodegaServicio;
+    @EJB
+    private SucursalServicio sucursalServicio;
+    @EJB
+    private EmpresaServicio empresaServicio;
     
     @PostConstruct
     public void init(){
         this.bodegas = this.bodegaServicio.obtenerTodos();
+        this.empresas = this.empresaServicio.obtenerTodos();
     }
     
     public void vista(){
@@ -88,6 +101,10 @@ public class BodegaBean {
     public void cancelar() {
         this.desplegarNuevo = false;
     }
+    public void cargarSucursales(){
+        System.out.println("CARGAR SUCURSALES");
+        this.sucursales = this.sucursalServicio.obtenerSurcursalesE(Integer.SIZE);
+    }
 
     public void onRowSelect(SelectEvent event) {
 
@@ -95,6 +112,30 @@ public class BodegaBean {
 
     public void onRowUnselect(UnselectEvent event) {
 
+    }
+
+    public List<Sucursal> getSucursales() {
+        return sucursales;
+    }
+
+    public void setSucursales(List<Sucursal> sucursales) {
+        this.sucursales = sucursales;
+    }
+
+    public List<Empresa> getEmpresas() {
+        return empresas;
+    }
+
+    public void setEmpresas(List<Empresa> empresas) {
+        this.empresas = empresas;
+    }
+
+    public Integer getIdEmpresa() {
+        return idEmpresa;
+    }
+
+    public void setIdEmpresa(Integer idEmpresa) {
+        this.idEmpresa = idEmpresa;
     }
 
     public List<Bodega> getBodegas() {

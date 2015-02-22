@@ -41,6 +41,7 @@
                 <p:panelGrid columns="3">
                     <p:outputLabel for="codigoCiudad" value="Codigo Ciudad:" />
                     <p:selectOneMenu id="codigoCiudad" value="#{empresaBean.empresa.idCiudad}" required="true" effect="puff">
+                        <f:selectItem itemLabel="- Seleccione -" itemValue="#{null}"/>
                         <f:selectItems value="#{ciudadBean.ciudades}" var="ciudad"
                                        itemLabel="#{ciudad.nombreCiudad}" itemValue="#{ciudad}"/>
                         <f:converter converterId="ciudadConverter"/>

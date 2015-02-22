@@ -56,6 +56,7 @@
                 <p:panelGrid columns="3">
                     <p:outputLabel for="codigoModelo" value="Codigo Modelo" />
                     <p:selectOneMenu id="codigoModelo" value="#{productoBean.producto.idModelo}" required="true" effect="puff">                    
+                        <f:selectItem itemLabel="- Seleccione -" itemValue="#{null}"/>
                         <f:selectItems value="#{modeloBean.modelos}" var="modelo"
                                        itemLabel="#{modelo.nombreModelo}" itemValue="#{modelo}"/>
                         <f:converter converterId="modeloConverter"/>
@@ -64,6 +65,7 @@
                     
                     <p:outputLabel for="codigoBodega" value="Codigo Bodega" />
                     <p:selectOneMenu id="codigoBodega" value="#{productoBean.producto.idBodega}" required="true" effect="puff">                    
+                        <f:selectItem itemLabel="- Seleccione -" itemValue="#{null}"/>
                         <f:selectItems value="#{bodegaBean.bodegas}" var="bodega"
                                        itemLabel="#{bodega.nombreBodega}" itemValue="#{bodega}"/>
                         <f:converter converterId="bodegaConverter"/>

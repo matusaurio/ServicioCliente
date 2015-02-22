@@ -14,7 +14,6 @@
             <p:submenu label="Opciones Solicitud Servicio">
                 <p:menuitem value="Ver" update="@form" actionListener="#{solicitudServicioBean.vista()}"/>
                 <p:menuitem value="Nuevo" update="@form" actionListener="#{solicitudServicioBean.nuevo()}"/>
-                <p:menuitem value="Editar" update="@form" actionListener="#{solicitudServicioBean.modificar()}"/>
                 <p:menuitem value="Eliminar" update="@form" actionListener="#{solicitudServicioBean.eliminar()}"/>
             </p:submenu>
         </p:menu>
@@ -37,7 +36,7 @@
                     <h:outputText value="#{solictudServicio.idEstadoSolicitudservicio.nombreEstadoSolicitudservicio}" />
                 </p:column>
                 <p:column headerText="Tecnico" >
-                    <h:outputText value="#{solictudServicio.idTecnico}" />
+                    <h:outputText value="#{solictudServicio.idTecnico.nombreTecnico}" />
                 </p:column>
                 <p:column headerText="Tipo Servicio" >
                     <h:outputText value="#{solictudServicio.idTipoServicioSolicitudservicio.nombreTipoServicioSolicitudservicio}" />
@@ -46,7 +45,7 @@
                     <h:outputText value="#{solictudServicio.idTipoServicioSolicitudservicio.nombreTipoServicioSolicitudservicio}" />
                 </p:column>
                 <p:column headerText="" >
-                    <h:link outcome="welcomePrimefaces" value="#{solicitudServicioBean.tituloFormulario}" />
+                    <h:commandButton value="#{solictudServicio.gpSolicitudservicio}" action="#{solicitudServicioBean.modificar()}"/>
                 </p:column>
             </p:dataTable>
         </p:panel>
@@ -74,14 +73,14 @@
                 </h:selectOneMenu>
                 <p:message for="codigoEstado" />
                 
-                <p:outputLabel for="codigoTecnico" value="Tecnico:" rendered="#{solicitudServicioBean.elegirTecnico}"/>
-                <p:selectOneMenu id="codigoTecnico" value="#{solicitudServicioBean.solicitudServicio.idTecnico}" effect="puff" rendered="#{solicitudServicioBean.elegirTecnico}">                    
+                <p:outputLabel for="codigoTecnico" value="Tecnico:"/>
+                <p:selectOneMenu id="codigoTecnico" value="#{solicitudServicioBean.solicitudServicio.idTecnico}" effect="puff" required="#{solicitudServicioBean.elegirTecnico}" requiredMessage="Debe escojer un Tecnico">                    
                     <f:selectItem itemLabel="- Seleccione -" itemValue="#{null}"/>
-                    <f:selectItems value="#{tecnicoBean.tecnicos}" var="tecnico"
+                    <f:selectItems value="#{solicitudServicioBean.tecnicos}" var="tecnico"
                                    itemLabel="#{tecnico.nombreTecnico}" itemValue="#{tecnico}"/>
                     <f:converter converterId="tecnicoConverter"/>
                 </p:selectOneMenu>                    
-                <p:message for="codigoTecnico" rendered="#{solicitudServicioBean.elegirTecnico}"/>
+                <p:message for="codigoTecnico" />
 
                 <p:outputLabel for="codigoEmpresa" value="Empresa:" />
                 <h:selectOneMenu id="codigoEmpresa" value="#{solicitudServicioBean.solicitudServicio.idEmpresa}" >
@@ -118,10 +117,40 @@
                     <f:selectItem itemLabel="- Seleccione -" itemValue="#{null}"/>
                     <f:selectItems value="#{solicitudServicioBean.bodegas}" var="bodega"
                                    itemLabel="#{bodega.nombreBodega}" itemValue="#{bodega}"/>
-                    <p:ajax update="codigoBodega" event="change" process="@this"/>
+                    <p:ajax update="codigoProducto" event="change" process="@this" listener="#{solicitudServicioBean.cargarProductos()}"/>
                     <f:converter converterId="bodegaConverter"/>
                 </p:selectOneMenu>                    
                 <p:message for="codigoBodega" />
+                
+                <p:outputLabel for="codigoProducto" value="Producto:" />
+            <p:selectOneMenu id="codigoProducto" value="#{solicitudServicioBean.solicitudServicio.idProducto}" effect="puff">                    
+                    <f:selectItem itemLabel="- Seleccione -" itemValue="#{null}"/>
+                    <f:selectItems value="#{solicitudServicioBean.productos}" var="producto"
+                                   itemLabel="#{producto.nombreProducto}" itemValue="#{producto}"/>
+                    <p:ajax update="codigoProducto" event="change" process="@this"/>
+                    <f:converter converterId="productoConverter"/>
+                </p:selectOneMenu>                    
+                <p:message for="codigoProducto" />
+                
+                <p:outputLabel for="codigoMarca" value="Marca:" />
+                <h:selectOneMenu id="codigoMarca" value="#{solicitudServicioBean.solicitudServicio.idMarca}" >
+                    <f:selectItem itemLabel="- Seleccione -" itemValue="#{null}"/>
+                    <f:selectItems value="#{marcaBean.marcas}" var="marca"
+                                   itemLabel="#{marca.nombreMarca}" itemValue="#{marca}"/>
+                    <f:converter converterId="marcaConverter"/>
+                    <p:ajax update="codigoModelo" event="change" process="@this" listener="#{solicitudServicioBean.cargarModelos()}"/>
+                </h:selectOneMenu>
+                <p:message for="codigoMarca" />
+                
+                <p:outputLabel for="codigoModelo" value="Modelo:" />
+                <p:selectOneMenu id="codigoModelo" value="#{solicitudServicioBean.solicitudServicio.idModelo}" effect="puff">                    
+                    <f:selectItem itemLabel="- Seleccione -" itemValue="#{null}"/>
+                    <f:selectItems value="#{solicitudServicioBean.modelos}" var="modelo"
+                                   itemLabel="#{modelo.nombreModelo}" itemValue="#{modelo}"/>
+                    <p:ajax update="codigoModelo" event="change" process="@this"/>
+                    <f:converter converterId="modeloConverter"/>
+                </p:selectOneMenu>                    
+                <p:message for="codigoModelo" />
 
                 <p:outputLabel for="inconveniente" value="Daño y/o inconveniente:" />
                 <p:inputText id="inconveniente" value="#{solicitudServicioBean.solicitudServicio.inconvenienteSolicitudservicio}" required="true" maxlength="100" requiredMessage="Debe ingresar el nombre de la empresa."/>
