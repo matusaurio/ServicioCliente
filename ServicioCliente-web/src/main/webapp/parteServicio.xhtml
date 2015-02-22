@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='ISO-8859-1' ?>
+<?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:composition xmlns="http://www.w3.org/1999/xhtml" 
                 xmlns:h="http://java.sun.com/jsf/html"
@@ -7,7 +7,7 @@
                 xmlns:p="http://primefaces.org/ui"
                 template="/plantillaInterna.xhtml">
 
-    <ui:define name="titulo">Bienvenido</ui:define>
+    <ui:define name="titulo">Parte Servicio</ui:define>
     <ui:define name="contenidoParteServicio">
         <p:growl autoUpdate="true" showDetail="true"/>
         <p:menu class="menuLateral">
@@ -19,86 +19,93 @@
             </p:submenu>
         </p:menu>
     </ui:define>
-    <ui:define name="tablaParteServicio">
-        <p:panel header="PARTE SERVICIO" rendered="#{parteServicioBean.desplegarVista}" class="panelCentral">
-            <p:dataTable var="parteServicio" value="#{parteServicioBean.parteServicios}" paginator="true" rows="5" paginatorAlwaysVisible="false" selectionMode="single" selection="#{parteServicioBean.parteServicioSeleccionado}" rowKey="#{parteServicio.idParteservicio}">
-                <p:ajax event="rowSelect" listener="#{parteServicioBean.onRowSelect(event)}" update="@form"/>
-                <p:ajax event="rowUnselect" listener="#{parteServicioBean.onRowUnselect(event)}" update="@form"/>
-                <p:column headerText="Codigo" >
-                    <h:outputText value="#{parteServicio.idParteservicio}" />
+    <ui:define name="verParteServicio">
+        <p:outputLabel for="codParteServicio" value="Parte de Servicio Nro. "/>
+        <h:outputText id="codParteServicio" value="#{parteServicio.idParteservicio}"/>
+        <p:fieldset legend="Información General">
+            <p:dataTable var="parteServicio" value="#{parteServicioBean.parteServicios}">
+                <p:column headerText="Empresa">
+                    <h:outputText value="#{parteServicio.idEmpresa.nombreEmpresa}"/>
                 </p:column>
-                <p:column headerText="Usuario" >
-                    <h:outputText value="#{parteServicio.idUsuario.nombreUsuario}" />
-                </p:column>
-                <p:column headerText="Codigo Solicitud Servicio" >
-                    <h:outputText value="#{parteServicio.idSolicitudservicio}" />
-                </p:column>
-                <p:column headerText="Fecha Inicio" >
-                    <h:outputText value="#{parteServicio.fechaInicioParteservicio}" />
-                </p:column>
-                <p:column headerText="Fecha Fin" >
-                    <h:outputText value="#{parteServicio.fechaFinParteservicio}" />
-                </p:column>
-                <p:column headerText="Total Horas" >
-                    <h:outputText value="#{parteServicio.totalHorasParteservicio}" />
-                </p:column>
-                <p:column headerText="Estado" >
-                    <h:outputText value="#{parteServicio.estadoParteServicioTxt}" />
-                </p:column>
-                <p:column headerText="Firma" >
-                    <h:outputText value="#{parteServicio.estadoFirmaTxt}" />
-                </p:column>
-                <p:column headerText="Fecha Firma" >
-                    <h:outputText value="#{parteServicio.fechaFirmaParteservicio}" />
-                </p:column>
-                <p:column headerText="Sugerencia" >
-                    <h:outputText value="#{parteServicio.sugerenciaParteservicio}" />
-                </p:column>
-                <p:column headerText="Observacion" >
-                    <h:outputText value="#{parteServicio.observacionParteservicio}" />
+                <p:column headerText="Contacto">
+                    <h:outputText value="#{parteServicio.idContacto.nombreContacto}"/>
                 </p:column>
             </p:dataTable>
-        </p:panel>
-    </ui:define>
-    <ui:define name="formularioParteServicio">
-        <p:panel header="Nuevo Parte Servicio" rendered="#{parteServicioBean.desplegarNuevo}" class="panelCentral">
-            <p:panelGrid columns="3">
-                <p:outputLabel for="codigoUsuario" value="Codigo Usuario" />
-                <h:selectOneMenu id="codigoUsuario" value="#{sucursalBean.idEmpresa}" required="true" onclick="">
-                    <f:selectItem itemLabel="- Seleccione -" itemValue=""/>
-                    <f:selectItems value="#{empresaBean.listaCombo}"/>
-                    <p:ajax update="codigoUsuario" event="change" process="@this" listener="#{sucursalBean.compararListas()}"/>
-                </h:selectOneMenu>
-                <p:message for="codigoSolicitudServicio" />
-                <p:outputLabel for="codigoSolicitudServicio" value="Codigo Solicitud Servicio" />
-                <p:selectOneMenu id="codigoSolicitudServicio" value="#{parteServicioBean.parteServicio.idUsuario}" effect="puff">                    
-                    <f:selectItems value="#{usuarioBean.usuarios}" var="usuario"
-                                   itemLabel="#{usuario.nombreUsuario}" itemValue="#{usuario}"/>
-                    <f:converter converterId="usuarioConverter"/>
-                    <p:ajax update="codigoSolicitudServicio" event="change" process="@this"/>
-                </p:selectOneMenu>                    
-                <p:message for="codigoSolicitudServicio" />
-                <p:outputLabel for="nombreT" value="Nombre" />
-                <p:inputText id="nombreT" value="#{parteServicioBean.tipoServicio.nombreTipoServicioSolicitudservicio}" required="true" maxlength="100" requiredMessage="Debe ingresar la descripcion."/>
-                <p:message for="nombreT" />
-                <p:outputLabel for="fechaT" value="Fecha" />
-                <p:calendar id="fechaT" value="#{parteServicioBean.tipoServicio.fechaTipoServicioSolicitudservicio}" pattern="yyyy/MM/dd HH:mm:ss"/>
-                <p:message for="fechaT" />
-
-                <p:outputLabel for="estadoT" value="Estado:"/>
-                <p:selectOneMenu id="estadoT" value="#{parteServicioBean.tipoServicio.estadoTipoServicioSolicitudservicio}" effect="explode" >
-                    <f:selectItem itemLabel="- Seleccione -" itemValue="#{null}" />
-                    <f:selectItem itemLabel="INACTIVO" itemValue="#{false}" />
-                    <f:selectItem itemLabel="ACTIVO" itemValue="#{true}" />
-                </p:selectOneMenu>
-                <p:message for="estadoT" />
-                <p:outputLabel for="observacionT" value="Observacion" />
-                <p:inputText id="observacionT" value="#{parteServicioBean.tipoServicio.observacionTipoServicioSolicitudservicio}" required="true" maxlength="100" requiredMessage="Debe ingresar la descripcion."/>
-                <p:message for="observacionT" />
-            </p:panelGrid>
-            <br/>
-            <p:commandButton value="Aceptar" update="@form" actionListener="#{parteServicioBean.guardar()}"/>
-            <p:commandButton value="Cancelar" update="@form" immediate="true" actionListener="#{parteServicioBean.cancelar()}"/>
-        </p:panel>
+            <p:spacer/>
+            <p:dataTable var="parteServicio" value="#{parteServicioBean.parteServicios}">
+                <p:column headerText="Técnico Asignado">
+                    <h:outputText value="#{parteServicio.idTecnico.nombreTecnico}"/>
+                </p:column>
+            </p:dataTable>
+            <p:spacer/>
+            <p:dataTable var="parteServicio" value="#{parteServicioBean.parteServicios}">
+                <p:column headerText="Hora de Inicio Servicio">
+                    <h:outputText value="#{parteServicio.idHorarioservicio.inicioHorarioservicio}"/>
+                </p:column>
+                <p:column headerText="Hora de Fin de Servicio">
+                    <h:outputText value="#{parteServicio.idHorarioservicio.finHorarioservicio}"/>
+                </p:column>
+                <p:column headerText="Total de Horas Servicio">
+                    <h:outputText value="#{parteServicio.idHorarioservicio.totalHorarioservicio}"/>
+                </p:column>
+            </p:dataTable>
+        </p:fieldset>
+        <p:spacer/>
+        <p:fieldset legend="Información del Equipo">
+            <p:dataTable var="parteServicio" value="#{parteServicioBean.parteServicios}">
+                <p:column headerText="Sucursal">
+                    <h:outputText value="#{parteServicio.idSolicitudservicio.idSucursal.nombreSucursal}"/>
+                </p:column>
+                <p:column headerText="Equipo">
+                    <h:outputText value="#{parteServicio.idSolicitudservicio.idProducto.nombreProducto}"/>
+                </p:column>
+                <p:column headerText="Ciudad Procedencia">
+                    <h:outputText value="#{parteServicio.idSolicitudservicio.idCiudad.nombreCiudad}"/>
+                </p:column>
+                <p:column headerText="Tipo Servicio">
+                    <h:outputText value="#{parteServicio.idSolicitudservicio.idTipoServicioSolicitudservicio.nombreTipoServicioSolicitudservicio}"/>
+                </p:column>
+            </p:dataTable>
+        </p:fieldset>
+        <p:spacer/>
+        <p:fieldset legend="Trabajo Realizado">
+            <p:dataTable var="parteServicio" value="#{parteServicioBean.parteServicios}">
+                <p:column headerText="Técnico">
+                    <h:outputText value="#{parteServicio.idTecnico.nombreTecnico}"/>
+                </p:column>
+                <p:column headerText="Hora Inicio">
+                    <h:outputText value="#{parteServicio.idHorarioservicio.inicioHorarioservicio}"/>
+                </p:column>
+                <p:column headerText="Hora Fin">
+                    <h:outputText value="#{parteServicio.idHorarioservicio.finHorarioservicio}"/>
+                </p:column>
+                <p:column headerText="Total Horas">
+                    <h:outputText value="#{parteServicio.idHorarioservicio.totalHorarioservicio}"/>
+                </p:column>
+            </p:dataTable>
+        </p:fieldset>
+        <p:spacer/>
+        <p:fieldset legend="Descripción Parte Servicio">
+            <p:dataTable var="parteServicio" value="#{parteServicioBean.parteServicios}">
+                <p:column headerText="Detalles">
+                    <h:outputText value="#{parteServicio.idDetalleParteservicio.descripcionDetalleParteservicio}"/>
+                </p:column>
+            </p:dataTable>
+        </p:fieldset>
+        <p:spacer/>
+        <p:fieldset legend="Observaciones Parte Servicio">
+            <p:dataTable var="parteServicio" value="#{parteServicioBean.parteServicios}">
+                <p:column headerText="Observaciones">
+                    <h:outputText value="#{parteServicio.observacionParteservicio}"/>
+                </p:column>
+            </p:dataTable>
+        </p:fieldset>
+        <p:spacer/>
+        <p:fieldset legend="Firma">
+            <p:outputLabel for="firmaParteServicio" value="El parte ha sido firmado?"/>
+            <h:outputText id="firmaParteServicio" value="#{parteServicio.firmaParteservicio}"/>
+        </p:fieldset>
+        <p:spacer/>
+        <h:link id="editParteServicio" value="Editar Parte Servicio" outcome="editParteServicio"/>
     </ui:define>
 </ui:composition>

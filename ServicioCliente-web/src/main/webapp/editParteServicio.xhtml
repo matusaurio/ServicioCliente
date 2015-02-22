@@ -1,0 +1,95 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" 
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core" 
+                xmlns:ui="http://java.sun.com/jsf/facelets" 
+                xmlns:p="http://primefaces.org/ui"
+                template="/plantillaInterna.xhtml">
+
+    <ui:define name="titulo">Editar Parte Servicio</ui:define>    
+    <ui:define name="editParteServicio">
+        <h2>Editar Parte de Servicio</h2>
+        <p:outputLabel for="codParteServicio" value="Parte de Servicio Nro. " style="text-align: left;"/>
+        <h:outputText id="codParteServicio" value="#{parteServicio.idParteservicio}"/>
+        <p:fieldset legend="Información General">
+            <p:dataTable var="parteServicio" value="#{parteServicioBean.parteServicios}">
+                <p:column headerText="Empresa">
+                    <h:outputText value="#{parteServicio.idEmpresa.nombreEmpresa}"/>
+                </p:column>
+                <p:column headerText="Contacto">
+                    <h:selectOneMenu id="contactoParteServicio" value="#{parteServicio.idContacto}">
+                        <f:selectItem itemLabel="- Seleccione -" itemValue="#{parteServicio.idContacto.nombreContacto}"/>
+                        <f:selectItems value="#{parteServicioBean.contactos}" var="contactos" itemLabel="#{contactos.nombreContacto}" itemValue="#{contactos}"/>
+                        <f:converter converterId="contactoConverter"/>
+                    </h:selectOneMenu>
+                </p:column>
+            </p:dataTable>            
+        </p:fieldset>
+        <p:spacer/>
+        <p:fieldset legend="Información del Equipo">
+            <p:dataTable var="parteServicio" value="#{parteServicioBean.parteServicios}">
+                <p:column headerText="Sucursal">
+                    <h:selectOneMenu id="sucursalParteServicio" value="#{parteServicio.idSolicitudservicio.idSucursal}">
+                        <f:selectItem itemLabel="- Seleccione -" itemValue="#{parteServicio.idSolicitudservicio.idSucursal.nombreSucursal}"/>
+                        <f:selectItems value="#{parteServicioBean.solicitudServicios}" var="sucursales" itemLabel="#{sucursales.idSucursal.nombreSucursal}" itemValue="#{sucursales}"/>
+                        <f:converter converterId="sucursalConverter"/>
+                    </h:selectOneMenu>
+                </p:column>
+                <p:column headerText="Equipo">
+                    <h:selectOneMenu id="equipoParteServicio" value="#{parteServicio.idSolicitudservicio.idProducto}">
+                        <f:selectItem itemLabel="- Seleccione -" itemValue="#{parteServicio.idSolicitudservicio.idProducto.nombreProducto}"/>
+                        <f:selectItems value="#{parteServicioBean.solicitudServicios}" var="equipos" itemLabel="#{equipos.idProducto}" itemValue="#{equipos}"/>
+                        <f:converter converterId="contactoConverter"/>
+                    </h:selectOneMenu>
+                </p:column>
+                <p:column headerText="Ciudad Procedencia">
+                    <h:outputText value="#{parteServicio.idSolicitudservicio.idCiudad.nombreCiudad}"/>
+                </p:column>
+                <p:column headerText="Tipo Servicio">
+                    <h:outputText value="#{parteServicio.idSolicitudservicio.idTipoServicioSolicitudservicio.nombreTipoServicioSolicitudservicio}"/>
+                </p:column>
+            </p:dataTable>
+        </p:fieldset>
+        <p:spacer/>
+        <p:fieldset legend="Registro Horas Trabajadas">
+            <p:dataTable var="parteServicio" value="#{parteServicioBean.parteServicios}">
+                <p:column headerText="Técnico">
+                    <h:selectOneMenu id="tecnicoParteServicio" value="#{parteServicio.idTecnico}">
+                        <f:selectItem itemLabel="- Seleccione -" itemValue="#{parteServicio.idTecnico.nombreTecnico}"/>
+                        <f:selectItems value="#{parteServicioBean.tecnicos}" var="tecnicos" itemLabel="#{tecnicos.nombreTecnico}" itemValue="#{tecnicos}"/>
+                        <f:converter converterId="contactoConverter"/>
+                    </h:selectOneMenu>
+                </p:column>
+                <p:column headerText="Hora Inicio">
+                    <p:calendar id="horaInicio" value="#{parteServicio.idHorarioservicio.inicioHorarioservicio}"/>                    
+                </p:column>
+                <p:column headerText="Hora Fin">
+                    <p:calendar id="horaInicio" value="#{parteServicio.idHorarioservicio.finHorarioservicio}"/>                    
+                </p:column>
+                <p:column headerText="Total Horas">
+                    <h:outputText value="#{parteServicio.idHorarioservicio.totalHorarioservicio}"/>
+                </p:column>
+            </p:dataTable>
+        </p:fieldset>
+        <p:spacer/>
+        <p:fieldset legend="Descripción Trabajo Realizado">
+            <p:dataTable var="parteServicio" value="#{parteServicioBean.parteServicios}">
+                <p:column headerText="Detalles">
+                    Ingrese el trabajo que se a realizado por el técnico
+                    <p:inputTextarea value="#{parteServicio.idDetalleParteservicio.descripcionDetalleParteservicio}"/>                    
+                </p:column>
+            </p:dataTable>
+        </p:fieldset>
+        <p:spacer/>
+        <p:fieldset legend="Observaciones y Sugerencias">
+            <p:dataTable var="parteServicio" value="#{parteServicioBean.parteServicios}">
+                <p:column headerText="Observaciones">
+                    <p:inputTextarea value="#{parteServicio.observacionParteservicio}"/>
+                </p:column>
+            </p:dataTable>
+        </p:fieldset>
+        <p:spacer/>        
+        <h:link id="verParteServicio" value="Resumen Parte Servicio" outcome="parteServicio"/>
+    </ui:define>
+</ui:composition>
