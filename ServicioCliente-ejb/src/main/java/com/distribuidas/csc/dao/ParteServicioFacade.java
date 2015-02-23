@@ -6,9 +6,11 @@
 package com.distribuidas.csc.dao;
 
 import com.distribuidas.csc.persistencia.ParteServicio;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -28,4 +30,18 @@ public class ParteServicioFacade extends AbstractFacade<ParteServicio> {
         super(ParteServicio.class);
     }
     
+    public List<ParteServicio> findBySolicitud(Integer codSolicitud) {
+        try{
+        Query qry = this.em.createQuery(
+                "SELECT obj FROM ParteServicio obj WHERE obj.idSolicitudservicio.idSolicitudservicio=?1");
+        qry.setParameter(1, codSolicitud);
+        return qry.getResultList();
+        }
+        catch(Exception e)
+        {
+            
+            System.out.println(e);
+        }
+        return null;
+    }
 }

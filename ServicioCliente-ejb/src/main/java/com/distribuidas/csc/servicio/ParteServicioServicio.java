@@ -28,7 +28,11 @@ public class ParteServicioServicio {
     public List<ParteServicio> obtenerTodos() {
         return this.parteServicioFacade.findAll();
     }
-
+    
+    public List<ParteServicio> obtenerParteS(Integer codSolicitud){
+        return this.parteServicioFacade.findBySolicitud(codSolicitud);
+    }
+    
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public void crear(ParteServicio parteServicio) {
         this.parteServicioFacade.create(parteServicio);
