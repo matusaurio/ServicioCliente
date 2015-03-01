@@ -14,7 +14,7 @@
             <p:submenu label="Opciones Solicitud Servicio">
                 <p:menuitem value="Ver" update="@form" actionListener="#{solicitudServicioBean.vista()}"/>
                 <p:menuitem value="Nuevo" update="@form" actionListener="#{solicitudServicioBean.nuevo()}"/>
-                <p:menuitem value="Eliminar" update="@form" actionListener="#{solicitudServicioBean.eliminar()}"/>
+                <p:menuitem value="Eliminar" update="@form" actionListener="#{solicitudServicioBean.eliminar()}" disabled="#{not solicitudServicioBean.activarEliminar}"/>
             </p:submenu>
         </p:menu>
     </ui:define>

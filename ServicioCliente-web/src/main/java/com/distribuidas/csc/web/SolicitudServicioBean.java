@@ -7,7 +7,9 @@ package com.distribuidas.csc.web;
 
 import com.distribuidas.csc.persistencia.Bodega;
 import com.distribuidas.csc.persistencia.Contacto;
+import com.distribuidas.csc.persistencia.DetalleParteServicio;
 import com.distribuidas.csc.persistencia.Estado;
+import com.distribuidas.csc.persistencia.HorarioServicio;
 import com.distribuidas.csc.persistencia.Modelo;
 import com.distribuidas.csc.persistencia.ParteServicio;
 import com.distribuidas.csc.persistencia.Producto;
@@ -16,13 +18,16 @@ import com.distribuidas.csc.persistencia.Sucursal;
 import com.distribuidas.csc.persistencia.Tecnico;
 import com.distribuidas.csc.servicio.BodegaServicio;
 import com.distribuidas.csc.servicio.ContactoServicio;
+import com.distribuidas.csc.servicio.DetalleParteServicioServicio;
 import com.distribuidas.csc.servicio.EstadoServicio;
+import com.distribuidas.csc.servicio.HorarioServicioServicio;
 import com.distribuidas.csc.servicio.ModeloServicio;
 import com.distribuidas.csc.servicio.ParteServicioServicio;
 import com.distribuidas.csc.servicio.ProductoServicio;
 import com.distribuidas.csc.servicio.SolicitudServicioServicio;
 import com.distribuidas.csc.servicio.SucursalServicio;
 import com.distribuidas.csc.servicio.TecnicoServicio;
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -63,6 +68,12 @@ public class SolicitudServicioBean {
     private ModeloServicio modeloServicio;
     @EJB
     private ParteServicioServicio parteServicioServicio;
+    @EJB
+    private DetalleParteServicioServicio detalleParteServicioServicio;
+    @EJB
+    private HorarioServicioServicio horarioServicioServicio;
+
+    Tecnico tecnico;
 
     private List<Sucursal> sucursales;
     private List<Modelo> modelos;
@@ -99,6 +110,8 @@ public class SolicitudServicioBean {
         this.bodegas = new ArrayList<>();
         this.estados = new ArrayList<>();
         this.tecnicos = new ArrayList<>();
+        this.tecnico = new Tecnico();
+        this.activarEliminar = true;
     }
 
     public void cargarSucursales() {
@@ -155,12 +168,21 @@ public class SolicitudServicioBean {
         aux = this.solicitudServicio.getIdEstadoSolicitudservicio().getIdEstadoSolicitudservicio();
         if (aux == 3) {
             this.solicitudServicio.setGpSolicitudservicio("Parte Servicio");
-            this.solicitudServicio.setIdTecnico(this.solicitudServicioSeleccionada.getIdTecnico());
+            this.solicitudServicio.setIdTecnico(this.tecnico);
+            DetalleParteServicio dps = new DetalleParteServicio();
+            dps.setDescripcionDetalleParteservicio("0");
+            dps.setCantidadDetalleParteservicio(BigDecimal.ZERO);
+            this.detalleParteServicioServicio.crear(dps);
+            HorarioServicio hs = new HorarioServicio();
+            hs.setTotalHorarioservicio(BigDecimal.ZERO);
+            this.horarioServicioServicio.crear(hs);
             ParteServicio p = new ParteServicio();
             p.setIdSolicitudservicio(this.solicitudServicioSeleccionada);
             p.setIdEmpresa(this.solicitudServicioSeleccionada.getIdEmpresa());
             p.setIdContacto(this.solicitudServicioSeleccionada.getIdContacto());
-            p.setIdTecnico(this.solicitudServicioSeleccionada.getIdTecnico());
+            p.setIdTecnico(this.tecnico);
+            p.setIdHorarioservicio(hs);
+            p.setIdDetalleParteservicio(dps);
             this.parteServicioServicio.crear(p);
         } else {
             this.solicitudServicio.setGpSolicitudservicio("Gestionar Servicio");
@@ -170,6 +192,7 @@ public class SolicitudServicioBean {
     public void guardar() {
         if (this.enNuevo) {
             comparar();
+            this.solicitudServicio.setIdCiudad(this.solicitudServicio.getIdEmpresa().getIdCiudad());
             this.solicitudServicioServicio.crear(this.solicitudServicio);
             this.desplegarNuevo = false;
             this.solicitudServicios.add(this.solicitudServicio);
@@ -177,6 +200,7 @@ public class SolicitudServicioBean {
         } else if (this.enModificar) {
             System.err.println("modificar");
             comparar();
+            this.solicitudServicio.setIdCiudad(this.solicitudServicio.getIdEmpresa().getIdCiudad());
             this.solicitudServicioServicio.actualizar(this.solicitudServicio);
             this.desplegarNuevo = false;
             this.enModificar = false;
@@ -208,6 +232,15 @@ public class SolicitudServicioBean {
     }
 
     public void onRowSelect(SelectEvent event) {
+        if (this.solicitudServicioSeleccionada.getIdTecnico() != null) {
+            this.tecnico = this.solicitudServicioSeleccionada.getIdTecnico();
+            System.out.println(this.tecnico);
+        }
+        if (this.solicitudServicioSeleccionada.getGpSolicitudservicio().compareTo("Parte Servicio") == 0) {
+            this.activarEliminar = false;
+        } else {
+            this.activarEliminar = true;
+        }
         int aux;
         aux = this.solicitudServicioSeleccionada.getIdEstadoSolicitudservicio().getIdEstadoSolicitudservicio();
         if (aux != 3) {

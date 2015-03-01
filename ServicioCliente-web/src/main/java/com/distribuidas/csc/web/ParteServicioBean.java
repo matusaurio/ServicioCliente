@@ -7,12 +7,22 @@ package com.distribuidas.csc.web;
 
 import com.distribuidas.csc.persistencia.Contacto;
 import com.distribuidas.csc.persistencia.ParteServicio;
+import com.distribuidas.csc.persistencia.Producto;
 import com.distribuidas.csc.persistencia.SolicitudServicio;
+import com.distribuidas.csc.persistencia.Sucursal;
 import com.distribuidas.csc.persistencia.Tecnico;
 import com.distribuidas.csc.servicio.ContactoServicio;
+import com.distribuidas.csc.servicio.DetalleParteServicioServicio;
+import com.distribuidas.csc.servicio.HorarioServicioServicio;
 import com.distribuidas.csc.servicio.ParteServicioServicio;
+import com.distribuidas.csc.servicio.ProductoServicio;
 import com.distribuidas.csc.servicio.SolicitudServicioServicio;
+import com.distribuidas.csc.servicio.SucursalServicio;
 import com.distribuidas.csc.servicio.TecnicoServicio;
+import java.io.Serializable;
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -30,23 +40,34 @@ import org.primefaces.event.UnselectEvent;
  */
 @ManagedBean
 @ViewScoped
-public class ParteServicioBean {
+public class ParteServicioBean implements Serializable{
 
     @EJB
     private ParteServicioServicio parteServicioServicio;
     @ManagedProperty(value = "#{solicitudServicio}")
     private SolicitudServicioBean solicitudServicio;
-    
+
     @EJB
     private ContactoServicio contactoServicio;
-    
-    @EJB 
+    @EJB
+    private HorarioServicioServicio horarioServicioServicio;
+    @EJB
+    private DetalleParteServicioServicio detalleParteServicioServicio;
+    @EJB
+    private SucursalServicio sucursalServicio;
+    @EJB
+    private ProductoServicio productoServicio;
+
+    @EJB
     private SolicitudServicioServicio solicitudServicioServicio;
-    
+
     @EJB
     private TecnicoServicio tecnicoServicio;
 
+    private double totalHoras;
     private List<ParteServicio> parteServicios;
+    private List<Sucursal> sucursales;
+    private List<Producto> productos;
     private List<Contacto> contactos;
     private List<SolicitudServicio> solicitudServicios;
     private List<Tecnico> tecnicos;
@@ -68,15 +89,30 @@ public class ParteServicioBean {
 
     @PostConstruct
     public void init() {
+        this.solicitudServicios = new ArrayList<>();
         FacesContext facesContext = FacesContext.getCurrentInstance();
         HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(false);
         this.idSolicitud = (Integer) session.getAttribute("idSolicitud");
         System.out.println(this.idSolicitud);
         this.parteServicios = this.parteServicioServicio.obtenerParteS(this.idSolicitud);
+        System.out.println(this.parteServicios.get(0));
+        this.contactos = this.contactoServicio.obtenerContactosE(this.parteServicios.get(0).getIdEmpresa().getIdEmpresa());
+        this.sucursales = this.sucursalServicio.obtenerSurcursalesE(this.parteServicios.get(0).getIdEmpresa().getIdEmpresa());
+        this.productos = this.productoServicio.obtenerProductoB(this.parteServicios.get(0).getIdSolicitudservicio().getIdBodega().getIdBodega());
+        this.tecnicos = this.tecnicoServicio.obtenerTodos();
+        this.solicitudServicios.add(this.parteServicios.get(0).getIdSolicitudservicio());
     }
 
     public void vista() {
         this.desplegarVista = true;
+    }
+
+    public String editar() {
+        this.parteServicios.get(0).getIdHorarioservicio().setTotalHorarioservicio(BigDecimal.valueOf(totalHoras));
+        this.horarioServicioServicio.actualizar(this.parteServicios.get(0).getIdHorarioservicio());
+        this.detalleParteServicioServicio.actualizar(this.parteServicios.get(0).getIdDetalleParteservicio());
+        this.parteServicioServicio.actualizar(this.parteServicios.get(0));
+        return "parteServicio";
     }
 
     public void nuevo() {
@@ -116,12 +152,46 @@ public class ParteServicioBean {
         this.desplegarNuevo = false;
     }
 
+    public void calcularHoras() {
+        Date Fecha_Inicio = this.parteServicios.get(0).getIdHorarioservicio().getInicioHorarioservicio();
+        Date Fecha_Fin = this.parteServicios.get(0).getIdHorarioservicio().getFinHorarioservicio();
+        long dias = (Fecha_Fin.getTime() - Fecha_Inicio.getTime()) / (24 * 60 * 60 * 1000);
+        long horas = (Fecha_Fin.getTime() - Fecha_Inicio.getTime()) / (60 * 60 * 1000) % 24;
+        long minutos = (Fecha_Fin.getTime() - Fecha_Inicio.getTime()) / (60 * 1000) % 60;
+        long segundos = (Fecha_Fin.getTime() - Fecha_Inicio.getTime()) / (1000) % 60;
+        totalHoras = (dias*24) + (horas) + (minutos / 60) + (segundos / 3600);
+        
+        System.out.println("Inicio: "+ Fecha_Inicio.getTime());
+        System.out.println("Fin: "+ Fecha_Fin.getTime());
+        System.out.println("Total dias: " + dias);
+        System.out.println("Total horas: " + horas);
+        System.out.println("Total minutos: " + minutos);
+        System.out.println("Total segundos: " + segundos);
+        System.out.println("Total: " + totalHoras);
+    }
+
     public void onRowSelect(SelectEvent event) {
 
     }
 
     public void onRowUnselect(UnselectEvent event) {
 
+    }
+
+    public List<Sucursal> getSucursales() {
+        return sucursales;
+    }
+
+    public void setSucursales(List<Sucursal> sucursales) {
+        this.sucursales = sucursales;
+    }
+
+    public List<Producto> getProductos() {
+        return productos;
+    }
+
+    public void setProductos(List<Producto> productos) {
+        this.productos = productos;
     }
 
     public SolicitudServicioBean getSolicitudServicio() {
@@ -255,7 +325,5 @@ public class ParteServicioBean {
     public void setTecnicos(List<Tecnico> tecnicos) {
         this.tecnicos = tecnicos;
     }
-    
-    
-    
+
 }

@@ -32,7 +32,6 @@
                                 <p:menuitem value="Modelo" update="@form" ajax="false" action="modelo"/>
                                 <p:menuitem value="Marca" update="@form" ajax="false" action="marca"/>
                                 <p:menuitem value="Usuario" update="@form" ajax="false" action="usuario"/>
-                                <p:menuitem value="Solicitud Servicio" update="@form" ajax="false" action="solicitudServicio"/>
                                 <p:menuitem value="Tipo Servicio" update="@form" ajax="false" action="tipodeservicio"/>
                                 <p:menuitem value="Estado" update="@form" ajax="false" action="estado"/>
                                 <p:menuitem value="Producto" update="@form" ajax="false" action="producto"/>
@@ -41,14 +40,12 @@
                             </p:submenu>    
                             <p:submenu label="Solicitud de Servicio">
                                 <p:menuitem value="Solicitud Servicio" update="@form" ajax="false" action="solicitudServicio"/>
-                                <p:menuitem value="Parte Servicio" update="@form" ajax="false" action="parteServicio"/>
                             </p:submenu>
                             <p:menuitem value="Logout" action="index" style="right: inherit" />
                         </p:menubar>
                         <p:spacer height="30px"/>
                         <p:layout>
                             <p:layoutUnit position="west" resizable="true" size="350px" minSize="350" >
-                                <ui:insert name="contenidoParteServicio"/>
                                 <ui:insert name="contenidoCiudad"/>
                                 <ui:insert name="contenidoEmpresa"/>
                                 <ui:insert name="contenidoMarca"/>
@@ -62,7 +59,6 @@
                                 <ui:insert name="contenidoSolicitudServicio"/>
                                 <ui:insert name="contenidoContacto"/>
                                 <ui:insert name="contenidoTecnico"/>
-                                <ui:insert name="contenidoParteServicio"/>
                             </p:layoutUnit>
                             <p:layoutUnit position="center" id="principal">
                                 <ui:insert name="tablaCiudad"/>

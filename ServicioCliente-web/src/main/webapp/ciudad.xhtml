@@ -14,8 +14,8 @@
             <p:submenu label="Opciones Ciudad">
                 <p:menuitem value="Ver" update="@form" actionListener="#{ciudadBean.vista()}" />
                 <p:menuitem value="Nuevo" update="@form" actionListener="#{ciudadBean.nuevo()}"/>
-                <p:menuitem value="Editar" update="@form" actionListener="#{ciudadBean.modificar()}"/>
-                <p:menuitem value="Eliminar" update="@form" actionListener="#{ciudadBean.eliminar()}"/>
+                <p:menuitem value="Editar" update="@form" actionListener="#{ciudadBean.modificar()}" disabled="#{not ciudadBean.activarModificar}"/>
+                <p:menuitem value="Eliminar" update="@form" actionListener="#{ciudadBean.eliminar()}" disabled="#{not ciudadBean.activarEliminar}"/>
             </p:submenu>
         </p:menu>
     </ui:define>

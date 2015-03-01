@@ -32,7 +32,7 @@ public class TecnicoConverter implements Converter{
             tecnicoId = Integer.parseInt(submittedValue);
         } catch (NumberFormatException e) {
             throw new ConverterException(new FacesMessage(FacesMessage.SEVERITY_ERROR, 
-                    "Error CiudadConverter", "Please try again!"));
+                    "Error TecnicoConverter", "Please try again!"));
         }
         return tecnicoFacade.find(tecnicoId);
     }

@@ -5,7 +5,6 @@
  */
 package com.distribuidas.csc.web;
 
-
 import com.distribuidas.csc.persistencia.Ciudad;
 import com.distribuidas.csc.servicio.CiudadServicio;
 import java.io.Serializable;
@@ -23,53 +22,38 @@ import org.primefaces.event.UnselectEvent;
  */
 @ManagedBean
 @ViewScoped
-public class CiudadBean  implements Serializable {
-    
+public class CiudadBean extends EstadoBotones implements Serializable {
+
     private List<Ciudad> ciudades;
     private Ciudad ciudad;
     private Ciudad ciudadSeleccionada;
-    
-    private Boolean desplegarVista = false;
-    private Boolean desplegarNuevo = false;
-    
-    private String tituloFormulario;
-    private Boolean enNuevo;
-    private Boolean enModificar;
-    
-    
-    private Boolean activarNuevo;
-    private Boolean activarModificar;
-    private Boolean activarEliminar;
-    private Boolean activarCambiarEstado;
-    
+
     @EJB
     private CiudadServicio ciudadServicio;
-    
+
     @PostConstruct
-    public void init(){
+    public void init() {
         this.ciudades = this.ciudadServicio.obtenerTodos();
     }
-    
-    public void vista(){
+
+    public void vista() {
         this.desplegarVista = true;
     }
-    
-    public void nuevo(){
+
+    public void nuevo() {
         this.desplegarNuevo = true;
         this.enNuevo = true;
         this.enModificar = false;
         this.ciudad = new Ciudad();
     }
-    
+
     public void guardar() {
         if (this.enNuevo) {
-            System.err.println("HOLOOOOO");
             this.ciudadServicio.crear(this.ciudad);
             this.desplegarNuevo = false;
             this.ciudades.add(this.ciudad);
             this.enNuevo = false;
         } else if (this.enModificar) {
-            System.err.println("modificar");
             this.ciudadServicio.actualizar(this.ciudad);
             this.desplegarNuevo = false;
             this.enModificar = false;
@@ -93,11 +77,8 @@ public class CiudadBean  implements Serializable {
     }
 
     public void onRowSelect(SelectEvent event) {
-
-    }
-
-    public void onRowUnselect(UnselectEvent event) {
-
+        this.activarModificar = true;
+        this.activarEliminar = true;
     }
 
     public List<Ciudad> getCiudades() {
@@ -112,22 +93,6 @@ public class CiudadBean  implements Serializable {
         this.ciudad = ciudad;
     }
 
-    public Boolean getDesplegarVista() {
-        return desplegarVista;
-    }
-
-    public void setDesplegarVista(Boolean desplegarVista) {
-        this.desplegarVista = desplegarVista;
-    }
-
-    public Boolean getDesplegarNuevo() {
-        return desplegarNuevo;
-    }
-
-    public void setDesplegarNuevo(Boolean desplegarNuevo) {
-        this.desplegarNuevo = desplegarNuevo;
-    }
-
     public Ciudad getCiudadSeleccionada() {
         return ciudadSeleccionada;
     }
@@ -135,62 +100,4 @@ public class CiudadBean  implements Serializable {
     public void setCiudadSeleccionada(Ciudad ciudadSeleccionada) {
         this.ciudadSeleccionada = ciudadSeleccionada;
     }
-
-    public String getTituloFormulario() {
-        return tituloFormulario;
-    }
-
-    public void setTituloFormulario(String tituloFormulario) {
-        this.tituloFormulario = tituloFormulario;
-    }
-
-    public Boolean getEnNuevo() {
-        return enNuevo;
-    }
-
-    public void setEnNuevo(Boolean enNuevo) {
-        this.enNuevo = enNuevo;
-    }
-
-    public Boolean getEnModificar() {
-        return enModificar;
-    }
-
-    public void setEnModificar(Boolean enModificar) {
-        this.enModificar = enModificar;
-    }
-
-    public Boolean getActivarNuevo() {
-        return activarNuevo;
-    }
-
-    public void setActivarNuevo(Boolean activarNuevo) {
-        this.activarNuevo = activarNuevo;
-    }
-
-    public Boolean getActivarModificar() {
-        return activarModificar;
-    }
-
-    public void setActivarModificar(Boolean activarModificar) {
-        this.activarModificar = activarModificar;
-    }
-
-    public Boolean getActivarEliminar() {
-        return activarEliminar;
-    }
-
-    public void setActivarEliminar(Boolean activarEliminar) {
-        this.activarEliminar = activarEliminar;
-    }
-
-    public Boolean getActivarCambiarEstado() {
-        return activarCambiarEstado;
-    }
-
-    public void setActivarCambiarEstado(Boolean activarCambiarEstado) {
-        this.activarCambiarEstado = activarCambiarEstado;
-    }    
-    
-    
 }

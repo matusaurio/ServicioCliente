@@ -68,22 +68,6 @@
             </p:dataTable>
         </p:fieldset>
         <p:spacer/>
-        <p:fieldset legend="Trabajo Realizado">
-            <p:dataTable var="parteServicio" value="#{parteServicioBean.parteServicios}">
-                <p:column headerText="Técnico">
-                    <h:outputText value="#{parteServicio.idTecnico.nombreTecnico}"/>
-                </p:column>
-                <p:column headerText="Hora Inicio">
-                    <h:outputText value="#{parteServicio.idHorarioservicio.inicioHorarioservicio}"/>
-                </p:column>
-                <p:column headerText="Hora Fin">
-                    <h:outputText value="#{parteServicio.idHorarioservicio.finHorarioservicio}"/>
-                </p:column>
-                <p:column headerText="Total Horas">
-                    <h:outputText value="#{parteServicio.idHorarioservicio.totalHorarioservicio}"/>
-                </p:column>
-            </p:dataTable>
-        </p:fieldset>
         <p:spacer/>
         <p:fieldset legend="Descripción Parte Servicio">
             <p:dataTable var="parteServicio" value="#{parteServicioBean.parteServicios}">

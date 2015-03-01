@@ -4,18 +4,20 @@
  * and open the template in the editor.
  */
 package com.distribuidas.csc.web;
+
+import org.primefaces.event.UnselectEvent;
+
 /**
  *
  * @author hendrix
  */
 public class EstadoBotones {
 
-    protected Boolean desplegarFormulario;
     protected String tituloFormulario;
 
     protected Boolean activarNuevo;
-    protected Boolean activarModificar;
-    protected Boolean activarEliminar;
+    protected Boolean activarModificar = false;
+    protected Boolean activarEliminar = false;
     protected Boolean activarCambiarEstado;
 
     protected Boolean enNuevo;
@@ -56,6 +58,12 @@ public class EstadoBotones {
         this.activarNuevo = true;
     }
 
+    public void onRowUnselect(UnselectEvent event) {
+        this.activarModificar = false;
+        this.activarEliminar = false;
+        this.activarCambiarEstado = false;
+    }
+    
     public Boolean getActivarNuevo() {
         return activarNuevo;
     }
@@ -70,14 +78,6 @@ public class EstadoBotones {
 
     public Boolean getActivarCambiarEstado() {
         return activarCambiarEstado;
-    }
-
-    public Boolean getDesplegarFormulario() {
-        return desplegarFormulario;
-    }
-
-    public void setDesplegarFormulario(Boolean desplegarFormulario) {
-        this.desplegarFormulario = desplegarFormulario;
     }
 
     public String getTituloFormulario() {
