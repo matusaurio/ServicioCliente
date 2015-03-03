@@ -9,92 +9,89 @@
 
     <ui:define name="titulo">Editar Parte Servicio</ui:define>    
     <ui:define name="editParteServicio">
-        <h2>Editar Parte de Servicio</h2>
-        <p:outputLabel for="codParteServicio" value="Parte de Servicio Nro. " style="text-align: left;"/>
-        <h:outputText id="codParteServicio" value="#{parteServicio.idParteservicio}"/>
-        <p:fieldset legend="Información General">
-            <p:dataTable var="parteServicio" value="#{parteServicioBean.parteServicios}">
-                <p:column headerText="Empresa">
-                    <h:outputText value="#{parteServicio.idEmpresa.nombreEmpresa}"/>
-                </p:column>
-                <p:column headerText="Contacto">
-                    <h:selectOneMenu id="contactoParteServicio" value="#{parteServicio.idContacto}">
-                        <f:selectItem itemLabel="- Seleccione -" itemValue="#{null}"/>
-                        <f:selectItems value="#{parteServicioBean.contactos}" var="contacto" itemLabel="#{contacto.nombreContacto}" itemValue="#{contacto}"/>
-                        <f:converter converterId="contactoConverter"/>
-                    </h:selectOneMenu>
-                </p:column>
-            </p:dataTable>            
-        </p:fieldset>
-        <p:spacer/>
-        <p:fieldset legend="Información del Solicitud">
-            <p:dataTable var="parteServicio" value="#{parteServicioBean.parteServicios}">
-                <p:column headerText="Sucursal">
-                    <h:selectOneMenu id="sucursalParteServicio" value="#{parteServicio.idSolicitudservicio.idSucursal}">
-                        <f:selectItem itemLabel="- Seleccione -" itemValue="#{null}"/>
-                        <f:selectItems value="#{parteServicioBean.sucursales}" var="sucursal" itemLabel="#{sucursal.nombreSucursal}" itemValue="#{sucursal}"/>
-                        <f:converter converterId="sucursalConverter"/>
-                    </h:selectOneMenu>
-                </p:column>
-                <p:column headerText="Producto">
-                    <h:selectOneMenu id="equipoParteServicio" value="#{parteServicio.idSolicitudservicio.idProducto}">
-                        <f:selectItem itemLabel="- Seleccione -" itemValue="#{null}"/>
-                        <f:selectItems value="#{parteServicioBean.productos}" var="equipos" itemLabel="#{equipos.nombreProducto}" itemValue="#{equipos}"/>
-                        <f:converter converterId="productoConverter"/>
-                    </h:selectOneMenu>
-                </p:column>
-                <p:column headerText="Ciudad Procedencia">
-                    <h:outputText value="#{parteServicio.idSolicitudservicio.idCiudad.nombreCiudad}"/>
-                </p:column>
-                <p:column headerText="Tipo Servicio">
-                    <h:outputText value="#{parteServicio.idSolicitudservicio.idTipoServicioSolicitudservicio.nombreTipoServicioSolicitudservicio}"/>
-                </p:column>
-            </p:dataTable>
-        </p:fieldset>
-        <p:spacer/>
-        <p:fieldset legend="Registro Horas Trabajadas">
-            <p:dataTable var="parteServicio" value="#{parteServicioBean.parteServicios}">
-                <p:column headerText="Técnico">
-                    <h:selectOneMenu id="tecnicoParteServicio" value="#{parteServicio.idTecnico}">
-                        <f:selectItem itemLabel="- Seleccione -" itemValue="#{null}"/>
-                        <f:selectItems value="#{parteServicioBean.tecnicos}" var="tecnico" itemLabel="#{tecnico.nombreTecnico}" itemValue="#{tecnico}"/>
-                        <f:converter converterId="tecnicoConverter"/>
-                    </h:selectOneMenu>
-                </p:column>
-            </p:dataTable>
-            <p:dataTable var="parteServicio" value="#{parteServicioBean.parteServicios}">
-                <p:column headerText="Hora de Inicio Servicio">
-                    <p:calendar id="fechaAtencionInicio" value="#{parteServicio.idHorarioservicio.inicioHorarioservicio}" pattern="yyyy/MM/dd HH:mm:ss"/>
-                </p:column>
-                <p:column headerText="Hora de Fin de Servicio">
-                    <p:calendar id="fechaAtencionFin" value="#{parteServicio.idHorarioservicio.finHorarioservicio}" pattern="yyyy/MM/dd HH:mm:ss"/>
-                </p:column>
-                <p:column>
-                    <p:commandButton value="Calcular Horas" actionListener="#{parteServicioBean.calcularHoras()}"/>
-                </p:column>
-                <p:column headerText="Total de Horas Servicio">
-                    <h:outputText value="#{parteServicio.idHorarioservicio.totalHorarioservicio}"/>
-                </p:column>
-            </p:dataTable>
-        </p:fieldset>
-        <p:spacer/>
-        <p:fieldset legend="Descripción Trabajo Realizado">
-            <p:dataTable var="parteServicio" value="#{parteServicioBean.parteServicios}">
-                <p:column headerText="Detalles">
-                    Ingrese el trabajo que se a realizado por el técnico
-                    <p:inputTextarea value="#{parteServicio.idDetalleParteservicio.descripcionDetalleParteservicio}"/>                    
-                </p:column>
-            </p:dataTable>
-        </p:fieldset>
-        <p:spacer/>
-        <p:fieldset legend="Observaciones y Sugerencias">
-            <p:dataTable var="parteServicio" value="#{parteServicioBean.parteServicios}">
-                <p:column headerText="Observaciones">
-                    <p:inputTextarea value="#{parteServicio.observacionParteservicio}"/>
-                </p:column>
-            </p:dataTable>
-        </p:fieldset>
-        <p:spacer/>
-        <h:commandButton value="Resumen Parte Servicio" action="#{parteServicioBean.editar()}"/>
+        <p:panel header="Editar Parte de Servicio" id="editarParteServicio">
+            <p:outputLabel for="codParteServicio" value="Parte de Servicio Nro. " style="text-align: left;"/>
+            <h:outputText id="codParteServicio" value="#{parteServicio.idParteservicio}"/>
+            <p:fieldset legend="Información General">
+                <p:dataTable var="parteServicio" value="#{parteServicioBean.parteServicios}">
+                    <p:column headerText="Empresa">
+                        <h:outputText value="#{parteServicio.idEmpresa.nombreEmpresa}"/>
+                    </p:column>
+                    <p:column headerText="Contacto">
+                        <p:selectOneMenu id="contactoParteServicio" value="#{parteServicio.idContacto}">
+                            <f:selectItem itemLabel="- Seleccione -" itemValue="#{null}"/>
+                            <f:selectItems value="#{parteServicioBean.contactos}" var="contacto" itemLabel="#{contacto.nombreContacto}" itemValue="#{contacto}"/>
+                            <f:converter converterId="contactoConverter"/>
+                        </p:selectOneMenu>
+                    </p:column>
+                </p:dataTable>            
+            </p:fieldset>
+            <p:spacer/>
+            <p:fieldset legend="Información del Solicitud">
+                <p:dataTable var="parteServicio" value="#{parteServicioBean.parteServicios}">
+                    <p:column headerText="Tipo Servicio">
+                        <h:outputText value="#{parteServicio.idSolicitudservicio.idTipoServicioSolicitudservicio.nombreTipoServicioSolicitudservicio}"/>
+                    </p:column>                
+                    <p:column headerText="Ciudad Procedencia">
+                        <h:outputText value="#{parteServicio.idSolicitudservicio.idCiudad.nombreCiudad}"/>
+                    </p:column>
+                    <p:column headerText="Sucursal">
+                        <p:selectOneMenu id="sucursalParteServicio" value="#{parteServicio.idSolicitudservicio.idSucursal}">
+                            <f:selectItem itemLabel="- Seleccione -" itemValue="#{null}"/>
+                            <f:selectItems value="#{parteServicioBean.sucursales}" var="sucursal" itemLabel="#{sucursal.nombreSucursal}" itemValue="#{sucursal}"/>
+                            <f:converter converterId="sucursalConverter"/>
+                        </p:selectOneMenu>
+                    </p:column>
+                    <p:column headerText="Producto">
+                        <p:selectOneMenu id="equipoParteServicio" value="#{parteServicio.idSolicitudservicio.idProducto}">
+                            <f:selectItem itemLabel="- Seleccione -" itemValue="#{null}"/>
+                            <f:selectItems value="#{parteServicioBean.productos}" var="equipos" itemLabel="#{equipos.nombreProducto}" itemValue="#{equipos}"/>
+                            <f:converter converterId="productoConverter"/>
+                        </p:selectOneMenu>
+                    </p:column>                
+                </p:dataTable>
+            </p:fieldset>
+            <p:spacer/>
+            <p:fieldset legend="Registro Horas Trabajadas">
+                <p:dataTable var="parteServicio" value="#{parteServicioBean.parteServicios}">
+                    <p:column headerText="Técnico" style="text-align: center;">
+                        <p:selectOneMenu id="tecnicoParteServicio" value="#{parteServicio.idTecnico}">
+                            <f:selectItem itemLabel="- Seleccione -" itemValue="#{null}"/>
+                            <f:selectItems value="#{parteServicioBean.tecnicos}" var="tecnico" itemLabel="#{tecnico.nombreTecnico}" itemValue="#{tecnico}"/>
+                            <f:converter converterId="tecnicoConverter"/>
+                        </p:selectOneMenu>
+                    </p:column>
+                </p:dataTable>
+                <p:spacer/>
+                <p:dataTable var="parteServicio" value="#{parteServicioBean.parteServicios}">
+                    <p:column headerText="Hora de Inicio Servicio" style="text-align: center;">
+                        <p:calendar id="fechaAtencionInicio" value="#{parteServicio.idHorarioservicio.inicioHorarioservicio}" pattern="yyyy/MM/dd HH:mm:ss"/>
+                    </p:column>
+                    <p:column headerText="Hora de Fin de Servicio" style="text-align: center;">
+                        <p:calendar id="fechaAtencionFin" value="#{parteServicio.idHorarioservicio.finHorarioservicio}" pattern="yyyy/MM/dd HH:mm:ss"/>
+                    </p:column>
+                </p:dataTable>
+            </p:fieldset>
+            <p:spacer/>
+            <p:fieldset legend="Descripción Trabajo Realizado">
+                <p:dataTable var="parteServicio" value="#{parteServicioBean.parteServicios}">
+                    <p:column headerText="Detalles">
+                        Ingrese el trabajo que se a realizado por el técnico:
+                        <br/><br/>
+                        <p:inputTextarea rows="5" cols="50" autoResize="false" value="#{parteServicio.idDetalleParteservicio.descripcionDetalleParteservicio}"/>                    
+                    </p:column>
+                </p:dataTable>
+            </p:fieldset>
+            <p:spacer/>
+            <p:fieldset legend="Observaciones y Sugerencias">
+                <p:dataTable var="parteServicio" value="#{parteServicioBean.parteServicios}">
+                    <p:column headerText="Observaciones" style="text-align: center;">
+                        <p:inputTextarea rows="5" cols="50" autoResize="false" value="#{parteServicio.observacionParteservicio}"/>
+                    </p:column>
+                </p:dataTable>
+            </p:fieldset>
+            <p:spacer/>
+            <p:commandButton value="Guardar Parte Servicio" action="#{parteServicioBean.editar()}"/>
+        </p:panel>
     </ui:define>
 </ui:composition>

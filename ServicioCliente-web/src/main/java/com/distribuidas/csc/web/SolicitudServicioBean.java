@@ -107,11 +107,13 @@ public class SolicitudServicioBean {
     public void init() {
         this.solicitudServicios = this.solicitudServicioServicio.obtenerTodos();
         this.sucursales = new ArrayList<>();
+        this.productos = new ArrayList<>();
         this.bodegas = new ArrayList<>();
-        this.estados = new ArrayList<>();
+        this.estados = this.estadoServicio.obtenerTodos();
         this.tecnicos = new ArrayList<>();
         this.tecnico = new Tecnico();
         this.activarEliminar = true;
+        this.desplegarVista = true;
     }
 
     public void cargarSucursales() {
@@ -161,6 +163,7 @@ public class SolicitudServicioBean {
         this.enModificar = false;
         this.solicitudServicio = new SolicitudServicio();
         this.solicitudServicio.setFechaCreacionSolicitudservicio((this.fecha));
+        this.estados.remove(2);
     }
 
     public void comparar() {
@@ -170,10 +173,12 @@ public class SolicitudServicioBean {
             this.solicitudServicio.setGpSolicitudservicio("Parte Servicio");
             this.solicitudServicio.setIdTecnico(this.tecnico);
             DetalleParteServicio dps = new DetalleParteServicio();
-            dps.setDescripcionDetalleParteservicio("0");
+            dps.setDescripcionDetalleParteservicio("Descripción del Parte de Servicio");
             dps.setCantidadDetalleParteservicio(BigDecimal.ZERO);
             this.detalleParteServicioServicio.crear(dps);
             HorarioServicio hs = new HorarioServicio();
+            hs.setInicioHorarioservicio(fecha);
+            hs.setFinHorarioservicio(fecha);
             hs.setTotalHorarioservicio(BigDecimal.ZERO);
             this.horarioServicioServicio.crear(hs);
             ParteServicio p = new ParteServicio();
@@ -183,6 +188,7 @@ public class SolicitudServicioBean {
             p.setIdTecnico(this.tecnico);
             p.setIdHorarioservicio(hs);
             p.setIdDetalleParteservicio(dps);
+            p.setObservacionParteservicio("Observación del Parte de Servicio");
             this.parteServicioServicio.crear(p);
         } else {
             this.solicitudServicio.setGpSolicitudservicio("Gestionar Servicio");
@@ -208,6 +214,8 @@ public class SolicitudServicioBean {
     }
 
     public String modificar() {
+        this.estados = this.estadoServicio.obtenerTodos();
+        this.estados.remove(0);
         if (this.solicitudServicioSeleccionada.getGpSolicitudservicio().compareTo("Parte Servicio") == 0) {
             FacesContext facesContext = FacesContext.getCurrentInstance();
             HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(true);
@@ -240,11 +248,6 @@ public class SolicitudServicioBean {
             this.activarEliminar = false;
         } else {
             this.activarEliminar = true;
-        }
-        int aux;
-        aux = this.solicitudServicioSeleccionada.getIdEstadoSolicitudservicio().getIdEstadoSolicitudservicio();
-        if (aux != 3) {
-
         }
     }
 

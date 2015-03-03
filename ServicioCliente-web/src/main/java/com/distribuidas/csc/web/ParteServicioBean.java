@@ -40,7 +40,7 @@ import org.primefaces.event.UnselectEvent;
  */
 @ManagedBean
 @ViewScoped
-public class ParteServicioBean implements Serializable{
+public class ParteServicioBean implements Serializable {
 
     @EJB
     private ParteServicioServicio parteServicioServicio;
@@ -80,6 +80,7 @@ public class ParteServicioBean implements Serializable{
     private String tituloFormulario;
     private Boolean enNuevo;
     private Boolean enModificar;
+    private Boolean parteFirmado = true;
     private Integer idSolicitud;
 
     private Boolean activarNuevo;
@@ -101,6 +102,12 @@ public class ParteServicioBean implements Serializable{
         this.productos = this.productoServicio.obtenerProductoB(this.parteServicios.get(0).getIdSolicitudservicio().getIdBodega().getIdBodega());
         this.tecnicos = this.tecnicoServicio.obtenerTodos();
         this.solicitudServicios.add(this.parteServicios.get(0).getIdSolicitudservicio());
+
+        if (this.parteServicios.get(0).getFirmaParteservicio()) {
+            parteFirmado = false;
+        } else {
+            parteFirmado = true;
+        }
     }
 
     public void vista() {
@@ -108,7 +115,9 @@ public class ParteServicioBean implements Serializable{
     }
 
     public String editar() {
+        this.calcularHoras();
         this.parteServicios.get(0).getIdHorarioservicio().setTotalHorarioservicio(BigDecimal.valueOf(totalHoras));
+        this.parteServicios.get(0).setFirmaParteservicio(true);
         this.horarioServicioServicio.actualizar(this.parteServicios.get(0).getIdHorarioservicio());
         this.detalleParteServicioServicio.actualizar(this.parteServicios.get(0).getIdDetalleParteservicio());
         this.parteServicioServicio.actualizar(this.parteServicios.get(0));
@@ -159,10 +168,10 @@ public class ParteServicioBean implements Serializable{
         long horas = (Fecha_Fin.getTime() - Fecha_Inicio.getTime()) / (60 * 60 * 1000) % 24;
         long minutos = (Fecha_Fin.getTime() - Fecha_Inicio.getTime()) / (60 * 1000) % 60;
         long segundos = (Fecha_Fin.getTime() - Fecha_Inicio.getTime()) / (1000) % 60;
-        totalHoras = (dias*24) + (horas) + (minutos / 60) + (segundos / 3600);
-        
-        System.out.println("Inicio: "+ Fecha_Inicio.getTime());
-        System.out.println("Fin: "+ Fecha_Fin.getTime());
+        totalHoras = (dias * 24) + (horas) + (minutos / 60) + (segundos / 3600);
+
+        System.out.println("Inicio: " + Fecha_Inicio.getTime());
+        System.out.println("Fin: " + Fecha_Fin.getTime());
         System.out.println("Total dias: " + dias);
         System.out.println("Total horas: " + horas);
         System.out.println("Total minutos: " + minutos);
@@ -324,6 +333,14 @@ public class ParteServicioBean implements Serializable{
 
     public void setTecnicos(List<Tecnico> tecnicos) {
         this.tecnicos = tecnicos;
+    }
+
+    public Boolean getParteFirmado() {
+        return parteFirmado;
+    }
+
+    public void setParteFirmado(Boolean parteFirmado) {
+        this.parteFirmado = parteFirmado;
     }
 
 }

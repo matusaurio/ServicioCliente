@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='ISO-8859-1' ?>
+<?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:composition xmlns="http://www.w3.org/1999/xhtml" 
                 xmlns:h="http://java.sun.com/jsf/html"
@@ -24,28 +24,28 @@
             <p:dataTable var="producto" value="#{productoBean.productos}" paginator="true" rows="5" paginatorAlwaysVisible="false" selectionMode="single" selection="#{productoBean.productoSeleccionado}" rowKey="#{producto.idProducto}">
                 <p:ajax event="rowSelect" listener="#{productoBean.onRowSelect(event)}" update="@form"/>
                 <p:ajax event="rowUnselect" listener="#{productoBean.onRowUnselect(event)}" update="@form"/>
-                <p:column headerText="Codigo Producto" >
+                <p:column headerText="Codigo" >
                     <h:outputText value="#{producto.idProducto}" />
                 </p:column>
-                <p:column headerText="Codigo Modelo" >
+                <p:column headerText="Modelo" >
                     <h:outputText value="#{producto.idModelo.nombreModelo}" />
                 </p:column>
-                <p:column headerText="Codigo Bodega" >
+                <p:column headerText="Bodega" >
                     <h:outputText value="#{producto.idBodega.nombreBodega}" />
                 </p:column>
-                <p:column headerText="Nombre  Producto" >
+                <p:column headerText="Nombre" >
                     <h:outputText value="#{producto.nombreProducto}" />
                 </p:column>
-                <p:column headerText="Precio  Producto" >
+                <p:column headerText="Precio" >
                     <h:outputText value="#{producto.precioProducto}" />
                 </p:column>
-                <p:column headerText="Fecha Creacion Producto" >
+                <p:column headerText="Fecha Creación" >
                     <h:outputText value="#{producto.fechaCreacionProducto}" />
                 </p:column>
-                <p:column headerText="Observacion Producto" >
+                <p:column headerText="Observación" >
                     <h:outputText value="#{producto.observacionProducto}" />
                 </p:column>
-                <p:column headerText="Cantidad Producto" >
+                <p:column headerText="Cantidad" >
                     <h:outputText value="#{producto.cantidadProducto}" />
                 </p:column>
             </p:dataTable>
@@ -54,7 +54,7 @@
     <ui:define name="formularioProducto">
         <p:panel header="Nuevo Producto" rendered="#{productoBean.desplegarNuevo}" class="panelCentral">
                 <p:panelGrid columns="3">
-                    <p:outputLabel for="codigoModelo" value="Codigo Modelo" />
+                    <p:outputLabel for="codigoModelo" value="Modelo:" />
                     <p:selectOneMenu id="codigoModelo" value="#{productoBean.producto.idModelo}" required="true" effect="puff">                    
                         <f:selectItem itemLabel="- Seleccione -" itemValue="#{null}"/>
                         <f:selectItems value="#{modeloBean.modelos}" var="modelo"
@@ -63,7 +63,7 @@
                     </p:selectOneMenu>                    
                     <p:message for="codigoModelo" />
                     
-                    <p:outputLabel for="codigoBodega" value="Codigo Bodega" />
+                    <p:outputLabel for="codigoBodega" value="Bodega:" />
                     <p:selectOneMenu id="codigoBodega" value="#{productoBean.producto.idBodega}" required="true" effect="puff">                    
                         <f:selectItem itemLabel="- Seleccione -" itemValue="#{null}"/>
                         <f:selectItems value="#{bodegaBean.bodegas}" var="bodega"
@@ -72,23 +72,23 @@
                     </p:selectOneMenu>                    
                     <p:message for="codigoBodega" />
                     
-                    <p:outputLabel for="nombreProducto" value="Nombre Producto" />
+                    <p:outputLabel for="nombreProducto" value="Nombre:" />
                     <p:inputText id="nombreProducto" value="#{productoBean.producto.nombreProducto}" required="true" maxlength="100" requiredMessage="Debe ingresar el nombre de la empresa."/>
                     <p:message for="nombreProducto" />
                     
-                    <p:outputLabel for="cantidadProducto" value="Cantidad Producto" />
+                    <p:outputLabel for="cantidadProducto" value="Cantidad:" />
                     <p:inputText id="cantidadProducto" value="#{productoBean.producto.cantidadProducto}" required="true" maxlength="100" requiredMessage="Debe ingresar el nombre de la empresa."/>
                     <p:message for="cantidadProducto" />
                     
-                    <p:outputLabel for="precioProducto" value="Precio Producto" />
+                    <p:outputLabel for="precioProducto" value="Precio:" />
                     <p:inputText id="precioProducto" value="#{productoBean.producto.precioProducto}" required="true" maxlength="100" requiredMessage="Debe ingresar el nombre de la empresa."/>
                     <p:message for="precioProducto" />
                     
-                    <p:outputLabel for="fechaProducto" value="Fecha" />
+                    <p:outputLabel for="fechaProducto" value="Fecha de Creación:" />
                     <p:outputLabel id="fechaProducto" value="#{productoBean.producto.fechaCreacionProducto}" />
                     <p:message for="fechaProducto" />
                     
-                    <p:outputLabel for="observacionProducto" value="Observacion Producto" />
+                    <p:outputLabel for="observacionProducto" value="Observación:" />
                     <p:inputText id="observacionProducto" value="#{productoBean.producto.observacionProducto}" required="true" maxlength="100" requiredMessage="Debe ingresar el nombre de la empresa."/>
                     <p:message for="observacionProducto" />
                     

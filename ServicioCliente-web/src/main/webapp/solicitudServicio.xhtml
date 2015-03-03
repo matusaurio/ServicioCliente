@@ -12,7 +12,6 @@
         <p:growl autoUpdate="true"/>
         <p:menu style="width: 250px">
             <p:submenu label="Opciones Solicitud Servicio">
-                <p:menuitem value="Ver" update="@form" actionListener="#{solicitudServicioBean.vista()}"/>
                 <p:menuitem value="Nuevo" update="@form" actionListener="#{solicitudServicioBean.nuevo()}"/>
                 <p:menuitem value="Eliminar" update="@form" actionListener="#{solicitudServicioBean.eliminar()}" disabled="#{not solicitudServicioBean.activarEliminar}"/>
             </p:submenu>
@@ -20,9 +19,9 @@
     </ui:define>
     <ui:define name="tablaSolicitudServicio">
         <p:panel header="Solicitudes de Servicio" rendered="#{solicitudServicioBean.desplegarVista}" class="panelCentral">
-            <p:dataTable var="solictudServicio" value="#{solicitudServicioBean.solicitudServicios}" paginator="true" rows="5" paginatorAlwaysVisible="false"  selectionMode="single" selection="#{solicitudServicioBean.solicitudServicioSeleccionada}" rowKey="#{solictudServicio.idSolicitudservicio}">
-                <p:ajax event="rowSelect" listener="#{solicitudServicioBean.onRowSelect(event)}" update="@form"/>
-                <p:ajax event="rowUnselect" listener="#{solicitudServicioBean.onRowUnselect(event)}" update="@form"/>
+            <p:dataTable id="tablaSolicitudesServicio" var="solictudServicio" value="#{solicitudServicioBean.solicitudServicios}" paginator="true" rows="5" paginatorAlwaysVisible="false"  selectionMode="single" selection="#{solicitudServicioBean.solicitudServicioSeleccionada}" rowKey="#{solictudServicio.idSolicitudservicio}" style="font-size: 12px;">
+                <p:ajax event="rowSelect" listener="#{solicitudServicioBean.onRowSelect(event)}" />
+                <p:ajax event="rowUnselect" listener="#{solicitudServicioBean.onRowUnselect(event)}" />
                 <p:column headerText="Codigo Solicitud" >
                     <h:outputText value="#{solictudServicio.idSolicitudservicio}" />
                 </p:column>
@@ -42,135 +41,141 @@
                     <h:outputText value="#{solictudServicio.idTipoServicioSolicitudservicio.nombreTipoServicioSolicitudservicio}" />
                 </p:column>
                 <p:column headerText="Fecha Creacion" >
-                    <h:outputText value="#{solictudServicio.idTipoServicioSolicitudservicio.nombreTipoServicioSolicitudservicio}" />
+                    <h:outputText value="#{solictudServicio.fechaCreacionSolicitudservicio}" />
                 </p:column>
-                <p:column headerText="" >
-                    <h:commandButton value="#{solictudServicio.gpSolicitudservicio}" action="#{solicitudServicioBean.modificar()}"/>
+                <p:column headerText="Acciones" >
+                    <p:commandButton value="#{solictudServicio.gpSolicitudservicio}" action="#{solicitudServicioBean.modificar()}" update="@form"/>
                 </p:column>
             </p:dataTable>
         </p:panel>
     </ui:define>
     <ui:define name="formularioSolicitudServicio">
         <p:panel header="Nueva Solicitud de Servicio" rendered="#{solicitudServicioBean.desplegarNuevo}" class="panelCentral">
-            <p:panelGrid columns="3">
 
-                <p:outputLabel for="codigoTipoServicio" value="Tipo de Servicio:" />
-                <h:selectOneMenu id="codigoTipoServicio" value="#{solicitudServicioBean.solicitudServicio.idTipoServicioSolicitudservicio}" required="true">
-                    <f:selectItem itemLabel="- Seleccione -" itemValue="#{null}"/>
-                    <f:selectItems value="#{tipoServicioBean.tipoServicios}" var="tipoServicio"
-                                   itemLabel="#{tipoServicio.nombreTipoServicioSolicitudservicio}" itemValue="#{tipoServicio}"/>
-                    <f:converter converterId="tipoServicioConverter"/>
-                </h:selectOneMenu>
-                <p:message for="codigoTipoServicio" />
+            <p:fieldset legend="Información General">
+                <p:panelGrid columns="3">
+                    <p:outputLabel for="codigoTipoServicio" value="Tipo de Servicio:" />
+                    <p:selectOneMenu id="codigoTipoServicio" value="#{solicitudServicioBean.solicitudServicio.idTipoServicioSolicitudservicio}" required="true">
+                        <f:selectItem itemLabel="- Seleccione -" itemValue="#{null}"/>
+                        <f:selectItems value="#{tipoServicioBean.tipoServicios}" var="tipoServicio"
+                                       itemLabel="#{tipoServicio.nombreTipoServicioSolicitudservicio}" itemValue="#{tipoServicio}"/>
+                        <f:converter converterId="tipoServicioConverter"/>
+                    </p:selectOneMenu>
+                    <p:message for="codigoTipoServicio" />
+                </p:panelGrid>
+                <p:panelGrid columns="6">
+                    <p:outputLabel for="codigoEstado" value="Estado:" />
+                    <p:selectOneMenu id="codigoEstado" value="#{solicitudServicioBean.solicitudServicio.idEstadoSolicitudservicio}" required="true">
+                        <f:selectItem itemLabel="- Seleccione -" itemValue="#{null}"/>
+                        <f:selectItems value="#{solicitudServicioBean.estados}" var="estado"
+                                       itemLabel="#{estado.nombreEstadoSolicitudservicio}" itemValue="#{estado}"/>
+                        <f:converter converterId="estadoConverter"/>
+                        <p:ajax update="codigoTecnico" event="change" process="@this" listener="#{solicitudServicioBean.cargarTecnicos()}"/>
+                    </p:selectOneMenu>
+                    <p:message for="codigoEstado" />
+                    <p:outputLabel for="codigoTecnico" value="Tecnico:"/>
+                    <p:selectOneMenu id="codigoTecnico" value="#{solicitudServicioBean.solicitudServicio.idTecnico}" effect="puff" required="#{solicitudServicioBean.elegirTecnico}" requiredMessage="Debe escojer un Tecnico">                    
+                        <f:selectItem itemLabel="- Seleccione -" itemValue="#{null}"/>
+                        <f:selectItems value="#{solicitudServicioBean.tecnicos}" var="tecnico"
+                                       itemLabel="#{tecnico.nombreTecnico}" itemValue="#{tecnico}"/>
+                        <f:converter converterId="tecnicoConverter"/>
+                    </p:selectOneMenu>                    
+                    <p:message for="codigoTecnico" />
+                </p:panelGrid>
+            </p:fieldset>            
+            <p:spacer/>
+            <p:fieldset legend="Información del Solicitante">
+                <p:panelGrid columns="6">
+                    <p:outputLabel for="codigoEmpresa" value="Empresa:" />
+                    <p:selectOneMenu id="codigoEmpresa" value="#{solicitudServicioBean.solicitudServicio.idEmpresa}" >
+                        <f:selectItem itemLabel="- Seleccione -" itemValue="#{null}"/>
+                        <f:selectItems value="#{empresaBean.empresas}" var="empresa"
+                                       itemLabel="#{empresa.nombreEmpresa}" itemValue="#{empresa}"/>
+                        <f:converter converterId="empresaConverter"/>
+                        <p:ajax update="codigoContacto" event="change" process="@this" listener="#{solicitudServicioBean.cargarContactos()}"/>
+                    </p:selectOneMenu>
+                    <p:message for="codigoEmpresa" />
 
-                <p:outputLabel for="codigoEstado" value="Estado:" />
-                <h:selectOneMenu id="codigoEstado" value="#{solicitudServicioBean.solicitudServicio.idEstadoSolicitudservicio}" required="true">
-                    <f:selectItem itemLabel="- Seleccione -" itemValue="#{null}"/>
-                    <f:selectItems value="#{estadoBean.estados}" var="estado"
-                                   itemLabel="#{estado.nombreEstadoSolicitudservicio}" itemValue="#{estado}"/>
-                    <f:converter converterId="estadoConverter"/>
-                    <p:ajax update="codigoTecnico" event="change" process="@this" listener="#{solicitudServicioBean.cargarTecnicos()}"/>
-                </h:selectOneMenu>
-                <p:message for="codigoEstado" />
-                
-                <p:outputLabel for="codigoTecnico" value="Tecnico:"/>
-                <p:selectOneMenu id="codigoTecnico" value="#{solicitudServicioBean.solicitudServicio.idTecnico}" effect="puff" required="#{solicitudServicioBean.elegirTecnico}" requiredMessage="Debe escojer un Tecnico">                    
-                    <f:selectItem itemLabel="- Seleccione -" itemValue="#{null}"/>
-                    <f:selectItems value="#{solicitudServicioBean.tecnicos}" var="tecnico"
-                                   itemLabel="#{tecnico.nombreTecnico}" itemValue="#{tecnico}"/>
-                    <f:converter converterId="tecnicoConverter"/>
-                </p:selectOneMenu>                    
-                <p:message for="codigoTecnico" />
+                    <p:outputLabel for="codigoContacto" value="Contacto:" />
+                    <p:selectOneMenu id="codigoContacto" value="#{solicitudServicioBean.solicitudServicio.idContacto}" required="true">
+                        <f:selectItem itemLabel="- Seleccione -" itemValue="#{null}"/>
+                        <f:selectItems value="#{solicitudServicioBean.contactos}" var="contacto"
+                                       itemLabel="#{contacto.nombreContacto}" itemValue="#{contacto}"/>
+                        <f:converter converterId="contactoConverter"/>
+                        <p:ajax update="codigoSucursal" event="change" process="@this" listener="#{solicitudServicioBean.cargarSucursales()}"/>
+                    </p:selectOneMenu>
+                    <p:message for="codigoContacto" />
+                </p:panelGrid>
+            </p:fieldset>
+            <p:spacer/>
+            <p:fieldset legend="Procedencia del Equipo/Sistema a Atender">
+                <p:panelGrid columns="6">
+                    <p:outputLabel for="codigoSucursal" value="Sucursal:" />
+                    <p:selectOneMenu id="codigoSucursal" value="#{solicitudServicioBean.solicitudServicio.idSucursal}" effect="puff">                    
+                        <f:selectItem itemLabel="- Seleccione -" itemValue="#{null}"/>
+                        <f:selectItems value="#{solicitudServicioBean.sucursales}" var="sucursal"
+                                       itemLabel="#{sucursal.nombreSucursal}" itemValue="#{sucursal}"/>
+                        <p:ajax update="codigoBodega" event="change" process="@this" listener="#{solicitudServicioBean.cargarBodegas()}"/>
+                        <f:converter converterId="sucursalConverter"/>
+                    </p:selectOneMenu>                    
+                    <p:message for="codigoSucursal" />
 
-                <p:outputLabel for="codigoEmpresa" value="Empresa:" />
-                <h:selectOneMenu id="codigoEmpresa" value="#{solicitudServicioBean.solicitudServicio.idEmpresa}" >
-                    <f:selectItem itemLabel="- Seleccione -" itemValue="#{null}"/>
-                    <f:selectItems value="#{empresaBean.empresas}" var="empresa"
-                                   itemLabel="#{empresa.nombreEmpresa}" itemValue="#{empresa}"/>
-                    <f:converter converterId="empresaConverter"/>
-                    <p:ajax update="codigoContacto" event="change" process="@this" listener="#{solicitudServicioBean.cargarContactos()}"/>
-                </h:selectOneMenu>
-                <p:message for="codigoEmpresa" />
-                
-                <p:outputLabel for="codigoContacto" value="Contacto:" />
-                <h:selectOneMenu id="codigoContacto" value="#{solicitudServicioBean.solicitudServicio.idContacto}" required="true">
-                    <f:selectItem itemLabel="- Seleccione -" itemValue="#{null}"/>
-                    <f:selectItems value="#{solicitudServicioBean.contactos}" var="contacto"
-                                   itemLabel="#{contacto.nombreContacto}" itemValue="#{contacto}"/>
-                    <f:converter converterId="contactoConverter"/>
-                    <p:ajax update="codigoSucursal" event="change" process="@this" listener="#{solicitudServicioBean.cargarSucursales()}"/>
-                </h:selectOneMenu>
-                <p:message for="codigoContacto" />
-
-                <p:outputLabel for="codigoSucursal" value="Sucursal:" />
-                <p:selectOneMenu id="codigoSucursal" value="#{solicitudServicioBean.solicitudServicio.idSucursal}" effect="puff">                    
-                    <f:selectItem itemLabel="- Seleccione -" itemValue="#{null}"/>
-                    <f:selectItems value="#{solicitudServicioBean.sucursales}" var="sucursal"
-                                   itemLabel="#{sucursal.nombreSucursal}" itemValue="#{sucursal}"/>
-                    <p:ajax update="codigoBodega" event="change" process="@this" listener="#{solicitudServicioBean.cargarBodegas()}"/>
-                    <f:converter converterId="sucursalConverter"/>
-                </p:selectOneMenu>                    
-                <p:message for="codigoSucursal" />
-
-                <p:outputLabel for="codigoBodega" value="Bodega:" />
-                <p:selectOneMenu id="codigoBodega" value="#{solicitudServicioBean.solicitudServicio.idBodega}" effect="puff">                    
-                    <f:selectItem itemLabel="- Seleccione -" itemValue="#{null}"/>
-                    <f:selectItems value="#{solicitudServicioBean.bodegas}" var="bodega"
-                                   itemLabel="#{bodega.nombreBodega}" itemValue="#{bodega}"/>
-                    <p:ajax update="codigoProducto" event="change" process="@this" listener="#{solicitudServicioBean.cargarProductos()}"/>
-                    <f:converter converterId="bodegaConverter"/>
-                </p:selectOneMenu>                    
-                <p:message for="codigoBodega" />
-                
-                <p:outputLabel for="codigoProducto" value="Producto:" />
-            <p:selectOneMenu id="codigoProducto" value="#{solicitudServicioBean.solicitudServicio.idProducto}" effect="puff">                    
-                    <f:selectItem itemLabel="- Seleccione -" itemValue="#{null}"/>
-                    <f:selectItems value="#{solicitudServicioBean.productos}" var="producto"
-                                   itemLabel="#{producto.nombreProducto}" itemValue="#{producto}"/>
-                    <p:ajax update="codigoProducto" event="change" process="@this"/>
-                    <f:converter converterId="productoConverter"/>
-                </p:selectOneMenu>                    
-                <p:message for="codigoProducto" />
-                
-                <p:outputLabel for="codigoMarca" value="Marca:" />
-                <h:selectOneMenu id="codigoMarca" value="#{solicitudServicioBean.solicitudServicio.idMarca}" >
-                    <f:selectItem itemLabel="- Seleccione -" itemValue="#{null}"/>
-                    <f:selectItems value="#{marcaBean.marcas}" var="marca"
-                                   itemLabel="#{marca.nombreMarca}" itemValue="#{marca}"/>
-                    <f:converter converterId="marcaConverter"/>
-                    <p:ajax update="codigoModelo" event="change" process="@this" listener="#{solicitudServicioBean.cargarModelos()}"/>
-                </h:selectOneMenu>
-                <p:message for="codigoMarca" />
-                
-                <p:outputLabel for="codigoModelo" value="Modelo:" />
-                <p:selectOneMenu id="codigoModelo" value="#{solicitudServicioBean.solicitudServicio.idModelo}" effect="puff">                    
-                    <f:selectItem itemLabel="- Seleccione -" itemValue="#{null}"/>
-                    <f:selectItems value="#{solicitudServicioBean.modelos}" var="modelo"
-                                   itemLabel="#{modelo.nombreModelo}" itemValue="#{modelo}"/>
-                    <p:ajax update="codigoModelo" event="change" process="@this"/>
-                    <f:converter converterId="modeloConverter"/>
-                </p:selectOneMenu>                    
-                <p:message for="codigoModelo" />
-
-                <p:outputLabel for="inconveniente" value="Daño y/o inconveniente:" />
-                <p:inputText id="inconveniente" value="#{solicitudServicioBean.solicitudServicio.inconvenienteSolicitudservicio}" required="true" maxlength="100" requiredMessage="Debe ingresar el nombre de la empresa."/>
-                <p:message for="inconveniente" />
-
-                <p:outputLabel for="observacion" value="Observacion:" />
-                <p:inputText id="observacion" value="#{solicitudServicioBean.solicitudServicio.observacionSolicitudservicio}" required="true" maxlength="100" requiredMessage="Debe ingresar el nombre de la empresa."/>
-                <p:message for="observacion" />
-
-                <p:outputLabel for="fechaAtencion" value="Fecha Atencion:" />
-                <p:calendar id="fechaAtencion" value="#{solicitudServicioBean.solicitudServicio.fechaAtencionSolicitudservicio}" pattern="yyyy/MM/dd HH:mm:ss"/>
-                <p:message for="fechaAtencion" />
-
-                <p:outputLabel for="fechaSolicitud" value="Fecha creacion solicitud:" />
+                    <p:outputLabel for="codigoBodega" value="Bodega:" />
+                    <p:selectOneMenu id="codigoBodega" value="#{solicitudServicioBean.solicitudServicio.idBodega}" effect="puff">                    
+                        <f:selectItem itemLabel="- Seleccione -" itemValue="#{null}"/>
+                        <f:selectItems value="#{solicitudServicioBean.bodegas}" var="bodega"
+                                       itemLabel="#{bodega.nombreBodega}" itemValue="#{bodega}"/>
+                        <p:ajax update="codigoProducto" event="change" process="@this" listener="#{solicitudServicioBean.cargarProductos()}"/>
+                        <f:converter converterId="bodegaConverter"/>
+                    </p:selectOneMenu>                    
+                    <p:message for="codigoBodega" />
+                </p:panelGrid>
+                <p:panelGrid columns="3">
+                    <p:outputLabel for="codigoProducto" value="Producto/Sistema:" />
+                    <p:selectOneMenu id="codigoProducto" value="#{solicitudServicioBean.solicitudServicio.idProducto}" effect="puff">                    
+                        <f:selectItem itemLabel="- Seleccione -" itemValue="#{null}"/>
+                        <f:selectItems value="#{solicitudServicioBean.productos}" var="producto"
+                                       itemLabel="#{producto.nombreProducto}" itemValue="#{producto}"/>
+                        <p:ajax update="codigoProducto" event="change" process="@this"/>
+                        <f:converter converterId="productoConverter"/>
+                    </p:selectOneMenu>                    
+                    <p:message for="codigoProducto" />
+                </p:panelGrid>
+            </p:fieldset>
+            <p:fieldset legend="Daño y/o Inconveniente">
+                <p:panelGrid columns="3">
+                    <p:outputLabel for="inconveniente" value="" />
+                    <p:inputTextarea id="inconveniente" rows="5" cols="50" autoResize="false" value="#{solicitudServicioBean.solicitudServicio.inconvenienteSolicitudservicio}" required="true" maxlength="100" requiredMessage="Debe ingresar el nombre de la empresa."/>
+                    <p:message for="inconveniente" />
+                </p:panelGrid>
+            </p:fieldset>
+            <p:spacer/>
+            <p:fieldset legend="Observaciones/Sugerencias">
+                <p:panelGrid columns="3">
+                    <p:outputLabel for="observacion" value="" />
+                    <p:inputTextarea id="observacion" rows="5" cols="50" autoResize="false" value="#{solicitudServicioBean.solicitudServicio.observacionSolicitudservicio}" required="true" maxlength="100" requiredMessage="Debe ingresar el nombre de la empresa."/>
+                    <p:message for="observacion" />
+                </p:panelGrid>
+            </p:fieldset>
+            <p:spacer/>
+            <p:fieldset legend="Fecha y Hora que se requiere la atención">
+                <p:panelGrid columns="3">
+                    <p:outputLabel for="fechaAtencion" value="" />
+                    <p:calendar id="fechaAtencion" value="#{solicitudServicioBean.solicitudServicio.fechaAtencionSolicitudservicio}" pattern="yyyy/MM/dd HH:mm:ss"/>
+                    <p:message for="fechaAtencion" />
+                </p:panelGrid>
+            </p:fieldset>
+            <p:spacer/>
+            <p:panelGrid columns="3" style="float: left;">
+                <p:outputLabel for="fechaSolicitud" value="Fecha creacion solicitud: " />
                 <p:outputLabel id="fechaSolicitud" value="#{solicitudServicioBean.solicitudServicio.fechaCreacionSolicitudservicio}" />
                 <p:message for="fechaSolicitud" />
             </p:panelGrid>
-            <br/>
-            <p:commandButton value="Aceptar" update="@form" actionListener="#{solicitudServicioBean.guardar()}"/>
-            <p:commandButton value="Cancelar" update="@form" immediate="true" actionListener="#{solicitudServicioBean.cancelar()}"/>
+            <p:spacer/>
+            <p:panelGrid columns="2">
+                <p:commandButton value="Guardar" update="@form" actionListener="#{solicitudServicioBean.guardar()}"/>
+                <p:commandButton value="Cancelar" update="@form" immediate="true" actionListener="#{solicitudServicioBean.cancelar()}"/>
+            </p:panelGrid>
         </p:panel>
     </ui:define>
 </ui:composition>

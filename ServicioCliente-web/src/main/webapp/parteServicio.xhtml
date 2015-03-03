@@ -20,76 +20,79 @@
         </p:menu>
     </ui:define>
     <ui:define name="verParteServicio">
-        <p:outputLabel for="codParteServicio" value="Parte de Servicio Nro. "/>
-        <h:outputText id="codParteServicio" value="#{parteServicio.idParteservicio}"/>
-        <p:fieldset legend="Información General">
-            <p:dataTable var="parteServicio" value="#{parteServicioBean.parteServicios}">
-                <p:column headerText="Empresa">
-                    <h:outputText value="#{parteServicio.idEmpresa.nombreEmpresa}"/>
-                </p:column>
-                <p:column headerText="Contacto">
-                    <h:outputText value="#{parteServicio.idContacto.nombreContacto}"/>
-                </p:column>
-            </p:dataTable>
+        <p:panel header="Parte de Servicio">
+            <p:fieldset legend="Información General">
+                <p:dataTable var="parteServicio" value="#{parteServicioBean.parteServicios}">
+                    <p:column headerText="Empresa">
+                        <h:outputText value="#{parteServicio.idEmpresa.nombreEmpresa}"/>
+                    </p:column>
+                    <p:column headerText="Contacto">
+                        <h:outputText value="#{parteServicio.idContacto.nombreContacto}"/>
+                    </p:column>
+                </p:dataTable>
+                <p:spacer/>
+                <p:dataTable var="parteServicio" value="#{parteServicioBean.parteServicios}">
+                    <p:column headerText="Técnico Asignado">
+                        <h:outputText value="#{parteServicio.idTecnico.nombreTecnico}"/>
+                    </p:column>
+                </p:dataTable>
+                <p:spacer/>
+                <p:dataTable var="parteServicio" value="#{parteServicioBean.parteServicios}">
+                    <p:column headerText="Hora de Inicio Servicio">
+                        <h:outputText value="#{parteServicio.idHorarioservicio.inicioHorarioservicio}"/>
+                    </p:column>
+                    <p:column headerText="Hora de Fin de Servicio">
+                        <h:outputText value="#{parteServicio.idHorarioservicio.finHorarioservicio}"/>
+                    </p:column>
+                    <p:column headerText="Total de Horas Servicio">
+                        <h:outputText value="#{parteServicio.idHorarioservicio.totalHorarioservicio}"/>
+                    </p:column>
+                </p:dataTable>
+            </p:fieldset>
             <p:spacer/>
-            <p:dataTable var="parteServicio" value="#{parteServicioBean.parteServicios}">
-                <p:column headerText="Técnico Asignado">
-                    <h:outputText value="#{parteServicio.idTecnico.nombreTecnico}"/>
-                </p:column>
-            </p:dataTable>
+            <p:fieldset legend="Información del Equipo">
+                <p:dataTable var="parteServicio" value="#{parteServicioBean.parteServicios}">
+                    <p:column headerText="Tipo Servicio">
+                        <h:outputText value="#{parteServicio.idSolicitudservicio.idTipoServicioSolicitudservicio.nombreTipoServicioSolicitudservicio}"/>
+                    </p:column>
+                    <p:column headerText="Ciudad Procedencia">
+                        <h:outputText value="#{parteServicio.idSolicitudservicio.idCiudad.nombreCiudad}"/>
+                    </p:column>
+                    <p:column headerText="Sucursal">
+                        <h:outputText value="#{parteServicio.idSolicitudservicio.idSucursal.nombreSucursal}"/>
+                    </p:column>
+                    <p:column headerText="Equipo">
+                        <h:outputText value="#{parteServicio.idSolicitudservicio.idProducto.nombreProducto}"/>
+                    </p:column>
+                </p:dataTable>
+            </p:fieldset>
             <p:spacer/>
-            <p:dataTable var="parteServicio" value="#{parteServicioBean.parteServicios}">
-                <p:column headerText="Hora de Inicio Servicio">
-                    <h:outputText value="#{parteServicio.idHorarioservicio.inicioHorarioservicio}"/>
-                </p:column>
-                <p:column headerText="Hora de Fin de Servicio">
-                    <h:outputText value="#{parteServicio.idHorarioservicio.finHorarioservicio}"/>
-                </p:column>
-                <p:column headerText="Total de Horas Servicio">
-                    <h:outputText value="#{parteServicio.idHorarioservicio.totalHorarioservicio}"/>
-                </p:column>
-            </p:dataTable>
-        </p:fieldset>
-        <p:spacer/>
-        <p:fieldset legend="Información del Equipo">
-            <p:dataTable var="parteServicio" value="#{parteServicioBean.parteServicios}">
-                <p:column headerText="Sucursal">
-                    <h:outputText value="#{parteServicio.idSolicitudservicio.idSucursal.nombreSucursal}"/>
-                </p:column>
-                <p:column headerText="Equipo">
-                    <h:outputText value="#{parteServicio.idSolicitudservicio.idProducto.nombreProducto}"/>
-                </p:column>
-                <p:column headerText="Ciudad Procedencia">
-                    <h:outputText value="#{parteServicio.idSolicitudservicio.idCiudad.nombreCiudad}"/>
-                </p:column>
-                <p:column headerText="Tipo Servicio">
-                    <h:outputText value="#{parteServicio.idSolicitudservicio.idTipoServicioSolicitudservicio.nombreTipoServicioSolicitudservicio}"/>
-                </p:column>
-            </p:dataTable>
-        </p:fieldset>
-        <p:spacer/>
-        <p:spacer/>
-        <p:fieldset legend="Descripción Parte Servicio">
-            <p:dataTable var="parteServicio" value="#{parteServicioBean.parteServicios}">
-                <p:column headerText="Detalles">
-                    <h:outputText value="#{parteServicio.idDetalleParteservicio.descripcionDetalleParteservicio}"/>
-                </p:column>
-            </p:dataTable>
-        </p:fieldset>
-        <p:spacer/>
-        <p:fieldset legend="Observaciones Parte Servicio">
-            <p:dataTable var="parteServicio" value="#{parteServicioBean.parteServicios}">
-                <p:column headerText="Observaciones">
-                    <h:outputText value="#{parteServicio.observacionParteservicio}"/>
-                </p:column>
-            </p:dataTable>
-        </p:fieldset>
-        <p:spacer/>
-        <p:fieldset legend="Firma">
-            <p:outputLabel for="firmaParteServicio" value="El parte ha sido firmado?"/>
-            <h:outputText id="firmaParteServicio" value="#{parteServicio.firmaParteservicio}"/>
-        </p:fieldset>
-        <p:spacer/>
-        <h:link id="editParteServicio" value="Editar Parte Servicio" outcome="editParteServicio"/>
+            <p:spacer/>
+            <p:fieldset legend="Descripción Parte Servicio">
+                <p:dataTable var="parteServicio" value="#{parteServicioBean.parteServicios}">
+                    <p:column headerText="Detalles">
+                        <h:outputText value="#{parteServicio.idDetalleParteservicio.descripcionDetalleParteservicio}"/>
+                    </p:column>
+                </p:dataTable>
+            </p:fieldset>
+            <p:spacer/>
+            <p:fieldset legend="Observaciones Parte Servicio">
+                <p:dataTable var="parteServicio" value="#{parteServicioBean.parteServicios}">
+                    <p:column headerText="Observaciones">
+                        <h:outputText value="#{parteServicio.observacionParteservicio}"/>
+                    </p:column>
+                </p:dataTable>
+            </p:fieldset>
+            <p:spacer/>
+            <p:fieldset legend="Firma">
+                <p:dataTable var="parteServicio" value="#{parteServicioBean.parteServicios}">
+                    <p:column headerText="El parte ha sido firmado?">
+                        <h:outputText value="#{parteServicio.firmaParteservicio? 'Firmado' : 'Sin Firmar'}"/>
+                    </p:column>
+                </p:dataTable>
+            </p:fieldset>
+            <p:spacer/>
+            <h:link id="editParteServicio" value="Editar Parte Servicio" outcome="editParteServicio" disabled="#{not parteServicioBean.parteFirmado}"/>
+        </p:panel>
     </ui:define>
 </ui:composition>

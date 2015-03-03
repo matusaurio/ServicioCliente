@@ -25,21 +25,27 @@
                         <p:growl autoUpdate="true"/>
                         <p:menubar>
                             <p:submenu label="Parametrización">
-                                <p:menuitem value="Ciudad" update="@form" ajax="false" action="ciudad"/>
-                                <p:menuitem value="Empresa" update="@form" ajax="false" action="empresa"/>
-                                <p:menuitem value="Sucursal" update="@form" ajax="false" action="sucursal"/>
-                                <p:menuitem value="Bodega" update="@form" ajax="false" action="bodega"/>
-                                <p:menuitem value="Modelo" update="@form" ajax="false" action="modelo"/>
-                                <p:menuitem value="Marca" update="@form" ajax="false" action="marca"/>
-                                <p:menuitem value="Usuario" update="@form" ajax="false" action="usuario"/>
-                                <p:menuitem value="Tipo Servicio" update="@form" ajax="false" action="tipodeservicio"/>
-                                <p:menuitem value="Estado" update="@form" ajax="false" action="estado"/>
-                                <p:menuitem value="Producto" update="@form" ajax="false" action="producto"/>
-                                <p:menuitem value="Contacto" update="@form" ajax="false" action="contacto"/>
-                                <p:menuitem value="Tecnico" update="@form" ajax="false" action="tecnico"/>
+                                <p:submenu label="General">
+                                    <p:menuitem value="Ciudad" update="@form" ajax="false" action="ciudad"/>
+                                    <p:menuitem value="Empresa" update="@form" ajax="false" action="empresa"/>
+                                    <p:menuitem value="Sucursal" update="@form" ajax="false" action="sucursal"/>
+                                    <p:menuitem value="Bodega" update="@form" ajax="false" action="bodega"/>
+                                    <p:menuitem value="Marca" update="@form" ajax="false" action="marca"/>
+                                    <p:menuitem value="Modelo" update="@form" ajax="false" action="modelo"/>
+                                    <p:menuitem value="Producto" update="@form" ajax="false" action="producto"/>
+                                    <p:menuitem value="Contacto" update="@form" ajax="false" action="contacto"/>
+                                    <p:menuitem value="Tecnico" update="@form" ajax="false" action="tecnico"/>
+                                </p:submenu>
+                                <p:submenu label="Solicitud de Servicio">
+                                    <p:menuitem value="Tipo Servicio" update="@form" ajax="false" action="tipodeservicio"/>
+                                    <p:menuitem value="Estado Solicitud" update="@form" ajax="false" action="estado"/>
+                                </p:submenu>
+                                <p:submenu label="Usuarios">
+                                    <p:menuitem value="Usuario" update="@form" ajax="false" action="usuario"/>
+                                </p:submenu>
                             </p:submenu>    
-                            <p:submenu label="Solicitud de Servicio">
-                                <p:menuitem value="Solicitud Servicio" update="@form" ajax="false" action="solicitudServicio"/>
+                            <p:submenu label="Servicio al Cliente">
+                                <p:menuitem value="Solicitud de Servicio" update="@form" ajax="false" action="solicitudServicio"/>
                             </p:submenu>
                             <p:menuitem value="Logout" action="index" style="right: inherit" />
                         </p:menubar>
